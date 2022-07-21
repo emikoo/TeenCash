@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "729402184768",
+    "project_id": "teencash-f70f1",
+    "storage_bucket": "teencash-f70f1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:729402184768:android:a9112e32a1b34778d13ba5",
+        "android_client_info": {
+          "package_name": "com.teenteen.teencash"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "729402184768-j6d0rqrkvqnrafp4hcboe51alehq6ab7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7gMl3UJyuOvGZGY6SfzTHGePwpGDZaJ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "729402184768-j6d0rqrkvqnrafp4hcboe51alehq6ab7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
