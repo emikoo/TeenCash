@@ -69,12 +69,12 @@ class OnBoardingFragment : Fragment(R.layout.fragment_onboarding) {
             dots !![i] = TextView(requireActivity())
             dots !![i]?.text = Html.fromHtml("&#8226;")
             dots !![i]?.textSize = 35f
-            dots !![i]?.setTextColor(R.color.grey80)
+            dots !![i]?.setTextColor(resources.getColor(R.color.grey80))
             binding.dotsLayout.addView(dots !![i])
         }
 
         if (dots !!.isNotEmpty()) {
-            dots !![currentPage]?.setTextColor(R.color.blue414A61)
+            dots !![currentPage]?.setTextColor(resources.getColor(R.color.blue414A61))
         }
     }
 
