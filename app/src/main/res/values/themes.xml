@@ -18,4 +18,30 @@
     <style name="SplashScreen" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:windowBackground">@drawable/ic_splash_screen</item>
     </style>
+
+    <style name="FragmentScreen">
+        <item name="android:windowBackground">@color/white</item>
+    </style>
+
+    <style name="SelectedDot">
+        <item name="android:textColor">@color/blue414A61</item>
+        <item name="android:textSize">@dimen/f_35</item>
+    </style>
+
+    <style name="Dots">
+        <item name="android:textColor">@color/grey_6c</item>
+        <item name="android:textSize">@dimen/f_35</item>
+    </style>
+
+    <style name="title_24sp_poppinsBold_black29">
+        <item name="android:textColor">@color/black29</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">@dimen/sp_24</item>
+    </style>
+
+    <style name="title_14sp_poppins_regular_grey58">
+        <item name="android:textColor">@color/grey58</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
 </resources>
