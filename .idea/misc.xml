@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_logo.xml" value="0.157" />
+        <entry key="app/src/main/res/drawable/ic_splash_screen.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_splash_screen_night.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/splash_scree.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/flow_fragment_language.xml" value="0.19972826086956522" />
         <entry key="app/src/main/res/layout/flow_fragment_main.xml" value="0.19972826086956522" />
