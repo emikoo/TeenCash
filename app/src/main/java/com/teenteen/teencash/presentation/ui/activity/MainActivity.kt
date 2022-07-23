@@ -11,7 +11,7 @@ import com.teenteen.teencash.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
-    private lateinit var pref: PrefsSettings
+    private lateinit var prefs: PrefsSettings
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_TeenCash)
@@ -27,9 +27,9 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
         val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
-        pref = PrefsSettings(this)
+        prefs = PrefsSettings(this)
 
-        when(pref.isFirstTimeLaunch()) {
+        when(prefs.isFirstTimeLaunch()) {
             PrefsSettings.FIRST_TIME -> {
                 navGraph.setStartDestination(R.id.onBoardingFlowFragment)
             }
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
                 navGraph.setStartDestination(R.id.signFlowFragment)
             }
             PrefsSettings.USER -> {
-                navGraph.setStartDestination(R.id.mainFlowFragment)
+                navGraph.setStartDestination(R.id.onBoardingFlowFragment)
             }
         }
         navController.graph = navGraph
