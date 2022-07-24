@@ -6,7 +6,7 @@
     android:gravity="center"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.ui.fragments.sign.in.AuthFragment">
+    tools:context=".presentation.ui.fragments.sign.AuthFragment">
 
     <TextView
         android:layout_width="wrap_content"
@@ -15,7 +15,7 @@
         android:text="@string/authorization"
         android:textColor="@color/grey58"
         android:layout_marginBottom="@dimen/dp_20"
-        android:fontFamily="@font/poppins_bold"/>
+        android:fontFamily="@font/poppins_bold" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayout_email"
@@ -23,15 +23,17 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_10"
-        android:hint="@string/email">
+        app:hintEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputEdit_email"
             android:layout_width="match_parent"
-            android:textCursorDrawable="@color/blue031952"
             android:inputType="textEmailAddress"
+            android:textCursorDrawable="@null"
+            android:textColor="@color/grey58"
             android:background="@drawable/bg_field_gray"
             android:padding="@dimen/dp_16"
+            android:hint="@string/email"
             android:fontFamily="@font/poppins_regular"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -43,16 +45,18 @@
         android:layout_marginStart="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_10"
-        android:hint="@string/password"
+        app:hintEnabled="false"
         app:endIconMode="password_toggle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputEdit_password"
             android:layout_width="match_parent"
-            android:textCursorDrawable="@color/blue031952"
             android:inputType="textPassword"
+            android:textCursorDrawable="@null"
+            android:textColor="@color/grey58"
             android:background="@drawable/bg_field_gray"
             android:padding="@dimen/dp_16"
+            android:hint="@string/password"
             android:fontFamily="@font/poppins_regular"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
