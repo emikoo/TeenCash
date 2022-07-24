@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.ui.fragments.sign.in.AuthFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_32"
+        android:text="@string/authorization"
+        android:textColor="@color/grey58"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:fontFamily="@font/poppins_bold"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayout_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:hint="@string/email">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputEdit_email"
+            android:layout_width="match_parent"
+            android:textCursorDrawable="@color/blue031952"
+            android:inputType="textEmailAddress"
+            android:background="@drawable/bg_field_gray"
+            android:padding="@dimen/dp_16"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayout_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:hint="@string/password"
+        app:endIconMode="password_toggle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputEdit_password"
+            android:layout_width="match_parent"
+            android:textCursorDrawable="@color/blue031952"
+            android:inputType="textPassword"
+            android:background="@drawable/bg_field_gray"
+            android:padding="@dimen/dp_16"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/button_sign_in"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:text="@string/sign_in"
+        style="@style/button_solid"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/button_sign_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        style="@style/button_stroke"
+        android:textSize="@dimen/sp_18"
+        android:text="@string/sign_up"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/button_forgot_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_4"
+        android:background="@android:color/transparent"
+        android:text="Forgot password?"
+        android:textAllCaps="false"
+        android:fontFamily="@font/poppins_regular"
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/grey58"/>
+
+</LinearLayout>

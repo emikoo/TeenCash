@@ -33,6 +33,20 @@
         <item name="android:textSize">@dimen/f_35</item>
     </style>
 
+    <style name="button_solid">
+        <item name="android:background">@drawable/bg_oval_btn_solid</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">@dimen/sp_18</item>
+    </style>
+
+    <style name="button_stroke">
+        <item name="android:background">@drawable/bg_oval_btn_stroke</item>
+        <item name="android:textColor">@color/blue7584A3</item>
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">@dimen/sp_18</item>
+    </style>
+
     <style name="title_24sp_poppinsBold_black29">
         <item name="android:textColor">@color/black29</item>
         <item name="android:fontFamily">@font/poppins_bold</item>

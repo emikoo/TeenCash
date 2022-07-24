@@ -12,4 +12,9 @@
     <dimen name="sp_14">14sp</dimen>
     <dimen name="dp_24">24dp</dimen>
     <dimen name="f_35">35f</dimen>
+    <dimen name="dp_10">10dp</dimen>
+    <dimen name="dp_20">20dp</dimen>
+    <dimen name="dp_14">14dp</dimen>
+    <dimen name="dp_7">7dp</dimen>
+    <dimen name="dp_1">1dp</dimen>
 </resources>

@@ -7,18 +7,12 @@
 
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.teenteen.teencash.presentation.ui.fragments.sign.in.SignInFragment"
+        android:name="com.teenteen.teencash.presentation.ui.fragments.sign.in.AuthFragment"
         android:label="fragment_sign_in"
-        tools:layout="@layout/fragment_sign_in">
+        tools:layout="@layout/fragment_auth">
         <action
-            android:id="@+id/action_signInFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
+            android:id="@+id/action_signInFragment_self"
+            app:destination="@id/signInFragment" />
     </fragment>
-
-    <fragment
-        android:id="@+id/signUpFragment"
-        android:name="com.teenteen.teencash.presentation.ui.fragments.sign.up.SignUpFragment"
-        android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" />
 
 </navigation>

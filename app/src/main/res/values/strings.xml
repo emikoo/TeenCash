@@ -10,4 +10,9 @@
     <string name="save_money">Save money</string>
     <string name="subtitle_onboarding3">Set the goal and save up money</string>
     <string name="next_onboarding3">Get started!</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="authorization">Authorization</string>
 </resources>

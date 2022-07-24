@@ -10,4 +10,9 @@
     <string name="save_money">Копите деньги</string>
     <string name="subtitle_onboarding3">Поставьте цель. Накопите. Купите.</string>
     <string name="next_onboarding3">Начать!</string>
+    <string name="email">Введите эл.почту</string>
+    <string name="password">Введите пароль</string>
+    <string name="sign_in">Войти</string>
+    <string name="sign_up">Создать</string>
+    <string name="authorization">Авторизация</string>
 </resources>
