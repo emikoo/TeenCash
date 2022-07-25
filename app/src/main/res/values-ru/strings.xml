@@ -15,4 +15,5 @@
     <string name="sign_in">Войти</string>
     <string name="sign_up">Создать</string>
     <string name="authorization">Авторизация</string>
+    <string name="fill_in_the_field">Заполните поле</string>
 </resources>

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.teenteen.teencash.presentation.ui.fragments.sign.in.AuthFragment"
+        android:name="com.teenteen.teencash.presentation.ui.fragments.sign.AuthFragment"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_auth">
         <action
