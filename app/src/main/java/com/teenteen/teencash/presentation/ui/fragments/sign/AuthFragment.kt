@@ -39,6 +39,7 @@ class AuthFragment: Fragment(R.layout.fragment_auth) {
     private fun setupListeners() {
         clickSignIn()
         clickSignUp()
+        clickForgotPassword()
     }
 
     private fun clickSignIn() {
@@ -99,6 +100,20 @@ class AuthFragment: Fragment(R.layout.fragment_auth) {
             }
     }
 
+    private fun clickForgotPassword() {
+        binding.buttonForgotPassword.setOnClickListener{
+            if (checkField(binding.inputEditEmail, binding.inputEditPassword)) resetPassword()
+        }
+    }
+
+    private fun resetPassword() {
+        auth.sendPasswordResetEmail(binding.inputEditEmail.text.toString())
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    makeErrorTextVisible(R.string.password_reset_email, R.color.grey80)
+                } else {
+                    makeErrorTextVisible(R.string.not_authorized_email, R.color.red)
+                }
             }
     }
 
