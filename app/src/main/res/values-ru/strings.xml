@@ -15,5 +15,21 @@
     <string name="sign_in">Войти</string>
     <string name="sign_up">Создать</string>
     <string name="authorization">Авторизация</string>
-    <string name="fill_in_the_field">Заполните поле</string>
+    <string name="fill_in_the_field">Заполните поля</string>
+    <string name="password_characters">Пароль должен состоять из 6 или более символов</string>
+    <string name="not_valid_email">Указанный вами адрес электронной почты недействителен.</string>
+    <string name="not_authorized_email">Указанный вами адрес электронной почты не зарегистрирован.</string>
+    <string name="verify_your_email">Сообщение с подтверждением отправлено!</string>
+    <string name="verify_your_email_subtitle">Мы отправили Вам письмо с подтверждением\n\nВы должны
+        подтвердить свой адрес электронной почты, чтобы закончить регистрацию.\nЕсли вы не получили письмо,
+        проверьте папки "Спам" и "Удаленные".</string>
+    <string name="resend_verification_email">Отправить еще раз</string>
+    <string name="verify_account">Аккаунт еще не подтвержден. Пожалуйста, проверьте свою электронную почту.</string>
+    <string name="login_failed">Неверный пароль или такой учетной записи не существует. Пожалуйста,
+        сбросьте пароль или создайте новую учетную запись.</string>
+    <string name="registration_failed">Ошибка при регистрации :( Пожалуйста, попробуйте позже..</string>
+    <string name="password_reset_email">Мы отправили Вам инструкцию о том, как сбросить пароль. Если вы не получили письмо,
+        проверьте папки "Спам" и "Удаленные".</string>
+    <string name="ok">OK</string>
+    <string name="forgot_password">Забыли пароль?</string>
 </resources>
