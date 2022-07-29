@@ -7,10 +7,13 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import com.example.singleactivity.activityNavController
 import com.example.singleactivity.navigateSafely
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
 import com.teenteen.teencash.R
 import com.teenteen.teencash.data.local.PrefsSettings.Companion.USER
 import com.teenteen.teencash.databinding.FragmentAuthBinding
@@ -21,7 +24,6 @@ import com.teenteen.teencash.presentation.extensions.showAlertDialog
 
 
 class AuthFragment : BaseFragment<FragmentAuthBinding>() {
-
     override fun attachBinding(
         list: MutableList<FragmentAuthBinding> ,
         layoutInflater: LayoutInflater ,
@@ -75,13 +77,17 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
     }
 
     private fun createNewUser() {
+        val email = binding.inputEditEmail.text.toString()
         auth
             .createUserWithEmailAndPassword(
-                binding.inputEditEmail.text.toString() ,
+                email ,
                 binding.inputEditPassword.text.toString()
             )
             .addOnCompleteListener(OnCompleteListener<AuthResult?> { task ->
                 if (task.isSuccessful) {
+                    val add = HashMap<String,Any>()
+                    add["email"]= email
+                    db.collection("users").document(currentUser!!.uid).set(add)
                     sendVerificationEmail()
                 } else {
                     makeErrorTextVisible(R.string.registration_failed, R.color.red)
@@ -90,8 +96,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
     }
 
     private fun sendVerificationEmail() {
-        val firebaseUser = auth.currentUser
-        firebaseUser?.sendEmailVerification()
+        currentUser?.sendEmailVerification()
             ?.addOnSuccessListener {
                 showAlertDialog(requireContext(), this)
             }
@@ -99,6 +104,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
                 makeErrorTextVisible(R.string.registration_failed, R.color.red)
             }
     }
+
 
     private fun clickForgotPassword() {
         binding.buttonForgotPassword.setOnClickListener{
@@ -118,7 +124,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
     }
 
     private fun checkIfEmailVerified(): Boolean {
-        return auth.currentUser?.isEmailVerified ?: false
+        return currentUser?.isEmailVerified ?: false
     }
 
     private fun checkField(et1: EditText, et2: EditText): Boolean {

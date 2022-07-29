@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 import com.teenteen.teencash.data.local.PrefsSettings
-import kotlin.reflect.KClass
 
 abstract class BaseFragment<VB_CHILD : ViewBinding>() : Fragment() {
 
@@ -16,12 +17,14 @@ abstract class BaseFragment<VB_CHILD : ViewBinding>() : Fragment() {
     lateinit var binding: VB_CHILD
     lateinit var prefs: PrefsSettings
     lateinit var auth: FirebaseAuth
+    lateinit var db: FirebaseFirestore
+    var currentUser: FirebaseUser? = null
 
     override fun onCreateView(
         inflater: LayoutInflater ,
         container: ViewGroup? ,
         savedInstanceState: Bundle?
-    ) = getInflatedView(inflater, container, false)
+    ) = getInflatedView(inflater , container , false)
 
     private fun getInflatedView(
         inflater: LayoutInflater ,
@@ -44,8 +47,10 @@ abstract class BaseFragment<VB_CHILD : ViewBinding>() : Fragment() {
     abstract fun setupViews()
 
     private fun init() {
+        db = FirebaseFirestore.getInstance()
         prefs = PrefsSettings(requireActivity())
         auth = FirebaseAuth.getInstance()
+        currentUser = auth.currentUser
     }
 
     override fun onDestroy() {
