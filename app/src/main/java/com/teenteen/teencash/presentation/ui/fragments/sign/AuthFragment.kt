@@ -1,39 +1,40 @@
 package com.teenteen.teencash.presentation.ui.fragments.sign
 
-import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Patterns
-import android.view.View
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.EditText
-import androidx.fragment.app.Fragment
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.singleactivity.activityNavController
 import com.example.singleactivity.navigateSafely
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
 import com.teenteen.teencash.R
-import com.teenteen.teencash.data.local.PrefsSettings
+import com.teenteen.teencash.data.local.PrefsSettings.Companion.USER
 import com.teenteen.teencash.databinding.FragmentAuthBinding
+import com.teenteen.teencash.presentation.base.BaseFragment
 import com.teenteen.teencash.presentation.extensions.isInvisible
 import com.teenteen.teencash.presentation.extensions.isVisible
 import com.teenteen.teencash.presentation.extensions.showAlertDialog
 
 
-class AuthFragment: Fragment(R.layout.fragment_auth) {
+class AuthFragment : BaseFragment<FragmentAuthBinding>() {
 
-    private val binding by viewBinding(FragmentAuthBinding::bind)
-    private lateinit var prefs: PrefsSettings
-    private val auth = FirebaseAuth.getInstance()
+    override fun attachBinding(
+        list: MutableList<FragmentAuthBinding> ,
+        layoutInflater: LayoutInflater ,
+        container: ViewGroup? ,
+        attachToRoot: Boolean
+    ) {
+        list.add(FragmentAuthBinding.inflate(layoutInflater , container , attachToRoot))
+    }
 
-    override fun onViewCreated(view: View , savedInstanceState: Bundle?) {
-        super.onViewCreated(view , savedInstanceState)
-        prefs = PrefsSettings(requireActivity())
+    override fun setupViews() {
         setupListeners()
-        setupTextWatcher(binding.inputEditEmail, binding.inputEditPassword)
-        setupTextWatcher(binding.inputEditPassword, binding.inputEditEmail)
+        setupTextWatcher(binding.inputEditEmail , binding.inputEditPassword)
+        setupTextWatcher(binding.inputEditPassword , binding.inputEditEmail)
     }
 
     private fun setupListeners() {
@@ -56,7 +57,7 @@ class AuthFragment: Fragment(R.layout.fragment_auth) {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     if (checkIfEmailVerified()) {
-                        prefs.setFirstTimeLaunch(PrefsSettings.USER)
+                        prefs.setFirstTimeLaunch(USER)
                         activityNavController().navigateSafely(R.id.action_global_mainFlowFragment)
                     } else {
                         makeErrorTextVisible(R.string.verify_account, R.color.red)
@@ -89,8 +90,7 @@ class AuthFragment: Fragment(R.layout.fragment_auth) {
     }
 
     private fun sendVerificationEmail() {
-        val firebaseAuth = FirebaseAuth.getInstance()
-        val firebaseUser = firebaseAuth.currentUser
+        val firebaseUser = auth.currentUser
         firebaseUser?.sendEmailVerification()
             ?.addOnSuccessListener {
                 showAlertDialog(requireContext(), this)

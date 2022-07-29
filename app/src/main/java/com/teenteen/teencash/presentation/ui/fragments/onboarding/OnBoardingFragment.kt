@@ -1,29 +1,33 @@
 package com.teenteen.teencash.presentation.ui.fragments.onboarding
 
-import android.os.Bundle
 import android.text.Html
-import android.view.View
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.singleactivity.activityNavController
 import com.example.singleactivity.navigateSafely
 import com.teenteen.teencash.R
 import com.teenteen.teencash.data.local.PrefsSettings
 import com.teenteen.teencash.databinding.FragmentOnboardingBinding
+import com.teenteen.teencash.presentation.base.BaseFragment
 
-class OnBoardingFragment : Fragment(R.layout.fragment_onboarding) {
+class OnBoardingFragment : BaseFragment<FragmentOnboardingBinding>() {
 
     private lateinit var sliderAdapter: SliderAdapter
     private var dots: Array<TextView?>? = null
     private lateinit var layouts: Array<Int>
-    private val binding by viewBinding(FragmentOnboardingBinding::bind)
-    private lateinit var prefs: PrefsSettings
 
-    override fun onViewCreated(view: View , savedInstanceState: Bundle?) {
-        super.onViewCreated(view , savedInstanceState)
-        prefs = PrefsSettings(requireActivity())
+    override fun attachBinding(
+        list: MutableList<FragmentOnboardingBinding> ,
+        layoutInflater: LayoutInflater ,
+        container: ViewGroup? ,
+        attachToRoot: Boolean
+    ) {
+        list.add(FragmentOnboardingBinding.inflate(layoutInflater , container , attachToRoot))
+    }
+
+    override fun setupViews() {
         init()
         dataSet()
         interactions()
