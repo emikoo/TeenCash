@@ -1,5 +1,11 @@
 package com.example.singleactivity
 
+import android.content.Context
+import android.util.TypedValue
+import android.view.View
+import android.view.animation.CycleInterpolator
+import android.view.animation.TranslateAnimation
+import android.widget.EditText
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
@@ -15,4 +21,27 @@ fun NavController.navigateSafely(@IdRes actionId: Int) {
 
 fun NavController.navigateSafely(directions: NavDirections) {
     currentDestination?.getAction(directions.actionId)?.let { navigate(directions) }
+}
+
+fun View.isGone() {
+    this.visibility = View.GONE
+}
+
+fun View.isInvisible() {
+    this.visibility = View.INVISIBLE
+}
+
+fun View.isVisible() {
+    this.visibility = View.VISIBLE
+}
+
+fun Int.toDp(context: Context): Int = TypedValue.applyDimension(
+    TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), context.resources.displayMetrics
+).toInt()
+
+fun EditText.shakeError() {
+    val shake = TranslateAnimation(0f, 10f, 0f, 0f)
+    shake.duration = 500
+    shake.interpolator = CycleInterpolator(7f)
+    this.startAnimation(shake)
 }

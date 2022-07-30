@@ -2,7 +2,6 @@ package com.teenteen.teencash.presentation.ui.fragments.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.google.firebase.firestore.FirebaseFirestore
 import com.teenteen.teencash.databinding.FragmentHomeBinding
 import com.teenteen.teencash.presentation.base.BaseFragment
 
@@ -19,7 +18,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun setupViews() {
         val usersRef = db.collection("users")
-        usersRef.document(auth.currentUser !!.uid).get().addOnCompleteListener { task ->
+        usersRef.document(prefs.getCurrentUserId()).get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val document = task.result
                 if (document.exists()) {

@@ -8,6 +8,7 @@ class PrefsSettings(private val context: Context) {
     private lateinit var prefs: SharedPreferences
     private lateinit var prefsEditor: SharedPreferences.Editor
     private val LANGUAGE = "LANGUAGE"
+    private val UID = "UID"
 
     init {
         prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -26,6 +27,14 @@ class PrefsSettings(private val context: Context) {
 
     fun getSettingsLanguage(): String {
         return prefs.getString(LANGUAGE, Locale.getDefault().language) ?: Locale.getDefault().language
+    }
+
+    fun saveCurrentUserId(uid: String?) {
+        prefsEditor.putString(UID, uid).apply()
+    }
+
+    fun getCurrentUserId(): String {
+        return prefs.getString(UID, "") ?: ""
     }
 
     companion object {

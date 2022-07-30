@@ -11,6 +11,9 @@ import com.teenteen.teencash.R
 fun showAlertDialog(
     context: Context,
     fragment: Fragment,
+    titleText: String? = null,
+    subtitleText: String? = null,
+    buttonText: String? = null
 ) {
     val alert = AlertDialog.Builder(context)
     val view: View = fragment.layoutInflater.inflate(R.layout.layout_alert, null)
@@ -21,9 +24,9 @@ fun showAlertDialog(
 
     val dialog = alert.create()
     dialog.setCancelable(false)
-    title.text = context.resources.getString(R.string.verify_your_email)
-    subtitle.text = context.resources.getString(R.string.verify_your_email_subtitle)
-    positiveButton.text = context.resources.getString(R.string.ok)
+    title.text = titleText
+    subtitle.text = subtitleText
+    positiveButton.text = buttonText
     positiveButton.setOnClickListener{
         dialog.dismiss()
     }

@@ -20,14 +20,15 @@
     <string name="not_valid_email">The email address you entered is not valid.</string>
     <string name="not_authorized_email">The email address you entered is not authorized.</string>
     <string name="verify_your_email">Verify your Email</string>
-    <string name="verify_your_email_subtitle">We have sent an email to you\n\nYou need to verify your
-        email to continue.\nIf you have not received the verification email, please check your "Spam"
+    <string name="verify_your_email_subtitle">We have sent an email to you\n\nClick the link on your email within
+        5 minutes to validate your address and continue.\nIf you have not received the verification email, please check your "Spam"
         or "Bulk Email" folder.</string>
     <string name="resend_verification_email">Resend verification Email</string>
     <string name="verify_account">Account has not been verified yet. Please check your email.</string>
     <string name="login_failed">Your password is incorrect or this account does not exist.
         Please reset your password or create new account.</string>
     <string name="registration_failed">Registration failed :( Please try again later..</string>
+    <string name="verification_failed">Verification failed :( Please try again later..</string>
     <string name="password_reset_email">We have sent you instructions on how to reset your password.
         If you have not received the verification email, please check your "Spam"
         or "Bulk Email" folder.</string>

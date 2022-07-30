@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
                 navGraph.setStartDestination(R.id.signFlowFragment)
             }
             PrefsSettings.USER -> {
-                navGraph.setStartDestination(R.id.onBoardingFlowFragment)
+                navGraph.setStartDestination(R.id.mainFlowFragment)
             }
         }
         navController.graph = navGraph

@@ -28,6 +28,7 @@
     <string name="login_failed">Your password is incorrect or this account does not exist.
         Please reset your password or create new account.</string>
     <string name="registration_failed">Registration failed :( Please try again later..</string>
+    <string name="verification_failed">Verification failed :( Please try again later..</string>
     <string name="password_reset_email">We have sent you instructions on how to reset your password.
         If you have not received the verification email, please check your "Spam"
         or "Bulk Email" folder.</string>

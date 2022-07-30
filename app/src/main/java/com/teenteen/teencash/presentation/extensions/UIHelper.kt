@@ -1,37 +1,19 @@
 package com.teenteen.teencash.presentation.extensions
 
+import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.TypedValue
+import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.CycleInterpolator
 import android.view.animation.TranslateAnimation
 import android.widget.EditText
-
-fun View.isGone() {
-    this.visibility = View.GONE
-}
-
-fun View.isInvisible() {
-    this.visibility = View.INVISIBLE
-}
-
-fun View.isVisible() {
-    this.visibility = View.VISIBLE
-}
-
-fun Int.toDp(context: Context): Int = TypedValue.applyDimension(
-    TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), context.resources.displayMetrics
-).toInt()
-
-fun EditText.shakeError() {
-    val shake = TranslateAnimation(0f, 10f, 0f, 0f)
-    shake.duration = 500
-    shake.interpolator = CycleInterpolator(7f)
-    this.startAnimation(shake)
-}
+import com.teenteen.teencash.R
 
 fun vibrate(context: Context?) {
     val vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
@@ -40,6 +22,21 @@ fun vibrate(context: Context?) {
             vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
         } else {
             vibrator.vibrate(500)
+        }
+    }
+}
+
+class ProgressDialog {
+    companion object {
+        fun progressDialog(context: Context): Dialog {
+            val dialog = Dialog(context)
+            val inflate = LayoutInflater.from(context).inflate(R.layout.layout_progress_dialog, null)
+            dialog.setContentView(inflate)
+            dialog.setCancelable(false)
+            dialog.window!!.setBackgroundDrawable(
+                ColorDrawable(Color.TRANSPARENT)
+            )
+            return dialog
         }
     }
 }

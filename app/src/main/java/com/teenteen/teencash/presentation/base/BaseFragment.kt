@@ -1,5 +1,6 @@
 package com.teenteen.teencash.presentation.base
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +11,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.teenteen.teencash.data.local.PrefsSettings
+import com.teenteen.teencash.presentation.extensions.ProgressDialog
 
 abstract class BaseFragment<VB_CHILD : ViewBinding>() : Fragment() {
 
     private var _binding: VB_CHILD? = null
     lateinit var binding: VB_CHILD
+    lateinit var progressDialog: Dialog
     lateinit var prefs: PrefsSettings
     lateinit var auth: FirebaseAuth
     lateinit var db: FirebaseFirestore
@@ -51,6 +54,7 @@ abstract class BaseFragment<VB_CHILD : ViewBinding>() : Fragment() {
         prefs = PrefsSettings(requireActivity())
         auth = FirebaseAuth.getInstance()
         currentUser = auth.currentUser
+        progressDialog = ProgressDialog.progressDialog(requireActivity())
     }
 
     override fun onDestroy() {
