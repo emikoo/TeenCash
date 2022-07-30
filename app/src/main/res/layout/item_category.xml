@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/dp_90"
+    android:layout_height="@dimen/dp_100"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="@dimen/dp_4"
+    android:background="@drawable/bg_category">
+
+    <ImageButton
+        android:id="@+id/btn_dots"
+        android:layout_width="@dimen/dp_18"
+        android:layout_height="@dimen/dp_18"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/name"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/dp_4"
+        android:background="@drawable/ic_dots"/>
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/dp_12"
+        tools:text="Transport"
+        style="@style/title_14sp_poppinsMedium_blue031952"/>
+
+    <TextView
+        android:id="@+id/limit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="15/20"
+        style="@style/title_12sp_poppinsRegular_blue7584A3"/>
+    
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_8"
+        app:layout_constraintTop_toBottomOf="@id/limit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/dp_12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:background="@drawable/ic_spending"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

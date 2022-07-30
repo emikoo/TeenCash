@@ -34,4 +34,10 @@
         or "Bulk Email" folder.</string>
     <string name="ok">OK</string>
     <string name="forgot_password">Forgot password?</string>
+    <string name="total">Total</string>
+    <string name="balance">balance</string>
+    <string name="kgs">KGS</string>
+    <string name="limit">Limit</string>
+    <string name="spendings">Spendings</string>
+    <string name="piggy_banks">Piggy banks</string>
 </resources>

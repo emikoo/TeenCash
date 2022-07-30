@@ -26,6 +26,19 @@
     <style name="ProductDialogStyle" parent="Theme.AppCompat.DayNight.Dialog.Alert">
     </style>
 
+    <style name="BottomNavigation">
+        <item name="android:background">@color/black030f28</item>
+        <item name="itemIconTint">@color/white</item>
+    </style>
+
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="tabSelectedTextColor">@color/whiteF9</item>
+        <item name="tabIndicatorColor">@color/whiteF9</item>
+        <item name="tabTextColor">@color/grey58</item>
+    </style>
+
     <style name="SelectedDot">
         <item name="android:textColor">@color/grey_6c</item>
         <item name="android:textSize">@dimen/f_35</item>
@@ -56,8 +69,62 @@
         <item name="android:textSize">@dimen/sp_24</item>
     </style>
 
+    <style name="title_14sp_poppinsMedium_blue031952">
+        <item name="android:textColor">@color/blue031952</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+
     <style name="title_14sp_poppins_regular_grey58">
         <item name="android:textColor">@color/whiteF9</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+
+    <style name="title_12sp_poppinsRegular_blue7584A3">
+        <item name="android:textColor">@color/blue7584A3</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+    </style>
+
+    <style name="title_32sp_montserratBold_black030f28">
+        <item name="android:textColor">@color/white_c7</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="android:textSize">@dimen/sp_32</item>
+    </style>
+
+    <style name="title_24sp_montserratBold_black030f28">
+        <item name="android:textColor">@color/white_c7</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="android:textSize">@dimen/sp_24</item>
+    </style>
+
+    <style name="title_18sp_montserratBold_black030f28">
+        <item name="android:textColor">@color/whiteF9</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="android:textSize">@dimen/sp_18</item>
+    </style>
+
+    <style name="title_18sp_montserratBold_brown">
+        <item name="android:textColor">@color/orange</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="android:textSize">@dimen/sp_18</item>
+    </style>
+
+    <style name="title_16sp_montserratBold_black030f28">
+        <item name="android:textColor">@color/white_c7</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+    </style>
+
+    <style name="title_16sp_montserratSemiBold_grey58">
+        <item name="android:textColor">@color/grey80</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+    </style>
+
+    <style name="title_14sp_montserratSemiBold_grey80">
+        <item name="android:textColor">@color/grey80</item>
         <item name="android:fontFamily">@font/poppins_regular</item>
         <item name="android:textSize">@dimen/sp_14</item>
     </style>

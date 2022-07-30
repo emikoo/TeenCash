@@ -7,11 +7,38 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.teenteen.teencash.presentation.ui.fragments.main.HomeFragment"
+        android:name="com.teenteen.teencash.presentation.ui.fragments.main.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_self"
             app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/debtorsFragment"
+        android:name="com.teenteen.teencash.presentation.ui.fragments.main.debtors.DebtorsFragment"
+        android:label="fragment_debtors"
+        tools:layout="@layout/fragment_debtors" >
+        <action
+            android:id="@+id/action_debtorsFragment_self"
+            app:destination="@id/debtorsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/spendingFragment"
+        android:name="com.teenteen.teencash.presentation.ui.fragments.main.spendings.SpendingFragment"
+        android:label="fragment_spending"
+        tools:layout="@layout/fragment_spending" >
+        <action
+            android:id="@+id/action_spendingFragment_self"
+            app:destination="@id/spendingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.teenteen.teencash.presentation.ui.fragments.main.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_self"
+            app:destination="@id/settingsFragment" />
     </fragment>
 </navigation>

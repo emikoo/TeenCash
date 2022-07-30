@@ -22,7 +22,8 @@
     <color name="orange">#FFA200</color>
     <color name="brown">#BA7612</color>
 
-    <color name="blueC6E3ED_to_blue414A61">#c6e3ed</color>
-    <color name="whiteC7_to_blue031952">#c7c7c7</color>
-    <color name="blue031952_to_blueC6e3ed">#031952</color>
+    <color name="blueC6E3ED_to_blue414A61">#414A61</color>
+    <color name="whiteC7_to_blue031952">#031952</color>
+    <color name="blue031952_to_blueC6e3ed">#c6e3ed</color>
+
 </resources>
