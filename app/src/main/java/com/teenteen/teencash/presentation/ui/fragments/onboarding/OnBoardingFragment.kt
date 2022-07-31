@@ -95,4 +95,5 @@ class OnBoardingFragment : BaseFragment<FragmentOnboardingBinding>() {
     }
 
     private fun getCurrentScreen(i: Int): Int = binding.slider.currentItem.plus(i)
+    override fun subscribeToLiveData() {}
 }

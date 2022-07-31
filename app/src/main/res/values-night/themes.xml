@@ -31,12 +31,23 @@
         <item name="itemIconTint">@color/white</item>
     </style>
 
+    <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_bottom_sheet</item>
+    </style>
+
+    <style name="BaseBottomSheetDialog" parent="@style/Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="bottomSheetStyle">@style/BottomSheet</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/white</item>
+    </style>
+
     <style name="TabLayoutTextStyle">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/montserrat_bold</item>
-        <item name="tabSelectedTextColor">@color/whiteF9</item>
-        <item name="tabIndicatorColor">@color/whiteF9</item>
-        <item name="tabTextColor">@color/grey58</item>
     </style>
 
     <style name="SelectedDot">
@@ -69,6 +80,12 @@
         <item name="android:textSize">@dimen/sp_24</item>
     </style>
 
+    <style name="title_16sp_poppinsMedium_black030f28">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+    </style>
+
     <style name="title_14sp_poppinsMedium_blue031952">
         <item name="android:textColor">@color/blue031952</item>
         <item name="android:fontFamily">@font/poppins_medium</item>
@@ -85,6 +102,12 @@
         <item name="android:textColor">@color/blue7584A3</item>
         <item name="android:fontFamily">@font/poppins_regular</item>
         <item name="android:textSize">@dimen/sp_12</item>
+    </style>
+
+    <style name="title_10sp_poppinsMedium_red">
+        <item name="android:textColor">@color/red</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">@dimen/sp_10</item>
     </style>
 
     <style name="title_32sp_montserratBold_black030f28">

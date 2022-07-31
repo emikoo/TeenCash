@@ -40,4 +40,6 @@
     <string name="limit">Limit</string>
     <string name="spendings">Spendings</string>
     <string name="piggy_banks">Piggy banks</string>
+    <string name="add">Add</string>
+    <string name="transport">Transport</string>
 </resources>

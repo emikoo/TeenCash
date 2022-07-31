@@ -1,4 +1,4 @@
-package com.teenteen.teencash.presentation.extensions
+package com.teenteen.teencash.presentation.utills
 
 import android.app.Dialog
 import android.content.Context

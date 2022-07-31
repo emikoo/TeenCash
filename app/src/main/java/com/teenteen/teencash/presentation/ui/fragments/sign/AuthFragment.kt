@@ -20,7 +20,6 @@ import com.teenteen.teencash.databinding.FragmentAuthBinding
 import com.teenteen.teencash.presentation.base.BaseFragment
 import com.teenteen.teencash.presentation.extensions.showAlertDialog
 
-
 class AuthFragment : BaseFragment<FragmentAuthBinding>() {
     override fun attachBinding(
         list: MutableList<FragmentAuthBinding> ,
@@ -133,7 +132,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
         Handler().postDelayed({
             if (!checkIfEmailVerified()) {
                 currentUser?.delete()
-                db.collection("users").document(currentUser!!.uid).delete()
+                usersCollection.document(currentUser!!.uid).delete()
             }
         }, 300000)
     }
@@ -183,9 +182,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
 
     private fun addNewUserToFirestore(){
         val email = binding.inputEditEmail.text.toString()
-        val add = HashMap<String , Any>()
-        add["email"] = email
-        currentUser?.uid?.let { db.collection("users").document(it).set(add) }
+        currentUser?.uid?.let { usersCollection.document(it).set(mapOf("email" to email)) }
     }
 
     private fun setupTextWatcher(et1: EditText , et2: EditText) {
@@ -207,4 +204,6 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
             }
         })
     }
+
+    override fun subscribeToLiveData() {}
 }

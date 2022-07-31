@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="MissingDefaultResource">
+
+    <ImageButton
+        android:id="@+id/ib_close"
+        android:layout_width="@dimen/dp_16"
+        android:layout_height="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/dp_16"
+        android:background="@drawable/ic_close"/>
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_100"
+        tools:background="@drawable/ic_close"
+        app:layout_constraintTop_toBottomOf="@id/ib_close"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16" />
+
+    <View
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_100"
+        android:background="@drawable/bg_transparent"
+        app:layout_constraintTop_toTopOf="@id/icon"
+        app:layout_constraintBottom_toBottomOf="@id/icon"
+        app:layout_constraintStart_toStartOf="@id/icon"
+        app:layout_constraintEnd_toEndOf="@id/icon"/>
+
+    <ImageButton
+        android:id="@+id/ib_edit"
+        app:layout_constraintTop_toTopOf="@id/icon"
+        app:layout_constraintBottom_toBottomOf="@id/icon"
+        app:layout_constraintStart_toStartOf="@id/icon"
+        app:layout_constraintEnd_toEndOf="@id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_edit"/>
+
+    <EditText
+        android:id="@+id/et_category_name"
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="wrap_content"
+        android:hint="@string/transport"
+        android:maxLength="9"
+        android:singleLine="true"
+        android:backgroundTint="@color/black030f28_to_whitef9"
+        style="@style/title_16sp_poppinsMedium_black030f28"
+        android:layout_marginStart="@dimen/dp_24"
+        app:layout_constraintTop_toTopOf="@id/icon"
+        app:layout_constraintStart_toEndOf="@id/icon"/>
+
+    <TextView
+        android:id="@+id/max_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="max: 0/9"
+        style="@style/title_10sp_poppinsMedium_red"
+        app:layout_constraintStart_toEndOf="@id/et_category_name"
+        app:layout_constraintBottom_toBottomOf="@id/et_category_name"
+        android:layout_marginBottom="@dimen/dp_8"
+        android:layout_marginStart="@dimen/dp_4"/>
+
+    <EditText
+        android:id="@+id/et_limit"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="wrap_content"
+        android:maxLength="4"
+        android:singleLine="true"
+        android:backgroundTint="@color/black030f28_to_whitef9"
+        android:textCursorDrawable="@drawable/cursor"
+        android:inputType="number"
+        android:hint="@string/limit"
+        style="@style/title_16sp_poppinsMedium_black030f28"
+        app:layout_constraintStart_toStartOf="@id/et_category_name"
+        app:layout_constraintBottom_toBottomOf="@id/icon"/>
+
+    <TextView
+        android:id="@+id/max_limit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="max: 0/4"
+        style="@style/title_10sp_poppinsMedium_red"
+        app:layout_constraintStart_toEndOf="@id/et_limit"
+        app:layout_constraintBottom_toBottomOf="@id/et_limit"
+        android:layout_marginBottom="@dimen/dp_8"
+        android:layout_marginStart="@dimen/dp_4"/>
+
+    <Button
+        android:id="@+id/btn_add"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_40"
+        app:layout_constraintTop_toBottomOf="@id/et_limit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_24"
+        android:text="@string/add"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/sp_16"
+        android:fontFamily="@font/poppins_semibold"
+        android:textAllCaps="false"
+        style="@style/button_solid"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

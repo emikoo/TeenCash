@@ -1,4 +1,4 @@
-package com.teenteen.teencash.presentation.ui.fragments.main.home
+package com.teenteen.teencash.presentation.ui.fragments.main.home.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,7 +11,7 @@ import com.teenteen.teencash.databinding.ButtonCategoryBinding
 import com.teenteen.teencash.databinding.ItemCategoryBinding
 
 class CategoryAdapter(
-    private val dataSet: MutableList<Category> ,
+    private val dataSet: List<Category> ,
     private val buttonListener: AddClickListener
 ) :
     BaseAdapter() {
@@ -43,46 +43,46 @@ class CategoryAdapter(
     override fun onBindViewHolder(viewHolder: BaseViewHolder, position: Int) {
         when (viewHolder) {
             is CategoryViewHolder -> setupCategoryViewHolder(
-                viewHolder as CategoryViewHolder,
+                viewHolder as CategoryViewHolder ,
                 position
             )
-            is ButtonViewHolder -> setupButtonViewHolder(viewHolder as ButtonViewHolder, position)
-            else -> setupCategoryViewHolder(viewHolder as CategoryViewHolder, position)
+            is ButtonViewHolder -> setupButtonViewHolder(viewHolder as ButtonViewHolder , position)
+            else -> setupCategoryViewHolder(viewHolder as CategoryViewHolder , position)
         }
     }
 
-    private fun setupCategoryViewHolder(viewHolder: CategoryViewHolder, position: Int) {
+    private fun setupCategoryViewHolder(viewHolder: CategoryViewHolder , position: Int) {
         val item = dataSet[position]
         viewHolder.name.text = item.name
         viewHolder.limit.text = "0/${item.limit}"
-        viewHolder.icon.setBackgroundResource(item.icon)
+        viewHolder.icon.setBackgroundResource(item.icon.toInt())
     }
 
-    private fun setupButtonViewHolder(viewHolder: ButtonViewHolder, position: Int) {
+    private fun setupButtonViewHolder(viewHolder: ButtonViewHolder , position: Int) {
         viewHolder.itemView.setOnClickListener {
             buttonListener.onAddClickListener(dataSet[position])
         }
     }
 
-    fun addItem(item: Category) {
-        dataSet.add(dataSet.size - 1, item)
-        notifyDataSetChanged()
-//        notifyItemRangeInserted(items.lastIndex, items.count()-1)
-    }
-
-    fun deleteItem(position: Int) {
-        dataSet.removeAt(position)
-        notifyItemRemoved(position)
-        notifyItemRangeChanged(position, itemCount)
-    }
-
-    fun restoreItem(item: Category?, position: Int){
-        item?.let {
-            dataSet.add(position, it)
-            notifyItemRangeChanged(position, itemCount)
-            notifyDataSetChanged()
-        }
-    }
+//    fun addItem(item: Category) {
+//        dataSet.add(dataSet.size - 1, item)
+//        notifyDataSetChanged()
+////        notifyItemRangeInserted(items.lastIndex, items.count()-1)
+//    }
+//
+//    fun deleteItem(position: Int) {
+//        dataSet.removeAt(position)
+//        notifyItemRemoved(position)
+//        notifyItemRangeChanged(position, itemCount)
+//    }
+//
+//    fun restoreItem(item: Category?, position: Int){
+//        item?.let {
+//            dataSet.add(position, it)
+//            notifyItemRangeChanged(position, itemCount)
+//            notifyDataSetChanged()
+//        }
+//    }
 
     override fun getItemViewType(position: Int): Int {
         return when (dataSet[position].name) {
