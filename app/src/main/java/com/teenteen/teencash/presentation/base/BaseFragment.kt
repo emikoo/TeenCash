@@ -14,7 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.teenteen.teencash.data.local.PrefsSettings
 import com.teenteen.teencash.presentation.utills.ProgressDialog
 
-abstract class BaseFragment<VB_CHILD : ViewBinding>() : Fragment() {
+abstract class BaseFragment<VB_CHILD : ViewBinding> : Fragment() {
 
     private var _binding: VB_CHILD? = null
     lateinit var binding: VB_CHILD
@@ -37,14 +37,14 @@ abstract class BaseFragment<VB_CHILD : ViewBinding>() : Fragment() {
         attachToRoot: Boolean
     ): View {
         val tempList = mutableListOf<VB_CHILD>()
-        attachBinding(tempList, inflater, container, attachToRoot)
+        attachBinding(tempList , inflater , container , attachToRoot)
         this._binding = tempList[0]
         binding = _binding as VB_CHILD
         return binding.root
     }
 
     override fun onViewCreated(view: View , savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        super.onViewCreated(view , savedInstanceState)
         init()
         setupViews()
         subscribeToLiveData()

@@ -36,11 +36,11 @@ fun View.isVisible() {
 }
 
 fun Int.toDp(context: Context): Int = TypedValue.applyDimension(
-    TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), context.resources.displayMetrics
+    TypedValue.COMPLEX_UNIT_DIP , this.toFloat() , context.resources.displayMetrics
 ).toInt()
 
 fun EditText.shakeError() {
-    val shake = TranslateAnimation(0f, 10f, 0f, 0f)
+    val shake = TranslateAnimation(0f , 10f , 0f , 0f)
     shake.duration = 500
     shake.interpolator = CycleInterpolator(7f)
     this.startAnimation(shake)

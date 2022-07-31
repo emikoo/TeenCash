@@ -18,7 +18,7 @@ import com.teenteen.teencash.R
 import com.teenteen.teencash.data.local.PrefsSettings.Companion.USER
 import com.teenteen.teencash.databinding.FragmentAuthBinding
 import com.teenteen.teencash.presentation.base.BaseFragment
-import com.teenteen.teencash.presentation.extensions.showAlertDialog
+import com.teenteen.teencash.presentation.utills.showAlertDialog
 
 class AuthFragment : BaseFragment<FragmentAuthBinding>() {
     override fun attachBinding(

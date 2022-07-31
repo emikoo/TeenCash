@@ -16,8 +16,8 @@ class CategoryAdapter(
 ) :
     BaseAdapter() {
 
-    enum class ViewHolderType{
-        ITEM, BUTTON
+    enum class ViewHolderType {
+        ITEM , BUTTON
     }
 
     class CategoryViewHolder(binding: ItemCategoryBinding) : BaseViewHolder(binding) {
@@ -26,13 +26,17 @@ class CategoryAdapter(
         val icon: ImageView = binding.icon
     }
 
-    class ButtonViewHolder(binding: ButtonCategoryBinding) : BaseViewHolder(binding) {}
+    class ButtonViewHolder(binding: ButtonCategoryBinding) : BaseViewHolder(binding)
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): BaseViewHolder {
+    override fun onCreateViewHolder(viewGroup: ViewGroup , viewType: Int): BaseViewHolder {
         val binding =
-            ItemCategoryBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
+            ItemCategoryBinding.inflate(LayoutInflater.from(viewGroup.context) , viewGroup , false)
         val bindingButton =
-            ButtonCategoryBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
+            ButtonCategoryBinding.inflate(
+                LayoutInflater.from(viewGroup.context) ,
+                viewGroup ,
+                false
+            )
         return when (viewType) {
             ViewHolderType.ITEM.ordinal -> CategoryViewHolder(binding)
             ViewHolderType.BUTTON.ordinal -> ButtonViewHolder(bindingButton)
@@ -40,13 +44,13 @@ class CategoryAdapter(
         }
     }
 
-    override fun onBindViewHolder(viewHolder: BaseViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: BaseViewHolder , position: Int) {
         when (viewHolder) {
             is CategoryViewHolder -> setupCategoryViewHolder(
-                viewHolder as CategoryViewHolder ,
+                viewHolder ,
                 position
             )
-            is ButtonViewHolder -> setupButtonViewHolder(viewHolder as ButtonViewHolder , position)
+            is ButtonViewHolder -> setupButtonViewHolder(viewHolder , position)
             else -> setupCategoryViewHolder(viewHolder as CategoryViewHolder , position)
         }
     }

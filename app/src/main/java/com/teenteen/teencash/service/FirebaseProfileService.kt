@@ -24,9 +24,9 @@ object FirebaseProfileService {
             db.collection("users")
                 .document(userId).get().await().toUser()
         } catch (e: Exception) {
-            Log.e(TAG , "Error getting user details", e)
+            Log.e(TAG , "Error getting user details" , e)
             FirebaseCrashlytics.getInstance().log("Error getting user details")
-            FirebaseCrashlytics.getInstance().setCustomKey("user id", userId)
+            FirebaseCrashlytics.getInstance().setCustomKey("user id" , userId)
             FirebaseCrashlytics.getInstance().recordException(e)
             null
         }
@@ -40,9 +40,9 @@ object FirebaseProfileService {
                 .collection("categories").get().await()
                 .documents.mapNotNull { it.toCategory() }
         } catch (e: Exception) {
-            Log.e(TAG , "Error getting category", e)
+            Log.e(TAG , "Error getting category" , e)
             FirebaseCrashlytics.getInstance().log("Error getting category")
-            FirebaseCrashlytics.getInstance().setCustomKey("user id", userId)
+            FirebaseCrashlytics.getInstance().setCustomKey("user id" , userId)
             FirebaseCrashlytics.getInstance().recordException(e)
             emptyList()
         }
@@ -57,8 +57,10 @@ object FirebaseProfileService {
                 .collection("categories")
                 .addSnapshotListener { querySnapshot: QuerySnapshot? , firebaseFirestoreException: FirebaseFirestoreException? ->
                     if (firebaseFirestoreException != null) {
-                        cancel(message = "Error fetching categories",
-                            cause = firebaseFirestoreException)
+                        cancel(
+                            message = "Error fetching categories" ,
+                            cause = firebaseFirestoreException
+                        )
                         return@addSnapshotListener
                     }
                     val map = querySnapshot !!.documents.mapNotNull { it.toCategory() }

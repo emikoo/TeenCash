@@ -8,19 +8,20 @@ import com.example.antkotlinproject.base.BaseViewHolder
 import com.teenteen.teencash.data.model.CategoryName
 import com.teenteen.teencash.databinding.ItemIconBinding
 
-class IconAdapter(val dataSet: MutableList<CategoryName> , private val listener: onClickListener) : BaseAdapter() {
+class IconAdapter(val dataSet: MutableList<CategoryName> , private val listener: onIconClickListener) :
+    BaseAdapter() {
 
     class IconListViewHolder(viewBinding: ItemIconBinding) : BaseViewHolder(viewBinding) {
         val icon: ImageView = viewBinding.icon
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup , viewType: Int): BaseViewHolder {
         val binding =
-            ItemIconBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemIconBinding.inflate(LayoutInflater.from(parent.context) , parent , false)
         return IconListViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BaseViewHolder , position: Int) {
         setupIconListViewHolder(holder as IconListViewHolder , position)
     }
 
@@ -34,7 +35,7 @@ class IconAdapter(val dataSet: MutableList<CategoryName> , private val listener:
 
     override fun getItemCount(): Int = dataSet.size
 
-    interface onClickListener {
+    interface onIconClickListener {
         fun onItemClick(item: CategoryName)
     }
 }

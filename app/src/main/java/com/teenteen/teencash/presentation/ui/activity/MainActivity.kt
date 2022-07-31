@@ -1,7 +1,7 @@
 package com.teenteen.teencash.presentation.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.teenteen.teencash.R
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
         prefs = PrefsSettings(this)
 
-        when(prefs.isFirstTimeLaunch()) {
+        when (prefs.isFirstTimeLaunch()) {
             PrefsSettings.FIRST_TIME -> {
                 navGraph.setStartDestination(R.id.onBoardingFlowFragment)
             }

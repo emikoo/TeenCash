@@ -1,4 +1,4 @@
-package com.teenteen.teencash.presentation.extensions
+package com.teenteen.teencash.presentation.utills
 
 import android.app.AlertDialog
 import android.content.Context
@@ -9,14 +9,14 @@ import androidx.fragment.app.Fragment
 import com.teenteen.teencash.R
 
 fun showAlertDialog(
-    context: Context,
-    fragment: Fragment,
-    titleText: String? = null,
-    subtitleText: String? = null,
+    context: Context ,
+    fragment: Fragment ,
+    titleText: String? = null ,
+    subtitleText: String? = null ,
     buttonText: String? = null
 ) {
     val alert = AlertDialog.Builder(context)
-    val view: View = fragment.layoutInflater.inflate(R.layout.layout_alert, null)
+    val view: View = fragment.layoutInflater.inflate(R.layout.layout_alert , null)
     alert.setView(view)
     val positiveButton: Button = view.findViewById(R.id.button_positive)
     val title: TextView = view.findViewById(R.id.title)
@@ -27,7 +27,7 @@ fun showAlertDialog(
     title.text = titleText
     subtitle.text = subtitleText
     positiveButton.text = buttonText
-    positiveButton.setOnClickListener{
+    positiveButton.setOnClickListener {
         dialog.dismiss()
     }
     dialog.show()

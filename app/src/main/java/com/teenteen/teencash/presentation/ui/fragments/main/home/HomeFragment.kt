@@ -1,6 +1,5 @@
 package com.teenteen.teencash.presentation.ui.fragments.main.home
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
@@ -79,7 +78,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.AddCl
     }
 
     override fun updateCategory(newCategory: Category) {
-        categoryArray.add(categoryArray.size -1, newCategory)
+        categoryArray.add(categoryArray.size - 1 , newCategory)
         categoryAdapter.notifyDataSetChanged()
     }
 }

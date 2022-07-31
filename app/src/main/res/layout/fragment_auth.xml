@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/FragmentScreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    style="@style/FragmentScreen"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.ui.fragments.sign.AuthFragment">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/sp_32"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:fontFamily="@font/poppins_bold"
         android:text="@string/authorization"
         android:textColor="@color/grey58"
-        android:layout_marginBottom="@dimen/dp_20"
-        android:fontFamily="@font/poppins_bold" />
+        android:textSize="@dimen/sp_32" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayout_email"
@@ -29,15 +29,15 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputEdit_email"
             android:layout_width="match_parent"
-            android:inputType="textEmailAddress"
-            android:textCursorDrawable="@null"
-            android:textColor="@color/grey58"
+            android:layout_height="wrap_content"
             android:background="@drawable/bg_field_gray"
+            android:fontFamily="@font/poppins_regular"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
             android:padding="@dimen/dp_16"
             android:singleLine="true"
-            android:hint="@string/email"
-            android:fontFamily="@font/poppins_regular"
-            android:layout_height="wrap_content" />
+            android:textColor="@color/grey58"
+            android:textCursorDrawable="@null" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -47,21 +47,21 @@
         android:layout_marginStart="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_10"
-        app:hintEnabled="false"
-        app:endIconMode="password_toggle">
+        app:endIconMode="password_toggle"
+        app:hintEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputEdit_password"
             android:layout_width="match_parent"
-            android:inputType="textPassword"
-            android:textCursorDrawable="@null"
-            android:textColor="@color/grey58"
+            android:layout_height="wrap_content"
             android:background="@drawable/bg_field_gray"
-            android:padding="@dimen/dp_16"
-            android:hint="@string/password"
-            android:singleLine="true"
             android:fontFamily="@font/poppins_regular"
-            android:layout_height="wrap_content" />
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:padding="@dimen/dp_16"
+            android:singleLine="true"
+            android:textColor="@color/grey58"
+            android:textCursorDrawable="@null" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -69,48 +69,48 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginEnd="@dimen/dp_10"
         android:layout_marginStart="@dimen/dp_10"
-        android:fontFamily="@font/poppins_regular"
         android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:fontFamily="@font/poppins_regular"
         android:textSize="@dimen/sp_12"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/button_sign_in"
+        style="@style/button_solid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_10"
         android:text="@string/sign_in"
-        style="@style/button_solid"
         android:textAllCaps="false" />
 
     <Button
         android:id="@+id/button_sign_up"
+        style="@style/button_stroke"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_10"
-        style="@style/button_stroke"
-        android:textSize="@dimen/sp_18"
         android:text="@string/sign_up"
-        android:textAllCaps="false" />
+        android:textAllCaps="false"
+        android:textSize="@dimen/sp_18" />
 
     <Button
         android:id="@+id/button_forgot_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginEnd="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginEnd="@dimen/dp_10"
         android:background="@android:color/transparent"
+        android:fontFamily="@font/poppins_regular"
         android:text="@string/forgot_password"
         android:textAllCaps="false"
-        android:fontFamily="@font/poppins_regular"
-        android:textSize="@dimen/sp_14"
-        android:textColor="@color/grey58"/>
+        android:textColor="@color/grey58"
+        android:textSize="@dimen/sp_14" />
 
 </LinearLayout>

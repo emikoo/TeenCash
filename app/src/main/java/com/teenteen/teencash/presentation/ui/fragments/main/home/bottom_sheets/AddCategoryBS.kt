@@ -14,16 +14,17 @@ import com.teenteen.teencash.presentation.base.BaseBottomSheetDialogFragment
 import com.teenteen.teencash.presentation.interfaces.PickerItem
 import com.teenteen.teencash.presentation.interfaces.UpdateData
 
-class AddCategoryBS(val updater: UpdateData): BaseBottomSheetDialogFragment<BsAddCategoryBinding>(),
+class AddCategoryBS(val updater: UpdateData) :
+    BaseBottomSheetDialogFragment<BsAddCategoryBinding>() ,
     PickerItem {
 
     override fun attachBinding(
-        list: MutableList<BsAddCategoryBinding>,
-        layoutInflater: LayoutInflater,
-        container: ViewGroup?,
+        list: MutableList<BsAddCategoryBinding> ,
+        layoutInflater: LayoutInflater ,
+        container: ViewGroup? ,
         attachToRoot: Boolean
     ) {
-        list.add(BsAddCategoryBinding.inflate(layoutInflater, container, attachToRoot))
+        list.add(BsAddCategoryBinding.inflate(layoutInflater , container , attachToRoot))
     }
 
     var categoryName = ""
@@ -41,12 +42,13 @@ class AddCategoryBS(val updater: UpdateData): BaseBottomSheetDialogFragment<BsAd
         }
         binding.btnAdd.setOnClickListener {
             if (binding.etCategoryName.text.isNotBlank() && binding.etCategoryName.text.isNotEmpty()
-                && binding.etLimit.text.isNotBlank() && binding.etLimit.text.isNotEmpty() && icon != 0) {
+                && binding.etLimit.text.isNotBlank() && binding.etLimit.text.isNotEmpty() && icon != 0
+            ) {
                 categoryName = binding.etCategoryName.text.toString()
                 limit = binding.etLimit.text.toString().toInt()
                 val newCategory = Category(
-                    name = categoryName,
-                    limit = binding.etLimit.text.toString().toInt(),
+                    name = categoryName ,
+                    limit = binding.etLimit.text.toString().toInt() ,
                     icon = icon
                 )
                 dialog?.dismiss()
@@ -55,7 +57,7 @@ class AddCategoryBS(val updater: UpdateData): BaseBottomSheetDialogFragment<BsAd
                     .collection("categories")
                 categoriesOfUser.add(newCategory)
             } else {
-                Toast.makeText(requireContext(), "Проверьте все данные", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext() , "Проверьте все данные" , Toast.LENGTH_LONG).show()
             }
         }
         binding.ibClose.setOnClickListener {
@@ -65,21 +67,37 @@ class AddCategoryBS(val updater: UpdateData): BaseBottomSheetDialogFragment<BsAd
 
     private fun setupTextLimitations() {
         binding.etCategoryName.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            override fun beforeTextChanged(
+                s: CharSequence ,
+                start: Int ,
+                count: Int ,
+                after: Int
+            ) {
+            }
+
+            override fun onTextChanged(s: CharSequence , start: Int , before: Int , count: Int) {
                 val length: Int = binding.etCategoryName.length()
                 val convert = length.toString()
-                binding.maxText.setText("max: $convert/9")
+                binding.maxText.text = "max: $convert/9"
             }
+
             override fun afterTextChanged(s: Editable) {}
         })
         binding.etLimit.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            override fun beforeTextChanged(
+                s: CharSequence ,
+                start: Int ,
+                count: Int ,
+                after: Int
+            ) {
+            }
+
+            override fun onTextChanged(s: CharSequence , start: Int , before: Int , count: Int) {
                 val length: Int = binding.etLimit.length()
                 val convert = length.toString()
-                binding.maxLimit.setText("max: $convert/4")
+                binding.maxLimit.text = "max: $convert/4"
             }
+
             override fun afterTextChanged(s: Editable) {}
         })
     }
@@ -90,7 +108,7 @@ class AddCategoryBS(val updater: UpdateData): BaseBottomSheetDialogFragment<BsAd
         bottomSheetDialogFragment.isCancelable = true
         activity?.supportFragmentManager?.let {
             bottomSheetDialogFragment.show(
-                it,
+                it ,
                 bottomSheetDialogFragment.tag
             )
         }

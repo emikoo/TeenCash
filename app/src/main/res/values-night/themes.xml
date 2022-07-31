@@ -23,8 +23,7 @@
         <item name="background">@color/black030f28</item>
     </style>
 
-    <style name="ProductDialogStyle" parent="Theme.AppCompat.DayNight.Dialog.Alert">
-    </style>
+    <style name="ProductDialogStyle" parent="Theme.AppCompat.DayNight.Dialog.Alert" />
 
     <style name="BottomNavigation">
         <item name="android:background">@color/black030f28</item>

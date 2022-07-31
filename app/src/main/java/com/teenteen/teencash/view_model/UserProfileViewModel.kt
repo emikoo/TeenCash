@@ -8,12 +8,13 @@ import com.teenteen.teencash.data.model.Category
 import com.teenteen.teencash.service.FirebaseProfileService
 import kotlinx.coroutines.launch
 
-class UserProfileViewModel() : ViewModel() {
+class UserProfileViewModel : ViewModel() {
     private val _category = MutableLiveData<List<Category>>()
     val category: LiveData<List<Category>> = _category
 
     fun getCategories(uid: String) {
         viewModelScope.launch {
             _category.value = FirebaseProfileService.getCategories(uid)
-        }    }
+        }
+    }
 }
