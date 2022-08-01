@@ -78,7 +78,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.AddCl
     }
 
     override fun updateCategory(newCategory: Category) {
-        categoryArray.add(categoryArray.size - 1 , newCategory)
-        categoryAdapter.notifyDataSetChanged()
+        getCategories()
     }
 }
