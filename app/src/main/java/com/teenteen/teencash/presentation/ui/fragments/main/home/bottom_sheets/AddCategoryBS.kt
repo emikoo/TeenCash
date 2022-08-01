@@ -29,7 +29,7 @@ class AddCategoryBS(private val updater: UpdateData) :
 
     var categoryName = ""
     var limit = 0
-    var icon = 0
+    var iconId = 0
 
     override fun setupViews() {
         setupTextLimitations()
@@ -42,14 +42,14 @@ class AddCategoryBS(private val updater: UpdateData) :
         }
         binding.btnAdd.setOnClickListener {
             if (binding.etCategoryName.text.isNotBlank() && binding.etCategoryName.text.isNotEmpty()
-                && binding.etLimit.text.isNotBlank() && binding.etLimit.text.isNotEmpty() && icon != 0
+                && binding.etLimit.text.isNotBlank() && binding.etLimit.text.isNotEmpty() && iconId != null
             ) {
                 categoryName = binding.etCategoryName.text.toString()
                 limit = binding.etLimit.text.toString().toInt()
                 val newCategory = Category(
                     name = categoryName ,
                     limit = binding.etLimit.text.toString().toInt() ,
-                    icon = icon
+                    iconId = iconId
                 )
                 dialog?.dismiss()
                 updater.updateCategory(newCategory)
@@ -116,6 +116,6 @@ class AddCategoryBS(private val updater: UpdateData) :
 
     override fun chosenIcon(item: CategoryName) {
         binding.icon.setBackgroundResource(item.name.toInt())
-        icon = item.name.toInt()
+        iconId = item.id
     }
 }

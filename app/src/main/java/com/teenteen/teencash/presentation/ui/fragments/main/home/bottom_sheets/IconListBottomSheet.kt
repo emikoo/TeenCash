@@ -8,7 +8,7 @@ import com.teenteen.teencash.databinding.BsIconBinding
 import com.teenteen.teencash.presentation.base.BaseBottomSheetDialogFragment
 import com.teenteen.teencash.presentation.interfaces.PickerItem
 import com.teenteen.teencash.presentation.ui.fragments.main.home.adapters.IconAdapter
-import com.teenteen.teencash.presentation.utills.iconArray
+import com.teenteen.teencash.presentation.utills.IconType.iconArray
 
 class IconListBottomSheet(private val listener: PickerItem) :
     BaseBottomSheetDialogFragment<BsIconBinding>() , IconAdapter.onIconClickListener {

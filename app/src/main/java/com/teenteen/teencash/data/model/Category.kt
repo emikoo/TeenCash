@@ -5,7 +5,7 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.firestore.DocumentSnapshot
 
 data class Category(
-    var icon: Int ,
+    var iconId: Int ,
     var limit: Int ,
     var name: String ,
     var spentToday: Int? = null
@@ -13,7 +13,7 @@ data class Category(
     companion object {
         fun DocumentSnapshot.toCategory(): Category? {
             try {
-                val icon = get("icon").toString().toInt()
+                val icon = get("iconId").toString().toInt()
                 val limit = get("limit").toString().toInt()
                 val name = getString("name") !!
                 val spentToday = get("spentToday")?.toString()?.toInt()
@@ -32,6 +32,7 @@ data class Category(
 }
 
 data class CategoryName(
+    val id: Int,
     val name: String ,
     var is_used: Boolean = false
 )
