@@ -6,14 +6,14 @@
     android:layout_height="wrap_content"
     tools:ignore="MissingDefaultResource">
 
-    <ImageButton
-        android:id="@+id/ib_close"
-        android:layout_width="@dimen/dp_16"
-        android:layout_height="@dimen/dp_16"
-        android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginTop="@dimen/dp_16"
-        android:background="@drawable/ic_close"
+    <ImageView
+        android:id="@+id/view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_2"
+        android:background="@drawable/ic_line_grey58"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -21,9 +21,9 @@
         android:layout_width="@dimen/dp_100"
         android:layout_height="@dimen/dp_100"
         android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_40"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ib_close"
+        app:layout_constraintTop_toBottomOf="@id/view"
         tools:background="@drawable/ic_close" />
 
     <View
@@ -97,16 +97,32 @@
     <Button
         android:id="@+id/btn_add"
         style="@style/button_solid"
-        android:layout_width="@dimen/dp_100"
-        android:layout_height="@dimen/dp_40"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="@dimen/dp_32"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_24"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="@string/save"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ib_close"
+        app:layout_constraintTop_toBottomOf="@id/et_limit" />
+
+    <Button
+        android:id="@+id/ib_close"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="@dimen/dp_32"
         android:layout_marginTop="@dimen/dp_16"
         android:layout_marginEnd="@dimen/dp_16"
         android:layout_marginBottom="@dimen/dp_24"
         android:fontFamily="@font/poppins_semibold"
-        android:text="@string/add"
+        android:text="@string/cancel"
         android:textAllCaps="false"
-        android:textColor="#ffffff"
-        android:textSize="@dimen/sp_16"
+        android:background="@android:color/transparent"
+        android:textColor="@color/black030f28_to_whitef9"
+        android:textSize="@dimen/sp_12"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_limit" />

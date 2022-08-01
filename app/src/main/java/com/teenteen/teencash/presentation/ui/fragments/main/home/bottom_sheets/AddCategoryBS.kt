@@ -1,4 +1,4 @@
-package com.teenteen.teencash.presentation.ui.fragments.main.home
+package com.teenteen.teencash.presentation.ui.fragments.main.home.bottom_sheets
 
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,7 +14,7 @@ import com.teenteen.teencash.presentation.base.BaseBottomSheetDialogFragment
 import com.teenteen.teencash.presentation.interfaces.PickerItem
 import com.teenteen.teencash.presentation.interfaces.UpdateData
 
-class AddCategoryBS(val updater: UpdateData) :
+class AddCategoryBS(private val updater: UpdateData) :
     BaseBottomSheetDialogFragment<BsAddCategoryBinding>() ,
     PickerItem {
 

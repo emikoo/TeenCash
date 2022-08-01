@@ -62,7 +62,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.AddCl
     override fun onAddClickListener(item: Category) {
         val bottomSheetDialogFragment: BottomSheetDialogFragment =
             AddCategoryBS(this)
-        bottomSheetDialogFragment.isCancelable = false
         activity?.supportFragmentManager?.let {
             bottomSheetDialogFragment.show(
                 it ,

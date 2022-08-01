@@ -17,6 +17,7 @@ import com.teenteen.teencash.R
 import com.teenteen.teencash.data.local.PrefsSettings
 import com.teenteen.teencash.presentation.utills.ProgressDialog
 
+
 @Suppress("DEPRECATION")
 abstract class BaseBottomSheetDialogFragment<VB_CHILD : ViewBinding> :
     BottomSheetDialogFragment() {
@@ -35,6 +36,9 @@ abstract class BaseBottomSheetDialogFragment<VB_CHILD : ViewBinding> :
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         (requireView().parent.parent.parent as View).fitsSystemWindows = false
+        val touchOutsideView = dialog!!.window!!.decorView
+            .findViewById<View>(com.google.android.material.R.id.touch_outside)
+        touchOutsideView.setOnClickListener(null)
     }
 
     override fun onCreateView(
@@ -65,6 +69,7 @@ abstract class BaseBottomSheetDialogFragment<VB_CHILD : ViewBinding> :
             parentLayout?.let {
                 val behaviour = BottomSheetBehavior.from(it)
                 behaviour.state = BottomSheetBehavior.STATE_EXPANDED
+                behaviour.isDraggable = true
             }
         }
         return dialog
