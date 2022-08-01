@@ -5,7 +5,7 @@
     android:layout_width="@dimen/dp_90"
     android:layout_height="@dimen/dp_100"
     android:layout_margin="@dimen/dp_4"
-    android:background="@drawable/bg_category">
+    android:background="@drawable/bg_category_blue">
 
     <ImageButton
         android:id="@+id/btn_dots"

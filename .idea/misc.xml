@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable-v24/bg_category_orange.xml" value="0.1685" />
         <entry key="app/src/main/res/drawable-v24/bg_next_btn.xml" value="0.157" />
+        <entry key="app/src/main/res/drawable-v24/ic_add_white_to_black.xml" value="0.1685" />
         <entry key="app/src/main/res/drawable-v24/ic_teencash_logo_night.xml" value="0.248" />
         <entry key="app/src/main/res/drawable/bg_alert.xml" value="0.1715" />
         <entry key="app/src/main/res/drawable/bg_billboard.xml" value="0.2685" />
@@ -62,6 +64,7 @@
         <entry key="app/src/main/res/layout/fragment_sign_in.xml" value="0.1000335693359375" />
         <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.20018115942028986" />
         <entry key="app/src/main/res/layout/fragment_spending.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_button.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/layout/item_category.xml" value="0.5193906449740178" />
         <entry key="app/src/main/res/layout/item_icon.xml" value="0.2056159420289855" />
         <entry key="app/src/main/res/layout/layout_alert.xml" value="0.1" />

@@ -1,13 +1,15 @@
 package com.teenteen.teencash.presentation.ui.fragments.main.home.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.antkotlinproject.base.BaseAdapter
 import com.example.antkotlinproject.base.BaseViewHolder
+import com.teenteen.teencash.R
 import com.teenteen.teencash.data.model.Category
-import com.teenteen.teencash.databinding.ButtonCategoryBinding
+import com.teenteen.teencash.databinding.ItemButtonBinding
 import com.teenteen.teencash.databinding.ItemCategoryBinding
 
 class CategoryAdapter(
@@ -26,13 +28,13 @@ class CategoryAdapter(
         val icon: ImageView = binding.icon
     }
 
-    class ButtonViewHolder(binding: ButtonCategoryBinding) : BaseViewHolder(binding)
+    class ButtonViewHolder(binding: ItemButtonBinding) : BaseViewHolder(binding) { val plus: View = binding.plus}
 
     override fun onCreateViewHolder(viewGroup: ViewGroup , viewType: Int): BaseViewHolder {
         val binding =
             ItemCategoryBinding.inflate(LayoutInflater.from(viewGroup.context) , viewGroup , false)
         val bindingButton =
-            ButtonCategoryBinding.inflate(
+            ItemButtonBinding.inflate(
                 LayoutInflater.from(viewGroup.context) ,
                 viewGroup ,
                 false
@@ -63,6 +65,8 @@ class CategoryAdapter(
     }
 
     private fun setupButtonViewHolder(viewHolder: ButtonViewHolder , position: Int) {
+        viewHolder.itemView.setBackgroundResource(R.drawable.bg_category_blue)
+        viewHolder.plus.setBackgroundResource(R.drawable.ic_add_blue)
         viewHolder.itemView.setOnClickListener {
             buttonListener.onAddClickListener(dataSet[position])
         }

@@ -4,12 +4,13 @@
     android:layout_width="@dimen/dp_90"
     android:layout_height="@dimen/dp_100"
     android:layout_margin="@dimen/dp_4"
-    android:background="@drawable/bg_category">
+    android:background="@drawable/bg_category_blue">
 
     <View
+        android:id="@+id/plus"
         android:layout_width="@dimen/dp_50"
         android:layout_height="@dimen/dp_50"
-        android:background="@drawable/ic_add"
+        android:background="@drawable/ic_add_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

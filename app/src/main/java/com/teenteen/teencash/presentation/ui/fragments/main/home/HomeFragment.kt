@@ -36,12 +36,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.AddCl
         getCategories()
     }
 
-    private fun getCategories() {
-        viewModel = ViewModelProvider(this)[UserProfileViewModel::class.java]
-        viewModel.getCategories(prefs.getCurrentUserId())
-        progressDialog.show()
-    }
-
     private fun setupRecyclerView() {
         categoryAdapter = CategoryAdapter(categoryArray , this)
         binding.recyclerView.adapter = categoryAdapter
@@ -55,14 +49,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.AddCl
         )
     }
 
-    override fun subscribeToLiveData() {
-        viewModel.category.observe(viewLifecycleOwner , Observer {
-            categoryArray.clear()
-            categoryArray.addAll(it)
-            categoryArray.add(Category(0 , 0 , ""))
-            categoryAdapter.notifyDataSetChanged()
-            progressDialog.dismiss()
-        })
+    private fun getCategories() {
+        viewModel = ViewModelProvider(this)[UserProfileViewModel::class.java]
+        viewModel.getCategories(prefs.getCurrentUserId())
+        progressDialog.show()
+    }
+
+    override fun updateCategory(newCategory: Category) {
+        getCategories()
     }
 
     override fun onAddClickListener(item: Category) {
@@ -77,7 +71,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.AddCl
         }
     }
 
-    override fun updateCategory(newCategory: Category) {
-        getCategories()
+    override fun subscribeToLiveData() {
+        viewModel.category.observe(viewLifecycleOwner , Observer {
+            categoryArray.clear()
+            categoryArray.addAll(it)
+            categoryArray.add(Category(0 , 0 , ""))
+            categoryAdapter.notifyDataSetChanged()
+            progressDialog.dismiss()
+        })
     }
 }
