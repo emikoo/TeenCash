@@ -2,18 +2,15 @@ package com.teenteen.teencash.data.local
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.appcompat.app.AppCompatDelegate
 import java.util.*
 
 class PrefsSettings(private val context: Context) {
-    private lateinit var prefs: SharedPreferences
-    private lateinit var prefsEditor: SharedPreferences.Editor
+    private var prefs: SharedPreferences = context.getSharedPreferences(PREFS_NAME , Context.MODE_PRIVATE)
+    private var prefsEditor: SharedPreferences.Editor = prefs.edit()
     private val LANGUAGE = "LANGUAGE"
+    private val DARK_THEME_MODE = "DARK_THEME_MODE"
     private val UID = "UID"
-
-    init {
-        prefs = context.getSharedPreferences(PREFS_NAME , Context.MODE_PRIVATE)
-        prefsEditor = prefs.edit()
-    }
 
     fun setFirstTimeLaunch(isFirstTime: Int) {
         prefsEditor.putInt(IS_FIRST_TIME_LAUNCH , isFirstTime).commit()
@@ -28,6 +25,14 @@ class PrefsSettings(private val context: Context) {
     fun getSettingsLanguage(): String {
         return prefs.getString(LANGUAGE , Locale.getDefault().language)
             ?: Locale.getDefault().language
+    }
+
+    fun saveDarkThemeMode(darkMode: Boolean) {
+        prefsEditor.putBoolean(DARK_THEME_MODE , darkMode).apply()
+    }
+
+    fun getDarkThemeMode(): Boolean {
+        return prefs.getBoolean(DARK_THEME_MODE , false)
     }
 
     fun saveCurrentUserId(uid: String?) {
@@ -45,6 +50,5 @@ class PrefsSettings(private val context: Context) {
         const val NOT_AUTH = 2
         const val USER = 3
         private const val IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch"
-        lateinit var instance: PrefsSettings
     }
 }

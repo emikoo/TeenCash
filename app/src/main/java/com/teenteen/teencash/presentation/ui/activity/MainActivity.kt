@@ -2,6 +2,7 @@ package com.teenteen.teencash.presentation.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.teenteen.teencash.R
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupNavigation()
+        getDeviceThemeMode()
     }
 
     private fun setupNavigation() {
@@ -41,5 +43,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
         navController.graph = navGraph
+    }
+
+    private fun getDeviceThemeMode() {
+        if (prefs.isFirstTimeLaunch() == PrefsSettings.FIRST_TIME) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        else if (prefs.getDarkThemeMode()) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        else if (!prefs.getDarkThemeMode()) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 }

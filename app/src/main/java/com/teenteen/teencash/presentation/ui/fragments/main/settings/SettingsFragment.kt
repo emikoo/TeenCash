@@ -1,19 +1,48 @@
 package com.teenteen.teencash.presentation.ui.fragments.main.settings
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import com.teenteen.teencash.R
+import com.teenteen.teencash.databinding.FragmentSettingsBinding
+import com.teenteen.teencash.presentation.base.BaseFragment
 
-class SettingsFragment : Fragment() {
+class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater , container: ViewGroup? ,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings , container , false)
+    override fun attachBinding(
+        list: MutableList<FragmentSettingsBinding> ,
+        layoutInflater: LayoutInflater ,
+        container: ViewGroup? ,
+        attachToRoot: Boolean
+    ) {
+        list.add(FragmentSettingsBinding.inflate(layoutInflater , container , attachToRoot))
     }
+
+    override fun setupViews() {
+        getDeviceThemeMode()
+        switchDeviceThemeMode()
+    }
+
+    private fun getDeviceThemeMode() {
+        binding.switchMode.isChecked = prefs.getDarkThemeMode()
+        val switchState = binding.switchMode.isChecked
+        if (switchState){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            binding.ivMode.setBackgroundResource(R.drawable.ic_dark_mode)
+        }
+        else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            binding.ivMode.setBackgroundResource(R.drawable.ic_light_mode)
+        }
+    }
+
+    private fun switchDeviceThemeMode() {
+        binding.switchMode.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) prefs.saveDarkThemeMode(true)
+            else prefs.saveDarkThemeMode(false)
+            getDeviceThemeMode()
+        }
+    }
+
+    override fun subscribeToLiveData() {}
 }
