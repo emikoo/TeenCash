@@ -16,6 +16,7 @@ import com.teenteen.teencash.presentation.interfaces.UpdateData
 import com.teenteen.teencash.presentation.ui.fragments.main.home.adapters.CategoryAdapter
 import com.teenteen.teencash.presentation.ui.fragments.main.home.bottom_sheets.AddCategoryBS
 import com.teenteen.teencash.presentation.ui.fragments.main.home.bottom_sheets.AddPiggyBS
+import com.teenteen.teencash.presentation.utills.checkInternetConnection
 import com.teenteen.teencash.view_model.UserProfileViewModel
 
 
@@ -41,9 +42,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.AddCl
         viewModel = ViewModelProvider(this)[UserProfileViewModel::class.java]
         key = CATEGORY_KEY
         setupTabLayout()
+        checkInternetConnection(this::getData, requireContext())
+        setupRecyclerView(categoryArray, CATEGORY_KEY)
+    }
+
+    private fun getData(){
         getCategories()
         getPiggies()
-        setupRecyclerView(categoryArray, CATEGORY_KEY)
     }
 
     private fun setupTabLayout() {

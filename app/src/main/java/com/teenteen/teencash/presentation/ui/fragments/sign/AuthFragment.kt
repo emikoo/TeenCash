@@ -18,6 +18,7 @@ import com.teenteen.teencash.R
 import com.teenteen.teencash.data.local.PrefsSettings.Companion.USER
 import com.teenteen.teencash.databinding.FragmentAuthBinding
 import com.teenteen.teencash.presentation.base.BaseFragment
+import com.teenteen.teencash.presentation.utills.checkInternetConnection
 import com.teenteen.teencash.presentation.utills.showAlertDialog
 
 class AuthFragment : BaseFragment<FragmentAuthBinding>() {
@@ -44,12 +45,14 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
 
     private fun clickSignIn() {
         binding.buttonSignIn.setOnClickListener {
-            if (checkField(binding.inputEditEmail , binding.inputEditPassword)) loginUser()
-            progressDialog.show()
+            if (checkField(binding.inputEditEmail , binding.inputEditPassword)){
+                checkInternetConnection(this::loginUser, requireContext())
+            }
         }
     }
 
     private fun loginUser() {
+        progressDialog.show()
         auth.signInWithEmailAndPassword(
             binding.inputEditEmail.text.toString() ,
             binding.inputEditPassword.text.toString()
@@ -61,7 +64,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
                         prefs.saveCurrentUserId(currentUser?.uid)
                         activityNavController().navigateSafely(R.id.action_global_mainFlowFragment)
                         progressDialog.dismiss()
-                    } else {
+                    } else if (!checkIfEmailVerified()) {
                         makeErrorTextVisible(R.string.verify_account , R.color.red)
                     }
                 } else {
@@ -73,7 +76,9 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
     private fun clickSignUp() {
         binding.buttonSignUp.setOnClickListener {
             progressDialog.show()
-            if (checkField(binding.inputEditEmail , binding.inputEditPassword)) createNewUser()
+            if (checkField(binding.inputEditEmail , binding.inputEditPassword)){
+                checkInternetConnection(this::createNewUser, requireContext())
+            }
         }
     }
 
@@ -113,7 +118,9 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
     private fun clickForgotPassword() {
         binding.buttonForgotPassword.setOnClickListener {
             progressDialog.show()
-            if (checkField(binding.inputEditEmail , binding.inputEditPassword)) resetPassword()
+            if (checkField(binding.inputEditEmail , binding.inputEditPassword)){
+                checkInternetConnection(this::resetPassword, requireContext())
+            }
         }
     }
 
