@@ -30,7 +30,7 @@
 
     <TextView
         android:id="@+id/limit"
-        style="@style/title_12sp_poppinsRegular_blue7584A3"
+        style="@style/title_12sp_poppinsRegular_grey58"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"

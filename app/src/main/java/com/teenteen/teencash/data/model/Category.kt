@@ -6,17 +6,17 @@ import com.google.firebase.firestore.DocumentSnapshot
 
 data class Category(
     var iconId: Int ,
-    var limit: Int ,
+    var secondAmount: Int ,
     var name: String ,
-    var spentToday: Int? = null
+    var firstAmount: Int? = null
 ) {
     companion object {
         fun DocumentSnapshot.toCategory(): Category? {
             try {
                 val icon = get("iconId").toString().toInt()
-                val limit = get("limit").toString().toInt()
+                val limit = get("secondAmount").toString().toInt()
                 val name = getString("name") !!
-                val spentToday = get("spentToday")?.toString()?.toInt()
+                val spentToday = get("firstAmount")?.toString()?.toInt()
                 return Category(icon , limit , name , spentToday)
             } catch (e: Exception) {
                 Log.e(TAG , "Error converting category" , e)

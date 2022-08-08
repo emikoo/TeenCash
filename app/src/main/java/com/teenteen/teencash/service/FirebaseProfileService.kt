@@ -48,6 +48,22 @@ object FirebaseProfileService {
         }
     }
 
+    suspend fun getPiggyBanks(userId: String): List<Category> {
+        val db = FirebaseFirestore.getInstance()
+        return try {
+            db.collection("users")
+                .document(userId)
+                .collection("piggy_banks").get().await()
+                .documents.mapNotNull { it.toCategory() }
+        } catch (e: Exception) {
+            Log.e(TAG , "Error getting piggy bank" , e)
+            FirebaseCrashlytics.getInstance().log("Error getting category")
+            FirebaseCrashlytics.getInstance().setCustomKey("user id" , userId)
+            FirebaseCrashlytics.getInstance().recordException(e)
+            emptyList()
+        }
+    }
+
     @ExperimentalCoroutinesApi
     fun getPosts(userId: String): Flow<List<Category>> {
         val db = FirebaseFirestore.getInstance()

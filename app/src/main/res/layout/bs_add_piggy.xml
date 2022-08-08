@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_2"
+        android:background="@drawable/ic_line_grey58"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Name of Goal"
+        android:maxLength="9"
+        android:textColorHint="@color/black030f28"
+        android:backgroundTint="@color/black030f28"
+        app:layout_constraintTop_toBottomOf="@id/view"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_40"
+        android:singleLine="true"
+        android:visibility="visible"
+        style="@style/title_16sp_poppinsMedium_black030f28"/>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/view"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_40"
+        style="@style/title_16sp_poppinsMedium_black030f28"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/limit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/title"
+        app:layout_constraintBottom_toBottomOf="@id/title"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible"
+        android:layout_marginEnd="@dimen/dp_16"
+        style="@style/title_14sp_poppins_regular_grey58"/>
+
+    <EditText
+        android:id="@+id/et_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/et_name"
+        style="@style/title_16sp_poppinsRegular_black030f28"
+        tools:hint="Goal"
+        android:maxLength="4"
+        android:singleLine="true"
+        android:inputType="number"
+        android:textColorHint="@color/grey58"
+        android:paddingStart="@dimen/dp_16"
+        android:paddingEnd="@dimen/dp_16"
+        android:paddingTop="@dimen/dp_16"
+        android:paddingBottom="@dimen/dp_8"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_8"
+        android:background="@drawable/bg_stroke_black"/>
+
+    <TextView
+        android:id="@+id/tv_currency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/et_amount"
+        android:layout_marginBottom="@dimen/dp_8"
+        app:layout_constraintEnd_toEndOf="@id/et_amount"
+        style="@style/title_16sp_poppinsMedium_black030f28"
+        android:text="KGS"
+        android:layout_marginEnd="@dimen/dp_16"/>
+
+    <Button
+        android:id="@+id/btn_add"
+        style="@style/button_solid"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="@dimen/dp_32"
+        android:layout_marginTop="@dimen/dp_32"
+        android:layout_marginBottom="@dimen/dp_24"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="@string/save"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_cancel"
+        app:layout_constraintTop_toBottomOf="@id/et_amount" />
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="@dimen/dp_32"
+        android:layout_marginTop="@dimen/dp_32"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_24"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="@string/cancel"
+        android:textAllCaps="false"
+        android:background="@android:color/transparent"
+        android:textColor="@color/black030f28_to_whitef9"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_amount" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -48,7 +48,7 @@ class AddCategoryBS(private val updater: UpdateData) :
                 limit = binding.etLimit.text.toString().toInt()
                 val newCategory = Category(
                     name = categoryName ,
-                    limit = binding.etLimit.text.toString().toInt() ,
+                    secondAmount = binding.etLimit.text.toString().toInt() ,
                     iconId = iconId
                 )
                 dialog?.dismiss()

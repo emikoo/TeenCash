@@ -11,10 +11,13 @@ import com.teenteen.teencash.R
 import com.teenteen.teencash.data.model.Category
 import com.teenteen.teencash.databinding.ItemButtonBinding
 import com.teenteen.teencash.databinding.ItemCategoryBinding
+import com.teenteen.teencash.presentation.ui.fragments.main.home.HomeFragment
+import com.teenteen.teencash.presentation.utills.IconType.getProjectIconType
 
 class CategoryAdapter(
     private val dataSet: List<Category> ,
-    private val buttonListener: AddClickListener
+    private val buttonListener: AddClickListener ,
+    private val key: String
 ) :
     BaseAdapter() {
 
@@ -60,15 +63,32 @@ class CategoryAdapter(
     private fun setupCategoryViewHolder(viewHolder: CategoryViewHolder , position: Int) {
         val item = dataSet[position]
         viewHolder.name.text = item.name
-        viewHolder.limit.text = "0/${item.limit}"
-        viewHolder.icon.setBackgroundResource(item.icon.toInt())
+        viewHolder.limit.text = "0/${item.secondAmount}"
+        viewHolder.icon.setBackgroundResource(getProjectIconType(item.iconId))
+        if (key == HomeFragment.CATEGORY_KEY) {
+            viewHolder.itemView.setBackgroundResource(R.drawable.bg_category_blue)
+            viewHolder.name.setTextColor(viewHolder.itemView.resources.getColor(R.color.blue031952))
+            viewHolder.limit.setTextColor(viewHolder.itemView.resources.getColor(R.color.blue031952))
+        } else if (key == HomeFragment.PIGGY_BANK_KEY) {
+            viewHolder.itemView.setBackgroundResource(R.drawable.bg_category_orange)
+            viewHolder.name.setTextColor(viewHolder.itemView.resources.getColor(R.color.dark_brown))
+            viewHolder.limit.setTextColor(viewHolder.itemView.resources.getColor(R.color.brown))
+        }
     }
 
     private fun setupButtonViewHolder(viewHolder: ButtonViewHolder , position: Int) {
-        viewHolder.itemView.setBackgroundResource(R.drawable.bg_category_blue)
-        viewHolder.plus.setBackgroundResource(R.drawable.ic_add_blue)
-        viewHolder.itemView.setOnClickListener {
-            buttonListener.onAddClickListener(dataSet[position])
+        if (key == HomeFragment.CATEGORY_KEY) {
+            viewHolder.itemView.setBackgroundResource(R.drawable.bg_category_blue)
+            viewHolder.plus.setBackgroundResource(R.drawable.ic_add_blue)
+            viewHolder.itemView.setOnClickListener {
+                buttonListener.onAddCategoryClickListener(dataSet[position])
+            }
+        } else if (key == HomeFragment.PIGGY_BANK_KEY) {
+            viewHolder.itemView.setBackgroundResource(R.drawable.bg_category_orange)
+            viewHolder.plus.setBackgroundResource(R.drawable.ic_add_brown)
+            viewHolder.itemView.setOnClickListener {
+                buttonListener.onAddPiggyClickListener(dataSet[position])
+            }
         }
     }
 
@@ -102,6 +122,7 @@ class CategoryAdapter(
     override fun getItemCount() = dataSet.size
 
     interface AddClickListener {
-        fun onAddClickListener(item: Category)
+        fun onAddCategoryClickListener(item: Category)
+        fun onAddPiggyClickListener(item: Category)
     }
 }
