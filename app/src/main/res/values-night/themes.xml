@@ -3,7 +3,7 @@
     <style name="Theme.TeenCash" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimaryVariant">@color/black030f28</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -17,6 +17,7 @@
 
     <style name="SplashScreen" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:windowBackground">@drawable/ic_splash_screen_night</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
     </style>
 
     <style name="FragmentScreen">
@@ -68,7 +69,7 @@
 
         <!-- colorAccent is used as the default value for colorControlActivated,
              which is used to tint widgets -->
-        <item name="colorAccent">@color/grey58</item>
+        <item name="colorAccent">@color/black</item>
 
         <!-- You can also set colorControlNormal, colorControlActivated
              colorControlHighlight, and colorSwitchThumbNormal. -->
@@ -113,7 +114,7 @@
     </style>
 
     <style name="title_14sp_poppinsMedium_blue031952">
-        <item name="android:textColor">@color/blue031952</item>
+        <item name="android:textColor">@color/blue7584A3</item>
         <item name="android:fontFamily">@font/poppins_medium</item>
         <item name="android:textSize">@dimen/sp_14</item>
     </style>
