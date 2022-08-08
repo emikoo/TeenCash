@@ -5,12 +5,13 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
-import com.example.teencash.ui.bottom_sheet.icon.IconListBottomSheet
+import com.example.teencash.ui.bottom_sheet.icon.IconListBS
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.teenteen.teencash.data.model.Category
 import com.teenteen.teencash.data.model.CategoryName
 import com.teenteen.teencash.databinding.BsAddCategoryBinding
 import com.teenteen.teencash.presentation.base.BaseBottomSheetDialogFragment
+import com.teenteen.teencash.presentation.extensions.show
 import com.teenteen.teencash.presentation.interfaces.PickerItem
 import com.teenteen.teencash.presentation.interfaces.UpdateData
 
@@ -38,7 +39,7 @@ class AddCategoryBS(private val updater: UpdateData) :
 
     private fun setupListeners() {
         binding.ibEdit.setOnClickListener {
-            setupIconBottomSheet()
+            IconListBS(this).show(activity?.supportFragmentManager)
         }
         binding.btnAdd.setOnClickListener {
             if (binding.etCategoryName.text.isNotBlank() && binding.etCategoryName.text.isNotEmpty()
@@ -100,18 +101,6 @@ class AddCategoryBS(private val updater: UpdateData) :
 
             override fun afterTextChanged(s: Editable) {}
         })
-    }
-
-    private fun setupIconBottomSheet() {
-        val bottomSheetDialogFragment: BottomSheetDialogFragment =
-            IconListBottomSheet(this)
-        bottomSheetDialogFragment.isCancelable = true
-        activity?.supportFragmentManager?.let {
-            bottomSheetDialogFragment.show(
-                it ,
-                bottomSheetDialogFragment.tag
-            )
-        }
     }
 
     override fun chosenIcon(item: CategoryName) {

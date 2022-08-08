@@ -12,6 +12,7 @@ import com.teenteen.teencash.R
 import com.teenteen.teencash.data.model.Category
 import com.teenteen.teencash.databinding.FragmentHomeBinding
 import com.teenteen.teencash.presentation.base.BaseFragment
+import com.teenteen.teencash.presentation.extensions.show
 import com.teenteen.teencash.presentation.interfaces.UpdateData
 import com.teenteen.teencash.presentation.ui.fragments.main.home.adapters.CategoryAdapter
 import com.teenteen.teencash.presentation.ui.fragments.main.home.bottom_sheets.AddCategoryBS
@@ -19,8 +20,7 @@ import com.teenteen.teencash.presentation.ui.fragments.main.home.bottom_sheets.A
 import com.teenteen.teencash.presentation.utills.checkInternetConnection
 import com.teenteen.teencash.view_model.UserProfileViewModel
 
-
-class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.AddClickListener ,
+class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.CategoryClickListener ,
     UpdateData {
 
     private var categoryArray = mutableListOf<Category>()
@@ -75,6 +75,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.AddCl
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext() , 4)
     }
 
+    override fun updateCategory(newCategory: Category) {
+        getCategories()
+    }
+
+    override fun updatePiggyBank(newGoal: Category) {
+        getPiggies()
+    }
+
     private fun getCategories() {
         progressDialog.show()
         viewModel.getCategories(prefs.getCurrentUserId())
@@ -85,51 +93,32 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.AddCl
         viewModel.getPiggyBanks(prefs.getCurrentUserId())
     }
 
-    override fun updateCategory(newCategory: Category) {
-        getCategories()
-    }
-
-    override fun updatePiggyBank(newGoal: Category) {
-        getPiggies()
-    }
-
     override fun onAddCategoryClickListener(item: Category) {
-        val bottomSheetDialogFragment: BottomSheetDialogFragment =
-            AddCategoryBS(this)
-        activity?.supportFragmentManager?.let {
-            bottomSheetDialogFragment.show(
-                it ,
-                bottomSheetDialogFragment.tag
-            )
-        }
+        AddCategoryBS(this).show(activity?.supportFragmentManager)
     }
 
     override fun onAddPiggyClickListener(item: Category) {
-        val bottomSheetDialogFragment: BottomSheetDialogFragment =
-            AddPiggyBS(this, PIGGY_BANK_KEY)
-        activity?.supportFragmentManager?.let {
-            bottomSheetDialogFragment.show(
-                it ,
-                bottomSheetDialogFragment.tag
-            )
-        }
+        AddPiggyBS(this, PIGGY_BANK_KEY).show(activity?.supportFragmentManager)
+    }
+
+
     }
 
     override fun subscribeToLiveData() {
         viewModel.category.observe(viewLifecycleOwner , Observer {
-            categoryArray.clear()
-            categoryArray.addAll(it)
-            categoryArray.add(Category(0 , 0 , ""))
-            categoryAdapter.notifyDataSetChanged()
-            progressDialog.dismiss()
+            updateArray(categoryArray, it)
         })
         viewModel.piggy.observe(viewLifecycleOwner , Observer {
-            piggyArray.clear()
-            piggyArray.addAll(it)
-            piggyArray.add(Category(0 , 0 , ""))
-            categoryAdapter.notifyDataSetChanged()
-            progressDialog.dismiss()
+            updateArray(piggyArray, it)
         })
+    }
+
+    private fun updateArray(array: MutableList<Category>, newList: List<Category>) {
+        array.clear()
+        array.addAll(newList)
+        array.add(Category(0 , 0 , ""))
+        categoryAdapter.notifyDataSetChanged()
+        progressDialog.dismiss()
     }
 
     companion object {

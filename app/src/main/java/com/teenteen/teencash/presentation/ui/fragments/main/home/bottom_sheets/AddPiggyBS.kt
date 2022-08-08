@@ -2,12 +2,12 @@ package com.teenteen.teencash.presentation.ui.fragments.main.home.bottom_sheets
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.example.singleactivity.isInvisible
-import com.example.singleactivity.isVisible
 import com.teenteen.teencash.R
 import com.teenteen.teencash.data.model.Category
 import com.teenteen.teencash.databinding.BsAddPiggyBinding
 import com.teenteen.teencash.presentation.base.BaseBottomSheetDialogFragment
+import com.teenteen.teencash.presentation.extensions.isInvisible
+import com.teenteen.teencash.presentation.extensions.isVisible
 import com.teenteen.teencash.presentation.interfaces.UpdateData
 import com.teenteen.teencash.presentation.ui.fragments.main.home.HomeFragment
 

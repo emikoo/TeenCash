@@ -23,18 +23,6 @@ fun NavController.navigateSafely(directions: NavDirections) {
     currentDestination?.getAction(directions.actionId)?.let { navigate(directions) }
 }
 
-fun View.isGone() {
-    this.visibility = View.GONE
-}
-
-fun View.isInvisible() {
-    this.visibility = View.INVISIBLE
-}
-
-fun View.isVisible() {
-    this.visibility = View.VISIBLE
-}
-
 fun Int.toDp(context: Context): Int = TypedValue.applyDimension(
     TypedValue.COMPLEX_UNIT_DIP , this.toFloat() , context.resources.displayMetrics
 ).toInt()

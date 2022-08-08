@@ -2,7 +2,6 @@ package com.teenteen.teencash.presentation.utills
 
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
@@ -12,7 +11,6 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.LayoutInflater
 import android.widget.Toast
-import androidx.fragment.app.FragmentManager
 import com.teenteen.teencash.R
 
 fun vibrate(context: Context?) {

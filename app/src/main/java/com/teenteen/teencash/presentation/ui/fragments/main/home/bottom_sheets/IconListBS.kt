@@ -10,7 +10,7 @@ import com.teenteen.teencash.presentation.interfaces.PickerItem
 import com.teenteen.teencash.presentation.ui.fragments.main.home.adapters.IconAdapter
 import com.teenteen.teencash.presentation.utills.IconType.iconArray
 
-class IconListBottomSheet(private val listener: PickerItem) :
+class IconListBS(private val listener: PickerItem) :
     BaseBottomSheetDialogFragment<BsIconBinding>() , IconAdapter.onIconClickListener {
     lateinit var adapter: IconAdapter
     override fun attachBinding(

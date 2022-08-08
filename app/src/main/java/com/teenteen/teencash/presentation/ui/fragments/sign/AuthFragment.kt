@@ -9,8 +9,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.EditText
 import com.example.singleactivity.activityNavController
-import com.example.singleactivity.isInvisible
-import com.example.singleactivity.isVisible
 import com.example.singleactivity.navigateSafely
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
@@ -18,6 +16,8 @@ import com.teenteen.teencash.R
 import com.teenteen.teencash.data.local.PrefsSettings.Companion.USER
 import com.teenteen.teencash.databinding.FragmentAuthBinding
 import com.teenteen.teencash.presentation.base.BaseFragment
+import com.teenteen.teencash.presentation.extensions.isInvisible
+import com.teenteen.teencash.presentation.extensions.isVisible
 import com.teenteen.teencash.presentation.utills.checkInternetConnection
 import com.teenteen.teencash.presentation.utills.showAlertDialog
 
