@@ -2,6 +2,7 @@ package com.teenteen.teencash.presentation.ui.fragments.main.home.bottom_sheets
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import com.teenteen.teencash.R
 import com.teenteen.teencash.data.model.Category
 import com.teenteen.teencash.databinding.BsAddPiggyBinding
@@ -13,6 +14,9 @@ import com.teenteen.teencash.presentation.ui.fragments.main.home.HomeFragment
 
 class AddPiggyBS(private val updater: UpdateData , val key: String) :
     BaseBottomSheetDialogFragment<BsAddPiggyBinding>() {
+
+    var categoryName = ""
+    var limit = 0
 
     override fun setupViews() {
         setupViewsByKey()
@@ -47,23 +51,52 @@ class AddPiggyBS(private val updater: UpdateData , val key: String) :
         binding.btnAdd.setOnClickListener{
             when(key){
                 HomeFragment.PIGGY_BANK_KEY -> {
-                    val newGoal = Category(
-                        name = binding.etName.text.toString() ,
-                        secondAmount = binding.etAmount.text.toString().toInt() ,
-                        iconId = 777
-                    )
-                    dialog?.dismiss()
-                    updater.updatePiggyBank(newGoal)
-                    val piggiesOfUser = usersCollection.document(prefs.getCurrentUserId())
-                        .collection("piggy_banks")
-                    piggiesOfUser.add(newGoal)
-                    dialog!!.dismiss()
+                    checkFields()
                 }
             }
         }
         binding.btnCancel.setOnClickListener {
             dialog!!.dismiss()
         }
+    }
+
+    private fun checkFields() {
+        if (binding.etName.text.isNotBlank() && binding.etName.text.isNotEmpty()
+            && binding.etAmount.text.isNotBlank() && binding.etAmount.text.isNotEmpty()
+        ) {
+            checkIfDocExists()
+        } else Toast.makeText(requireContext() , getString(R.string.check_all_data) , Toast.LENGTH_LONG).show()
+    }
+
+    private fun checkIfDocExists() {
+        categoryName = binding.etName.text.toString()
+        limit = binding.etAmount.text.toString().toInt()
+        val categoriesOfUser = usersCollection.document(prefs.getCurrentUserId())
+            .collection("piggy_banks").document(categoryName)
+        categoriesOfUser.get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val document = task.result
+                if(document != null) {
+                    if (document.exists()) {
+                        Toast.makeText(requireContext(), getString(R.string.item_exists), Toast.LENGTH_LONG).show()
+                    } else {
+                        addPiggy()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun addPiggy() {
+        val newGoal = Category(
+            name = categoryName ,
+            secondAmount = limit ,
+            iconId = 777
+        )
+        dialog?.dismiss()
+        updater.updatePiggyBank()
+        usersCollection.document(prefs.getCurrentUserId())
+            .collection("piggy_banks").document(categoryName).set(newGoal)
     }
 
     override fun attachBinding(

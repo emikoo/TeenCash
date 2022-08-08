@@ -25,4 +25,16 @@ class UserProfileViewModel : ViewModel() {
             _piggy.value = FirebaseProfileService.getPiggyBanks(uid)
         }
     }
+
+    fun deleteCategory(uid: String, docName: String){
+        viewModelScope.launch {
+            FirebaseProfileService.deleteCategory(uid, docName)
+        }
+    }
+
+    fun deletePiggy(uid: String, docName: String){
+        viewModelScope.launch {
+            FirebaseProfileService.deletePiggy(uid, docName)
+        }
+    }
 }

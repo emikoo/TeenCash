@@ -3,6 +3,7 @@ package com.teenteen.teencash.presentation.ui.fragments.main.home.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.antkotlinproject.base.BaseAdapter
@@ -16,7 +17,7 @@ import com.teenteen.teencash.presentation.utills.IconType.getProjectIconType
 
 class CategoryAdapter(
     private val dataSet: List<Category> ,
-    private val buttonListener: AddClickListener ,
+    private val buttonListener: CategoryClickListener ,
     private val key: String
 ) :
     BaseAdapter() {
@@ -29,6 +30,7 @@ class CategoryAdapter(
         val name: TextView = binding.name
         val limit: TextView = binding.limit
         val icon: ImageView = binding.icon
+        val dots: ImageButton = binding.btnDots
     }
 
     class ButtonViewHolder(binding: ItemButtonBinding) : BaseViewHolder(binding) { val plus: View = binding.plus}
@@ -69,10 +71,24 @@ class CategoryAdapter(
             viewHolder.itemView.setBackgroundResource(R.drawable.bg_category_blue)
             viewHolder.name.setTextColor(viewHolder.itemView.resources.getColor(R.color.blue031952))
             viewHolder.limit.setTextColor(viewHolder.itemView.resources.getColor(R.color.blue031952))
+            viewHolder.dots.setOnClickListener {
+                buttonListener.onCategoryDotsClickListener(item)
+            }
+            viewHolder.itemView.setOnLongClickListener {
+                buttonListener.onCategoryDotsClickListener(item)
+                true
+            }
         } else if (key == HomeFragment.PIGGY_BANK_KEY) {
             viewHolder.itemView.setBackgroundResource(R.drawable.bg_category_orange)
             viewHolder.name.setTextColor(viewHolder.itemView.resources.getColor(R.color.dark_brown))
             viewHolder.limit.setTextColor(viewHolder.itemView.resources.getColor(R.color.brown))
+            viewHolder.dots.setOnClickListener {
+                buttonListener.onPiggyDotsClickListener(item)
+            }
+            viewHolder.itemView.setOnLongClickListener {
+                buttonListener.onPiggyDotsClickListener(item)
+                true
+            }
         }
     }
 
@@ -121,8 +137,10 @@ class CategoryAdapter(
 
     override fun getItemCount() = dataSet.size
 
-    interface AddClickListener {
+    interface CategoryClickListener {
         fun onAddCategoryClickListener(item: Category)
         fun onAddPiggyClickListener(item: Category)
+        fun onCategoryDotsClickListener(item: Category)
+        fun onPiggyDotsClickListener(item: Category)
     }
 }

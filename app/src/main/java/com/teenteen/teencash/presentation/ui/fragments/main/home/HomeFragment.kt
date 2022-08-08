@@ -14,6 +14,7 @@ import com.teenteen.teencash.databinding.FragmentHomeBinding
 import com.teenteen.teencash.presentation.base.BaseFragment
 import com.teenteen.teencash.presentation.extensions.show
 import com.teenteen.teencash.presentation.interfaces.UpdateData
+import com.teenteen.teencash.presentation.ui.bottom_sheets.BottomSheetSettings
 import com.teenteen.teencash.presentation.ui.fragments.main.home.adapters.CategoryAdapter
 import com.teenteen.teencash.presentation.ui.fragments.main.home.bottom_sheets.AddCategoryBS
 import com.teenteen.teencash.presentation.ui.fragments.main.home.bottom_sheets.AddPiggyBS
@@ -75,11 +76,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext() , 4)
     }
 
-    override fun updateCategory(newCategory: Category) {
+    override fun updateCategory() {
         getCategories()
     }
 
-    override fun updatePiggyBank(newGoal: Category) {
+    override fun updatePiggyBank() {
         getPiggies()
     }
 
@@ -101,7 +102,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
         AddPiggyBS(this, PIGGY_BANK_KEY).show(activity?.supportFragmentManager)
     }
 
+    override fun onCategoryDotsClickListener(item: Category) {
+        BottomSheetSettings(BottomSheetSettings.CATEGORY_SETTINGS, this, item.name).show(activity?.supportFragmentManager)
+    }
 
+    override fun onPiggyDotsClickListener(item: Category) {
+        BottomSheetSettings(BottomSheetSettings.PIGGY_SETTINGS, this, item.name).show(activity?.supportFragmentManager)
     }
 
     override fun subscribeToLiveData() {

@@ -118,6 +118,12 @@
         <item name="android:textSize">@dimen/sp_14</item>
     </style>
 
+    <style name="title_14sp_poppinsRegular_black030f28">
+        <item name="android:textColor">@color/black030f28</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+
     <style name="title_14sp_poppins_regular_grey58">
         <item name="android:textColor">@color/grey58</item>
         <item name="android:fontFamily">@font/poppins_regular</item>

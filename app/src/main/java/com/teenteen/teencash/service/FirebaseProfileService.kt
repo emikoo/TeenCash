@@ -64,6 +64,36 @@ object FirebaseProfileService {
         }
     }
 
+    suspend fun deleteCategory(userId: String, docName: String) {
+        val db = FirebaseFirestore.getInstance()
+        val category_ref = db.collection("users")
+            .document(userId)
+            .collection("categories").document(docName)
+        try {
+            category_ref.delete()
+        } catch (e: Exception) {
+            Log.e(TAG , "Error deleting category" , e)
+            FirebaseCrashlytics.getInstance().log("Error deleting category")
+            FirebaseCrashlytics.getInstance().setCustomKey("user id" , userId)
+            FirebaseCrashlytics.getInstance().recordException(e)
+        }
+    }
+
+    suspend fun deletePiggy(userId: String, docName: String) {
+        val db = FirebaseFirestore.getInstance()
+        val piggy_ref = db.collection("users")
+            .document(userId)
+            .collection("piggy_banks").document(docName)
+        try {
+            piggy_ref.delete()
+        } catch (e: Exception) {
+            Log.e(TAG , "Error deleting piggy bank" , e)
+            FirebaseCrashlytics.getInstance().log("Error deleting piggy bank")
+            FirebaseCrashlytics.getInstance().setCustomKey("user id" , userId)
+            FirebaseCrashlytics.getInstance().recordException(e)
+        }
+    }
+
     @ExperimentalCoroutinesApi
     fun getPosts(userId: String): Flow<List<Category>> {
         val db = FirebaseFirestore.getInstance()

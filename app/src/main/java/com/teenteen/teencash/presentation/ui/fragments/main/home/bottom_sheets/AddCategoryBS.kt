@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.teencash.ui.bottom_sheet.icon.IconListBS
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.teenteen.teencash.R
 import com.teenteen.teencash.data.model.Category
 import com.teenteen.teencash.data.model.CategoryName
 import com.teenteen.teencash.databinding.BsAddCategoryBinding
@@ -42,28 +42,50 @@ class AddCategoryBS(private val updater: UpdateData) :
             IconListBS(this).show(activity?.supportFragmentManager)
         }
         binding.btnAdd.setOnClickListener {
-            if (binding.etCategoryName.text.isNotBlank() && binding.etCategoryName.text.isNotEmpty()
-                && binding.etLimit.text.isNotBlank() && binding.etLimit.text.isNotEmpty() && iconId != null
-            ) {
-                categoryName = binding.etCategoryName.text.toString()
-                limit = binding.etLimit.text.toString().toInt()
-                val newCategory = Category(
-                    name = categoryName ,
-                    secondAmount = binding.etLimit.text.toString().toInt() ,
-                    iconId = iconId
-                )
-                dialog?.dismiss()
-                updater.updateCategory(newCategory)
-                val categoriesOfUser = usersCollection.document(prefs.getCurrentUserId())
-                    .collection("categories")
-                categoriesOfUser.add(newCategory)
-            } else {
-                Toast.makeText(requireContext() , "Проверьте все данные" , Toast.LENGTH_LONG).show()
-            }
+            categoryName = binding.etCategoryName.text.toString()
+            limit = binding.etLimit.text.toString().toInt()
+            checkFields()
         }
         binding.ibClose.setOnClickListener {
             dialog?.dismiss()
         }
+    }
+
+    private fun checkFields() {
+        if (binding.etCategoryName.text.isNotBlank() && binding.etCategoryName.text.isNotEmpty()
+            && binding.etLimit.text.isNotBlank() && binding.etLimit.text.isNotEmpty() && iconId != null
+        ) {
+            checkIfDocExists()
+        } else Toast.makeText(requireContext() , getString(R.string.check_all_data) , Toast.LENGTH_LONG).show()
+    }
+
+    private fun checkIfDocExists() {
+        val categoriesOfUser = usersCollection.document(prefs.getCurrentUserId())
+            .collection("categories").document(categoryName)
+        categoriesOfUser.get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val document = task.result
+                if(document != null) {
+                    if (document.exists()) {
+                        Toast.makeText(requireContext(), getString(R.string.item_exists), Toast.LENGTH_LONG).show()
+                    } else {
+                        addCategory()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun addCategory() {
+        val newCategory = Category(
+            name = categoryName ,
+            secondAmount = limit ,
+            iconId = iconId
+        )
+        dialog?.dismiss()
+        updater.updateCategory()
+        usersCollection.document(prefs.getCurrentUserId())
+            .collection("categories").document(categoryName).set(newCategory)
     }
 
     private fun setupTextLimitations() {
