@@ -1,4 +1,4 @@
-package com.teenteen.teencash.presentation.ui.fragments.main.home.bottom_sheets
+package com.teenteen.teencash.presentation.ui.common_bottom_sheets
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,9 +10,9 @@ import com.teenteen.teencash.presentation.base.BaseBottomSheetDialogFragment
 import com.teenteen.teencash.presentation.extensions.isInvisible
 import com.teenteen.teencash.presentation.extensions.isVisible
 import com.teenteen.teencash.presentation.interfaces.UpdateData
-import com.teenteen.teencash.presentation.ui.fragments.main.home.HomeFragment
+import com.teenteen.teencash.presentation.utills.AddBottomSheetKeys
 
-class AddPiggyBS(private val updater: UpdateData , val key: String) :
+class BottomSheetAdd(private val updater: UpdateData , val key: AddBottomSheetKeys) :
     BaseBottomSheetDialogFragment<BsAddPiggyBinding>() {
 
     var categoryName = ""
@@ -24,7 +24,7 @@ class AddPiggyBS(private val updater: UpdateData , val key: String) :
     }
 
     private fun setupViewsByKey() {
-        if (key == HomeFragment.PIGGY_BANK_KEY) {
+        if (key == AddBottomSheetKeys.PIGGY_BANK) {
             binding.title.isInvisible()
             binding.limit.isInvisible()
             binding.etName.isVisible()
@@ -34,10 +34,10 @@ class AddPiggyBS(private val updater: UpdateData , val key: String) :
             binding.etName.isInvisible()
         }
         when (key) {
-            HomeFragment.PIGGY_BANK_KEY -> setupTextByKey(resources.getString(R.string.goal), false)
-            HomeFragment.SET_LIMIT_KEY -> setupTextByKey(resources.getString(R.string.limit), false)
-            HomeFragment.SPENT_CATEGORY_KEY -> setupTextByKey(resources.getString(R.string.spent), true)
-            HomeFragment.SAVED_PIGGY_KEY -> setupTextByKey(resources.getString(R.string.saved), true)
+            AddBottomSheetKeys.PIGGY_BANK -> setupTextByKey(resources.getString(R.string.goal), false)
+            AddBottomSheetKeys.SET_LIMIT -> setupTextByKey(resources.getString(R.string.limit), false)
+            AddBottomSheetKeys.SPENT_CATEGORY -> setupTextByKey(resources.getString(R.string.spent), true)
+            AddBottomSheetKeys.SAVED_PIGGY -> setupTextByKey(resources.getString(R.string.saved), true)
         }
     }
 
@@ -50,9 +50,10 @@ class AddPiggyBS(private val updater: UpdateData , val key: String) :
     private fun setupListener() {
         binding.btnAdd.setOnClickListener{
             when(key){
-                HomeFragment.PIGGY_BANK_KEY -> {
-                    checkFields()
-                }
+                AddBottomSheetKeys.PIGGY_BANK -> checkFields()
+                AddBottomSheetKeys.SET_LIMIT -> doSmth()
+                AddBottomSheetKeys.SPENT_CATEGORY -> doSmth()
+                AddBottomSheetKeys.SAVED_PIGGY -> doSmth()
             }
         }
         binding.btnCancel.setOnClickListener {
@@ -67,6 +68,8 @@ class AddPiggyBS(private val updater: UpdateData , val key: String) :
             checkIfDocExists()
         } else Toast.makeText(requireContext() , getString(R.string.check_all_data) , Toast.LENGTH_LONG).show()
     }
+
+    private fun doSmth() {}
 
     private fun checkIfDocExists() {
         categoryName = binding.etName.text.toString()

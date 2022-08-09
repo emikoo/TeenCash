@@ -10,15 +10,15 @@ import com.example.antkotlinproject.base.BaseAdapter
 import com.example.antkotlinproject.base.BaseViewHolder
 import com.teenteen.teencash.R
 import com.teenteen.teencash.data.model.Category
-import com.teenteen.teencash.databinding.ItemButtonBinding
+import com.teenteen.teencash.databinding.ItemButtonCategoryBinding
 import com.teenteen.teencash.databinding.ItemCategoryBinding
-import com.teenteen.teencash.presentation.ui.fragments.main.home.HomeFragment
+import com.teenteen.teencash.presentation.utills.CategoryAdapterKeys
 import com.teenteen.teencash.presentation.utills.IconType.getProjectIconType
 
 class CategoryAdapter(
     private val dataSet: List<Category> ,
     private val buttonListener: CategoryClickListener ,
-    private val key: String
+    private val key: CategoryAdapterKeys
 ) :
     BaseAdapter() {
 
@@ -33,13 +33,13 @@ class CategoryAdapter(
         val dots: ImageButton = binding.btnDots
     }
 
-    class ButtonViewHolder(binding: ItemButtonBinding) : BaseViewHolder(binding) { val plus: View = binding.plus}
+    class ButtonViewHolder(binding: ItemButtonCategoryBinding) : BaseViewHolder(binding) { val plus: View = binding.plus}
 
     override fun onCreateViewHolder(viewGroup: ViewGroup , viewType: Int): BaseViewHolder {
         val binding =
             ItemCategoryBinding.inflate(LayoutInflater.from(viewGroup.context) , viewGroup , false)
         val bindingButton =
-            ItemButtonBinding.inflate(
+            ItemButtonCategoryBinding.inflate(
                 LayoutInflater.from(viewGroup.context) ,
                 viewGroup ,
                 false
@@ -67,7 +67,7 @@ class CategoryAdapter(
         viewHolder.name.text = item.name
         viewHolder.limit.text = "0/${item.secondAmount}"
         viewHolder.icon.setBackgroundResource(getProjectIconType(item.iconId))
-        if (key == HomeFragment.CATEGORY_KEY) {
+        if (key == CategoryAdapterKeys.CATEGORY) {
             viewHolder.itemView.setBackgroundResource(R.drawable.bg_category_blue)
             viewHolder.name.setTextColor(viewHolder.itemView.resources.getColor(R.color.blue031952))
             viewHolder.limit.setTextColor(viewHolder.itemView.resources.getColor(R.color.blue031952))
@@ -78,7 +78,10 @@ class CategoryAdapter(
                 buttonListener.onCategoryDotsClickListener(item)
                 true
             }
-        } else if (key == HomeFragment.PIGGY_BANK_KEY) {
+            viewHolder.itemView.setOnClickListener {
+                buttonListener.onCategoryClickListener(item)
+            }
+        } else if (key == CategoryAdapterKeys.PIGGY_BANK) {
             viewHolder.itemView.setBackgroundResource(R.drawable.bg_category_orange)
             viewHolder.name.setTextColor(viewHolder.itemView.resources.getColor(R.color.dark_brown))
             viewHolder.limit.setTextColor(viewHolder.itemView.resources.getColor(R.color.brown))
@@ -89,17 +92,20 @@ class CategoryAdapter(
                 buttonListener.onPiggyDotsClickListener(item)
                 true
             }
+            viewHolder.itemView.setOnClickListener {
+                buttonListener.onPiggyClickListener(item)
+            }
         }
     }
 
     private fun setupButtonViewHolder(viewHolder: ButtonViewHolder , position: Int) {
-        if (key == HomeFragment.CATEGORY_KEY) {
+        if (key == CategoryAdapterKeys.CATEGORY) {
             viewHolder.itemView.setBackgroundResource(R.drawable.bg_category_blue)
             viewHolder.plus.setBackgroundResource(R.drawable.ic_add_blue)
             viewHolder.itemView.setOnClickListener {
                 buttonListener.onAddCategoryClickListener(dataSet[position])
             }
-        } else if (key == HomeFragment.PIGGY_BANK_KEY) {
+        } else if (key == CategoryAdapterKeys.PIGGY_BANK) {
             viewHolder.itemView.setBackgroundResource(R.drawable.bg_category_orange)
             viewHolder.plus.setBackgroundResource(R.drawable.ic_add_brown)
             viewHolder.itemView.setOnClickListener {
@@ -107,26 +113,6 @@ class CategoryAdapter(
             }
         }
     }
-
-//    fun addItem(item: Category) {
-//        dataSet.add(dataSet.size - 1, item)
-//        notifyDataSetChanged()
-////        notifyItemRangeInserted(items.lastIndex, items.count()-1)
-//    }
-//
-//    fun deleteItem(position: Int) {
-//        dataSet.removeAt(position)
-//        notifyItemRemoved(position)
-//        notifyItemRangeChanged(position, itemCount)
-//    }
-//
-//    fun restoreItem(item: Category?, position: Int){
-//        item?.let {
-//            dataSet.add(position, it)
-//            notifyItemRangeChanged(position, itemCount)
-//            notifyDataSetChanged()
-//        }
-//    }
 
     override fun getItemViewType(position: Int): Int {
         return when (dataSet[position].name) {
@@ -142,5 +128,7 @@ class CategoryAdapter(
         fun onAddPiggyClickListener(item: Category)
         fun onCategoryDotsClickListener(item: Category)
         fun onPiggyDotsClickListener(item: Category)
+        fun onCategoryClickListener(item: Category)
+        fun onPiggyClickListener(item: Category)
     }
 }
