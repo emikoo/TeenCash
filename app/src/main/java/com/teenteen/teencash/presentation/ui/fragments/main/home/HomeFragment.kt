@@ -29,7 +29,6 @@ import nl.dionsegijn.konfetti.core.Position
 import nl.dionsegijn.konfetti.core.emitter.Emitter
 import java.util.concurrent.TimeUnit
 
-
 class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.CategoryClickListener ,
     UpdateData {
 
@@ -58,7 +57,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
             BottomSheetAdd(this, AddBottomSheetKeys.SET_LIMIT)
                 .show(activity?.supportFragmentManager)
         }
-        checkDate()
         binding.totalAmount.setOnLongClickListener {
             BottomSheetAdd(this, AddBottomSheetKeys.UPDATE_BALANCE)
                 .show(activity?.supportFragmentManager)
@@ -91,6 +89,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
 
     private fun getData() {
         progressDialog.show()
+        checkDate()
         viewModel.getBalance(prefs.getCurrentUserId())
         viewModel.getSavedAmount(prefs.getCurrentUserId())
         viewModel.getLimit(prefs.getCurrentUserId())
@@ -180,10 +179,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
             val dateInString = date.dateToString()
             if (prefs.getCurrentDay() != dateInString) {
                 for (item in it) {
-                    viewModel.clearAmountCategory(prefs.getCurrentUserId() , item.name)
+                    viewModel.clearAmountCategory(prefs.getCurrentUserId() , item.docName)
                 }
             }
             updateArray(categoryArray , it)
+            prefs.saveCurrentDay(dateInString)
             progressDialog.dismiss()
         }
         viewModel.piggy.observe(viewLifecycleOwner) {

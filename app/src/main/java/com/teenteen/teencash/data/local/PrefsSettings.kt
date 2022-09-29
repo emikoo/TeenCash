@@ -15,10 +15,6 @@ class PrefsSettings(private val context: Context) {
     private val CURRENT_DAY = "CURRENT_DAY"
     private val UID = "UID"
 
-    init {
-        saveCurrentDay()
-    }
-
     fun setFirstTimeLaunch(isFirstTime: Int) {
         prefsEditor.putInt(IS_FIRST_TIME_LAUNCH , isFirstTime).commit()
     }
@@ -50,9 +46,7 @@ class PrefsSettings(private val context: Context) {
         return prefs.getString(UID , "") ?: ""
     }
 
-    private fun saveCurrentDay() {
-        val date = getCurrentDateTime()
-        val dateInString = date.dateToString()
+    fun saveCurrentDay(dateInString: String) {
         prefsEditor.putString(CURRENT_DAY , dateInString).apply()
     }
 
