@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayout
+import com.teenteen.teencash.R
 import com.teenteen.teencash.data.model.Debtor
 import com.teenteen.teencash.databinding.FragmentDebtorsBinding
 import com.teenteen.teencash.presentation.base.BaseFragment
@@ -45,8 +46,8 @@ class DebtorsFragment : BaseFragment<FragmentDebtorsBinding>(), UpdateData, Debt
 
     private fun setupTabLayout() {
         val tabLayout = binding.tabLayout
-        tabLayout.addTab(tabLayout.newTab().setText("Borrowers"))
-        tabLayout.addTab(tabLayout.newTab().setText("Moneylenders"))
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.borrowers)))
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.moneylenders)))
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 if (tabLayout.selectedTabPosition == 0) {
