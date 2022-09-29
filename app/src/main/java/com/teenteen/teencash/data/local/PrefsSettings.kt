@@ -3,6 +3,8 @@ package com.teenteen.teencash.data.local
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
+import com.teenteen.teencash.presentation.extensions.dateToString
+import com.teenteen.teencash.presentation.extensions.getCurrentDateTime
 import java.util.*
 
 class PrefsSettings(private val context: Context) {
@@ -10,7 +12,12 @@ class PrefsSettings(private val context: Context) {
     private var prefsEditor: SharedPreferences.Editor = prefs.edit()
     private val LANGUAGE = "LANGUAGE"
     private val DARK_THEME_MODE = "DARK_THEME_MODE"
+    private val CURRENT_DAY = "CURRENT_DAY"
     private val UID = "UID"
+
+    init {
+        saveCurrentDay()
+    }
 
     fun setFirstTimeLaunch(isFirstTime: Int) {
         prefsEditor.putInt(IS_FIRST_TIME_LAUNCH , isFirstTime).commit()
@@ -41,6 +48,16 @@ class PrefsSettings(private val context: Context) {
 
     fun getCurrentUserId(): String {
         return prefs.getString(UID , "") ?: ""
+    }
+
+    private fun saveCurrentDay() {
+        val date = getCurrentDateTime()
+        val dateInString = date.dateToString()
+        prefsEditor.putString(CURRENT_DAY , dateInString).apply()
+    }
+
+    fun getCurrentDay(): String {
+        return prefs.getString(CURRENT_DAY , "") ?: ""
     }
 
     companion object {

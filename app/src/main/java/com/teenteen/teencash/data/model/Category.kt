@@ -8,20 +8,24 @@ data class Category(
     var iconId: Int ,
     var secondAmount: Int ,
     var name: String ,
-    var firstAmount: Int? = null
+    var docName: String,
+    var firstAmount: Int,
+    var image: String = ""
 ) {
     companion object {
         fun DocumentSnapshot.toCategory(): Category? {
             try {
                 val icon = get("iconId").toString().toInt()
-                val limit = get("secondAmount").toString().toInt()
+                val secondAmount = get("secondAmount").toString().toInt()
                 val name = getString("name") !!
-                val spentToday = get("firstAmount")?.toString()?.toInt()
-                return Category(icon , limit , name , spentToday)
+                val docName = getString("docName") !!
+                val firstAmount = get("firstAmount").toString().toInt()
+                val image = getString("image") !!
+                return Category(icon , secondAmount , name , docName, firstAmount, image)
             } catch (e: Exception) {
                 Log.e(TAG , "Error converting category" , e)
                 FirebaseCrashlytics.getInstance().log("Error converting category")
-                FirebaseCrashlytics.getInstance().setCustomKey("categoryId" , id)
+                FirebaseCrashlytics.getInstance().setCustomKey("categoryId"     , id)
                 FirebaseCrashlytics.getInstance().recordException(e)
                 return null
             }

@@ -25,4 +25,16 @@ object FirebaseHomeService {
             emptyList()
         }
     }
+    fun updateCategory(userId: String , docName: String) {
+        try {
+            db.collection("users")
+                .document(userId)
+                .collection("categories").document(docName).update("firstAmount" , 0)
+        } catch (e: Exception) {
+            Log.e(TAG , "Error spending category" , e)
+            FirebaseCrashlytics.getInstance().log("Error spending category")
+            FirebaseCrashlytics.getInstance().setCustomKey("user id" , userId)
+            FirebaseCrashlytics.getInstance().recordException(e)
+        }
+    }
 }

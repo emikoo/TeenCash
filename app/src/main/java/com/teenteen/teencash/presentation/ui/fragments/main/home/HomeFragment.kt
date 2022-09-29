@@ -2,7 +2,6 @@ package com.teenteen.teencash.presentation.ui.fragments.main.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.tabs.TabLayout
@@ -11,6 +10,8 @@ import com.teenteen.teencash.R
 import com.teenteen.teencash.data.model.Category
 import com.teenteen.teencash.databinding.FragmentHomeBinding
 import com.teenteen.teencash.presentation.base.BaseFragment
+import com.teenteen.teencash.presentation.extensions.dateToString
+import com.teenteen.teencash.presentation.extensions.getCurrentDateTime
 import com.teenteen.teencash.presentation.extensions.show
 import com.teenteen.teencash.presentation.interfaces.UpdateData
 import com.teenteen.teencash.presentation.ui.common_bottom_sheets.BottomSheetAdd
@@ -30,7 +31,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
     private var categoryArray = mutableListOf<Category>()
     private var piggyArray = mutableListOf<Category>()
     private lateinit var categoryAdapter: CategoryAdapter
-    lateinit var viewModel: UserProfileViewModel
     lateinit var viewModel: MainViewModel
 
     override fun attachBinding(
@@ -86,6 +86,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
     private fun getPiggies() {
         progressDialog.show()
         viewModel.getPiggyBanks(prefs.getCurrentUserId())
+    private fun checkDate() {
+        val date = getCurrentDateTime()
+        val dateInString = date.dateToString()
+        if (prefs.getCurrentDay() != dateInString) {
+            viewModel.updateSpentAmount(prefs.getCurrentUserId(), 0)
+            viewModel.getSpentAmount(prefs.getCurrentUserId())
+        }
     }
 
     override fun onAddCategoryClickListener(item: Category) {
@@ -119,14 +126,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
     private fun updateArray(array: MutableList<Category>, newList: List<Category>) {
         array.clear()
         array.addAll(newList)
-        array.add(Category(0 , 0 , ""))
+        array.add(Category(0 , 0 , "", "",0))
         categoryAdapter.notifyDataSetChanged()
-        progressDialog.dismiss()
     }
     override fun subscribeToLiveData() {
         viewModel.category.observe(viewLifecycleOwner) {
             val date = getCurrentDateTime()
             val dateInString = date.dateToString()
+            if (prefs.getCurrentDay() != dateInString) {
+                for (item in it) {
+                    viewModel.clearAmountCategory(prefs.getCurrentUserId() , item.name)
+                }
+            }
             updateArray(categoryArray , it)
             progressDialog.dismiss()
         }

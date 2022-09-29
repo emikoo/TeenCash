@@ -18,4 +18,9 @@ class MainViewModel() : ViewModel() {
             _category.value = FirebaseHomeService.getCategories(uid)
         }
     }
+    fun clearAmountCategory(uid: String , docName: String) {
+        viewModelScope.launch {
+            FirebaseHomeService.updateCategory(uid, docName)
+        }
+    }
 }
