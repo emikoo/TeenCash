@@ -22,6 +22,7 @@ import com.teenteen.teencash.presentation.utills.CategoryAdapterKeys
 import com.teenteen.teencash.presentation.utills.ListBottomSheetKeys
 import com.teenteen.teencash.presentation.utills.checkInternetConnection
 import com.teenteen.teencash.view_model.UserProfileViewModel
+import com.teenteen.teencash.view_model.MainViewModel
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.CategoryClickListener ,
     UpdateData {
@@ -30,6 +31,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
     private var piggyArray = mutableListOf<Category>()
     private lateinit var categoryAdapter: CategoryAdapter
     lateinit var viewModel: UserProfileViewModel
+    lateinit var viewModel: MainViewModel
 
     override fun attachBinding(
         list: MutableList<FragmentHomeBinding> ,
@@ -42,6 +44,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
 
     override fun setupViews() {
         viewModel = ViewModelProvider(this)[UserProfileViewModel::class.java]
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         setupTabLayout()
         checkInternetConnection(this::getData , requireContext())
         setupRecyclerView(categoryArray , CategoryAdapterKeys.CATEGORY)
@@ -58,10 +61,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.piggy_banks)))
         tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                if (tabLayout.selectedTabPosition == 0){
+                if (tabLayout.selectedTabPosition == 0) {
                     setupRecyclerView(categoryArray , CategoryAdapterKeys.CATEGORY)
-                }
-                else if (tabLayout.selectedTabPosition == 1) {
+                } else if (tabLayout.selectedTabPosition == 1) {
                     setupRecyclerView(piggyArray , CategoryAdapterKeys.PIGGY_BANK)
                 }
             }
@@ -73,13 +75,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
     private fun setupRecyclerView(array: MutableList<Category> , key: CategoryAdapterKeys) {
         categoryAdapter = CategoryAdapter(array , this , key)
         binding.recyclerView.adapter = categoryAdapter
-        binding.recyclerView.layoutManager = GridLayoutManager(requireContext() , 4)
+        binding.recyclerView.layoutManager = GridLayoutManager(requireContext() , 3)
     }
 
-    override fun updateCategory() { getCategories() }
-    override fun updatePiggyBank() { getPiggies() }
-
-    private fun getCategories() {
+    private fun getData() {
         progressDialog.show()
         viewModel.getCategories(prefs.getCurrentUserId())
     }
@@ -115,16 +114,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
     }
 
     override fun onPiggyClickListener(item: Category) {
-
-    }
-
-    override fun subscribeToLiveData() {
-        viewModel.category.observe(viewLifecycleOwner , Observer {
-            updateArray(categoryArray, it)
-        })
-        viewModel.piggy.observe(viewLifecycleOwner , Observer {
-            updateArray(piggyArray, it)
-        })
     }
 
     private fun updateArray(array: MutableList<Category>, newList: List<Category>) {
@@ -133,5 +122,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
         array.add(Category(0 , 0 , ""))
         categoryAdapter.notifyDataSetChanged()
         progressDialog.dismiss()
+    }
+    override fun subscribeToLiveData() {
+        viewModel.category.observe(viewLifecycleOwner) {
+            val date = getCurrentDateTime()
+            val dateInString = date.dateToString()
+            updateArray(categoryArray , it)
+            progressDialog.dismiss()
+        }
     }
 }
