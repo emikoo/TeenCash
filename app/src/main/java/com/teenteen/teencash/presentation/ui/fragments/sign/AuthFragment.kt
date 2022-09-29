@@ -18,6 +18,7 @@ import com.teenteen.teencash.databinding.FragmentAuthBinding
 import com.teenteen.teencash.presentation.base.BaseFragment
 import com.teenteen.teencash.presentation.extensions.isInvisible
 import com.teenteen.teencash.presentation.extensions.isVisible
+import com.teenteen.teencash.presentation.extensions.showNoConnectionToast
 import com.teenteen.teencash.presentation.utills.checkInternetConnection
 import com.teenteen.teencash.presentation.utills.showAlertDialog
 
@@ -46,7 +47,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
     private fun clickSignIn() {
         binding.buttonSignIn.setOnClickListener {
             if (checkField(binding.inputEditEmail , binding.inputEditPassword)){
-                checkInternetConnection(this::loginUser, requireContext())
+                checkInternetConnection(this::loginUser, requireContext(), this::showNoInternetConnectionToast)
             }
         }
     }
@@ -77,7 +78,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
         binding.buttonSignUp.setOnClickListener {
             progressDialog.show()
             if (checkField(binding.inputEditEmail , binding.inputEditPassword)){
-                checkInternetConnection(this::createNewUser, requireContext())
+                checkInternetConnection(this::createNewUser, requireContext(), this::showNoInternetConnectionToast)
             }
         }
     }
@@ -119,7 +120,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
         binding.buttonForgotPassword.setOnClickListener {
             progressDialog.show()
             if (checkField(binding.inputEditEmail , binding.inputEditPassword)){
-                checkInternetConnection(this::resetPassword, requireContext())
+                checkInternetConnection(this::resetPassword, requireContext(), this::showNoInternetConnectionToast)
             }
         }
     }
@@ -211,6 +212,8 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
             }
         })
     }
+
+    private fun showNoInternetConnectionToast() { requireContext().showNoConnectionToast() }
 
     override fun subscribeToLiveData() {}
 }

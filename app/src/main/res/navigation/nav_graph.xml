@@ -30,4 +30,9 @@
         android:name="com.teenteen.teencash.presentation.ui.fragments.sign.SignFlowFragment"
         android:label="flow_fragment_sign"
         tools:layout="@layout/flow_fragment_sign" />
+    <fragment
+        android:id="@+id/noConnectionFlowFragment"
+        android:name="com.teenteen.teencash.presentation.ui.fragments.noconnection.NoConnectionFlowFragment"
+        android:label="flow_fragment_noconnection"
+        tools:layout="@layout/flow_fragment_noconnection" />
 </navigation>
