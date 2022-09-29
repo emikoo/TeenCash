@@ -25,6 +25,5 @@ abstract class BaseFlowFragment(
         setupNavigation()
     }
 
-    protected open fun setupNavigation() {
-    }
+    protected open fun setupNavigation() {}
 }

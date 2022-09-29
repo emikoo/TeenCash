@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/bg_bottom_sheet_orange"/>
+
+    <ImageView
+        android:id="@+id/view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_2"
+        android:background="@drawable/ic_line_grey58"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="@dimen/dp_120"
+        android:layout_height="@dimen/dp_120"
+        android:src="@drawable/ic_piggy_bank"
+        app:tint="@color/dark_brown"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view"
+        android:layout_marginTop="@dimen/dp_40"
+        android:layout_marginStart="@dimen/dp_16"/>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/image"
+        app:layout_constraintStart_toEndOf="@id/image"
+        android:layout_marginStart="@dimen/dp_24"
+        tools:text="Hello"
+        android:layout_marginTop="@dimen/dp_16"
+        style="@style/title_32sp_montserratBold_white"/>
+
+    <TextView
+        android:id="@+id/goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintStart_toEndOf="@id/image"
+        android:layout_marginStart="@dimen/dp_24"
+        tools:text="500 KGS"
+        android:layout_marginTop="@dimen/dp_8"
+        style="@style/title_32sp_montserratBold_white"/>
+
+    <Button
+        android:id="@+id/btn_image"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_24"
+        app:layout_constraintTop_toBottomOf="@id/image"
+        app:layout_constraintStart_toStartOf="@id/image"
+        app:layout_constraintEnd_toEndOf="@id/image"
+        android:text="@string/set_image"
+        android:background="@android:color/transparent"
+        android:textAllCaps="false"
+        android:textColor="@color/whiteF9"
+        android:layout_marginBottom="@dimen/dp_16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/title_12sp_poppinsRegular"/>
+
+    <ImageButton
+        android:id="@+id/btn_delete"
+        android:layout_width="@dimen/dp_32"
+        android:layout_height="@dimen/dp_32"
+        app:layout_constraintTop_toBottomOf="@id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:src="@drawable/ic_delete"
+        android:background="@android:color/transparent"
+        app:tint="@color/white"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

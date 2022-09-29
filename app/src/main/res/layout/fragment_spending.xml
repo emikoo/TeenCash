@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/FragmentScreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.ui.fragments.main.spendings.SpendingFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:text="Статистика пока недоступна"
+        style="@style/title_16sp_poppinsMedium_black030f28"/>
 
-</FrameLayout>
+</LinearLayout>

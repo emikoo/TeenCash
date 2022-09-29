@@ -58,9 +58,15 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
     private fun setupListener() {
         binding.btnLang.setOnClickListener {
+            BottomSheetList(ListBottomSheetKeys.CHANGE_LANGUAGE).show(activity?.supportFragmentManager)
         }
         binding.btnAchievements.setOnClickListener {
+            val directions =
+                SettingsFragmentDirections.actionSettingsFragmentToAchievementsFragment()
+            findNavController().navigate(directions)
+        }
         binding.btnAsk.setOnClickListener {
+            AskQuestionBottomSheet().show(activity?.supportFragmentManager)
         }
 
         binding.btnSignOut.setOnClickListener {
