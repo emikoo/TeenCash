@@ -40,9 +40,11 @@ class ProgressDialog {
     }
 }
 
-fun checkInternetConnection(action: () -> Unit, context: Context) {
+fun checkInternetConnection(connectedAction: () -> Unit, context: Context, noInternetAction: () -> Unit) {
     if (internetIsConnected(context)) {
-        action()
+        connectedAction()
+    } else {
+        noInternetAction()
     }
 }
 

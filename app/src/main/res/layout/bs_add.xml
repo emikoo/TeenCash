@@ -19,13 +19,14 @@
         android:id="@+id/et_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Name of Goal"
+        android:hint="Name"
         android:maxLength="9"
-        android:textColorHint="@color/black030f28"
-        android:backgroundTint="@color/black030f28"
+        android:textColorHint="@color/grey_6c"
+        android:backgroundTint="@color/black030f28_to_whitef9"
         app:layout_constraintTop_toBottomOf="@id/view"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="@dimen/dp_16"
+        android:textCursorDrawable="@null"
         android:layout_marginTop="@dimen/dp_40"
         android:singleLine="true"
         android:visibility="visible"
@@ -35,11 +36,10 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/view"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginTop="@dimen/dp_40"
-        style="@style/title_16sp_poppinsMedium_black030f28"
+        app:layout_constraintTop_toTopOf="@id/et_name"
+        app:layout_constraintBottom_toBottomOf="@id/et_name"
+        app:layout_constraintStart_toStartOf="@id/et_name"
+        style="@style/title_18sp_poppinsMedium_black030f28"
         android:visibility="invisible"/>
 
     <TextView
@@ -50,6 +50,7 @@
         app:layout_constraintBottom_toBottomOf="@id/title"
         app:layout_constraintEnd_toEndOf="parent"
         android:visibility="invisible"
+        android:textColor="@color/grey58"
         android:layout_marginEnd="@dimen/dp_16"
         style="@style/title_14sp_poppins_regular_grey58"/>
 
@@ -60,10 +61,11 @@
         app:layout_constraintTop_toBottomOf="@id/et_name"
         style="@style/title_16sp_poppinsRegular_black030f28"
         tools:hint="Goal"
-        android:maxLength="4"
+        android:textColorHint="@color/grey_6c"
+        android:maxLength="6"
         android:singleLine="true"
         android:inputType="number"
-        android:textColorHint="@color/grey58"
+        android:textCursorDrawable="@null"
         android:paddingStart="@dimen/dp_16"
         android:paddingEnd="@dimen/dp_16"
         android:paddingTop="@dimen/dp_16"
@@ -84,6 +86,39 @@
         android:text="KGS"
         android:layout_marginEnd="@dimen/dp_16"/>
 
+    <EditText
+        android:id="@+id/et_limit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/et_amount"
+        style="@style/title_16sp_poppinsRegular_black030f28"
+        tools:hint="Limit"
+        android:textColorHint="@color/grey_6c"
+        android:maxLength="6"
+        android:singleLine="true"
+        android:inputType="number"
+        android:textCursorDrawable="@null"
+        android:paddingStart="@dimen/dp_16"
+        android:paddingEnd="@dimen/dp_16"
+        android:paddingTop="@dimen/dp_16"
+        android:paddingBottom="@dimen/dp_8"
+        android:layout_marginStart="@dimen/dp_16"
+        android:visibility="gone"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_8"
+        android:background="@drawable/bg_stroke_black"/>
+
+    <TextView
+        android:id="@+id/tv_currency1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/et_limit"
+        android:layout_marginBottom="@dimen/dp_8"
+        app:layout_constraintEnd_toEndOf="@id/et_limit"
+        style="@style/title_16sp_poppinsMedium_black030f28"
+        android:text="KGS"
+        android:layout_marginEnd="@dimen/dp_16"/>
+
     <Button
         android:id="@+id/btn_add"
         style="@style/button_solid"
@@ -98,7 +133,7 @@
         android:textSize="@dimen/sp_12"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btn_cancel"
-        app:layout_constraintTop_toBottomOf="@id/et_amount" />
+        app:layout_constraintTop_toBottomOf="@id/et_limit"/>
 
     <Button
         android:id="@+id/btn_cancel"
@@ -115,5 +150,5 @@
         android:textSize="@dimen/sp_12"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_amount" />
+        app:layout_constraintTop_toBottomOf="@id/et_limit" />
 </androidx.constraintlayout.widget.ConstraintLayout>

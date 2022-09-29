@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.RadioButton
+import android.widget.TextView
 import com.example.antkotlinproject.base.BaseAdapter
 import com.example.antkotlinproject.base.BaseViewHolder
 import com.teenteen.teencash.data.model.ListBS
@@ -22,7 +23,8 @@ class AddBSAdapter(
     class AddBSViewHolder(binding: ItemBsListBinding): BaseViewHolder(binding) {
         val image: ImageView = binding.imageView
         val btn: Button = binding.button
-        val radio: RadioButton = binding.radio
+        val title: TextView = binding.title
+        val subtitle: TextView = binding.subtitle
     }
 
     override fun onCreateViewHolder(parent: ViewGroup , viewType: Int): BaseViewHolder {
@@ -37,32 +39,38 @@ class AddBSAdapter(
 
     private fun setupAddBSViewHolder(holder: AddBSViewHolder , position: Int) {
         val item = dataSet[position]
-        holder.image.setBackgroundResource(item.image)
-        holder.btn.setText(item.btnText)
+        holder.title.text = item.title
         when(key) {
             ListBottomSheetKeys.CATEGORY_SETTINGS -> {
+                holder.image.isVisible()
+                item.image?.let { holder.image.setBackgroundResource(it)  }
                 holder.btn.setOnClickListener{
                     if (position == 0) listener.onEditCategory()
                     else listener.onDeleteCategory()
                 }
-                holder.radio.isGone()
+                holder.subtitle.isGone()
             }
             ListBottomSheetKeys.PIGGY_BANK_SETTINGS -> {
+                holder.image.isVisible()
+                item.image?.let { holder.image.setBackgroundResource(it)  }
                 holder.btn.setOnClickListener{
-                    if (position == 0) listener.onEditPiggyBank()
-                    else listener.onDeletePiggyBank()
+                    when (position) {
+                        0 -> listener.onAchieved()
+                        1 -> listener.onEditPiggyBank()
+                        2 -> listener.onDeletePiggyBank()
+                    }
                 }
-                holder.radio.isGone()
-            }
-            ListBottomSheetKeys.PLUS -> {
-                holder.radio.isGone()
+                holder.subtitle.isGone()
             }
             ListBottomSheetKeys.CHANGE_LANGUAGE -> {
-                holder.radio.isVisible()
+                holder.subtitle.isVisible()
+                holder.image.isGone()
+                holder.subtitle.text = item.subtitle.toString()
+                holder.btn.setOnClickListener {
+                    listener.onLanguageSelected(item)
+                }
             }
-            ListBottomSheetKeys.CHANGE_CURRENCY -> {
-                holder.radio.isVisible()
-            }
+            ListBottomSheetKeys.CHANGE_CURRENCY -> {}
         }
     }
 
@@ -73,5 +81,7 @@ class AddBSAdapter(
         fun onDeletePiggyBank()
         fun onEditCategory()
         fun onEditPiggyBank()
+        fun onAchieved()
+        fun onLanguageSelected(item: ListBS)
     }
 }

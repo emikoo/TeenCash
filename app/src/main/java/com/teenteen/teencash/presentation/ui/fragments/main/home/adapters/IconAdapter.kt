@@ -27,7 +27,7 @@ class IconAdapter(val dataSet: MutableList<CategoryName> , private val listener:
 
     private fun setupIconListViewHolder(holder: IconListViewHolder , position: Int) {
         val item = dataSet[position]
-        holder.icon.setBackgroundResource(item.name.toInt())
+        holder.icon.setImageResource(item.name.toInt())
         holder.itemView.setOnClickListener {
             listener.onItemClick(item)
         }

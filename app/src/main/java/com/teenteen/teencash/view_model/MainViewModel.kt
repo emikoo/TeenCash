@@ -12,11 +12,21 @@ import kotlinx.coroutines.launch
 
 class MainViewModel() : ViewModel() {
     private val _category = MutableLiveData<List<Category>>()
+    private val _achievement = MutableLiveData<List<Category>>()
+    private val _piggy = MutableLiveData<List<Category>>()
     private val _mf = MutableLiveData<List<Debtor>>()
     private val _bs = MutableLiveData<List<Debtor>>()
     private val _balance = MutableLiveData<Int>()
     val balance: LiveData<Int> = _balance
+    private val _saved = MutableLiveData<Int>()
+    val saved: LiveData<Int> = _saved
+    private val _limit = MutableLiveData<Int>()
+    val limit: LiveData<Int> = _limit
+    private val _spentAmount = MutableLiveData<Int>()
+    val spentAmount: LiveData<Int> = _spentAmount
     val category: LiveData<List<Category>> = _category
+    val achievement: LiveData<List<Category>> = _achievement
+    val piggy: LiveData<List<Category>> = _piggy
     val mf: LiveData<List<Debtor>> = _mf
     val bs: LiveData<List<Debtor>> = _bs
 
@@ -32,9 +42,27 @@ class MainViewModel() : ViewModel() {
         }
     }
 
+    fun createAchievement(uid: String, docName: String, item: Category) {
+        viewModelScope.launch {
+            FirebaseHomeService.createAchievement(uid, docName, item)
+        }
+    }
+
     fun getCategories(uid: String) {
         viewModelScope.launch {
             _category.value = FirebaseHomeService.getCategories(uid)
+        }
+    }
+
+    fun getPiggyBanks(uid: String) {
+        viewModelScope.launch {
+            _piggy.value = FirebaseHomeService.getPiggyBanks(uid)
+        }
+    }
+
+    fun getAchievements(uid: String) {
+        viewModelScope.launch {
+            _achievement.value = FirebaseHomeService.getAchievements(uid)
         }
     }
 
@@ -56,6 +84,41 @@ class MainViewModel() : ViewModel() {
         }
     }
 
+    fun getSavedAmount(uid: String) {
+        viewModelScope.launch {
+            _saved.value = FirebaseHomeService.getSavedAmount(uid)
+        }
+    }
+
+    fun getLimit(uid: String) {
+        viewModelScope.launch {
+            _limit.value = FirebaseHomeService.getLimit(uid)
+        }
+    }
+
+    fun getSpentAmount(uid: String) {
+        viewModelScope.launch {
+            _spentAmount.value = FirebaseHomeService.getSpentAmount(uid)
+        }
+    }
+
+    fun spendCategory(uid: String, docName: String, value: Int){
+        viewModelScope.launch {
+            FirebaseHomeService.spendCategory(uid, docName, value)
+        }
+    }
+
+    fun saveMoneyPiggy(uid: String, docName: String, value: Int) {
+        viewModelScope.launch {
+            FirebaseHomeService.saveMoneyPiggy(uid, docName, value)
+        }
+    }
+
+    fun updateSpentAmount(uid: String, amount: Int) {
+        viewModelScope.launch {
+            FirebaseHomeService.updateSpentAmount(uid, amount)
+        }
+    }
 
     fun updateBalance(uid: String, balance: Int) {
         viewModelScope.launch {
@@ -63,9 +126,21 @@ class MainViewModel() : ViewModel() {
         }
     }
 
+    fun updateSavedAmount(uid: String, amount: Int) {
+        viewModelScope.launch {
+            FirebaseHomeService.updateSavedAmount(uid, amount)
+        }
+    }
+
     fun clearAmountCategory(uid: String , docName: String) {
         viewModelScope.launch {
             FirebaseHomeService.updateCategory(uid, docName)
+        }
+    }
+
+    fun updateLimit(uid: String, amount: Int) {
+        viewModelScope.launch {
+            FirebaseHomeService.updateLimit(uid, amount)
         }
     }
 
@@ -81,6 +156,17 @@ class MainViewModel() : ViewModel() {
         }
     }
 
+    fun updateCategory(uid: String , docName: String , name: String , firstAmount: Int , secondAmount: Int) {
+        viewModelScope.launch {
+            FirebaseHomeService.updateCategory(uid, docName, name, firstAmount, secondAmount)
+        }
+    }
+
+    fun updatePiggy(uid: String , docName: String , name: String , firstAmount: Int , secondAmount: Int) {
+        viewModelScope.launch {
+            FirebaseHomeService.updatePiggy(uid, docName, name, firstAmount, secondAmount)
+        }
+    }
 
     fun deleteMotherfucker(uid: String, docName: String){
         viewModelScope.launch {
@@ -94,4 +180,27 @@ class MainViewModel() : ViewModel() {
         }
     }
 
+    fun deleteCategory(uid: String, docName: String){
+        viewModelScope.launch {
+            FirebaseHomeService.deleteCategory(uid, docName)
+        }
+    }
+
+    fun deletePiggy(uid: String, docName: String){
+        viewModelScope.launch {
+            FirebaseHomeService.deletePiggy(uid, docName)
+        }
+    }
+
+    fun deleteAchievement(uid: String, docName: String){
+        viewModelScope.launch {
+            FirebaseHomeService.deleteAchievement(uid, docName)
+        }
+    }
+
+    fun setImage(uid: String, docName: String, image: String) {
+        viewModelScope.launch {
+            FirebaseHomeService.setImage(uid, docName, image)
+        }
+    }
 }

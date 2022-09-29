@@ -7,27 +7,45 @@
 
     <ImageView
         android:id="@+id/image_view"
-        app:layout_constraintBottom_toBottomOf="@id/button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/button"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:background="@drawable/ic_edit" />
+        tools:background="@drawable/ic_edit_rectangle" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/image_view"
+        app:layout_constraintBottom_toBottomOf="@id/image_view"
+        app:layout_constraintStart_toEndOf="@id/image_view"
+        android:layout_marginStart="@dimen/dp_8"
+        style="@style/title_14sp_poppinsRegular_black030f28"
+        tools:text="Edit"
+        android:layout_marginTop="@dimen/dp_4"/>
+
+    <TextView
+        android:id="@+id/subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/image_view"
+        app:layout_constraintBottom_toBottomOf="@id/image_view"
+        app:layout_constraintStart_toEndOf="@id/title"
+        android:visibility="gone"
+        android:layout_marginStart="@dimen/dp_8"
+        style="@style/title_14sp_poppins_regular_grey58"
+        tools:text="Edit"
+        android:layout_marginTop="@dimen/dp_4"/>
 
     <Button
         android:id="@+id/button"
-        style="@style/title_14sp_poppinsRegular_black030f28"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/image_view"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="@dimen/dp_0"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:paddingStart="@dimen/dp_8"
-        android:paddingTop="@dimen/dp_4"
-        tools:text="@string/edit"
-        android:textAlignment="textStart"
-        android:textAllCaps="false" />
+        android:background="@android:color/transparent" />
 
     <View
         android:id="@+id/line"
@@ -35,12 +53,4 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/blue7584A3" />
-
-    <RadioButton
-        android:id="@+id/radio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/button"
-        app:layout_constraintBottom_toBottomOf="@id/button"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

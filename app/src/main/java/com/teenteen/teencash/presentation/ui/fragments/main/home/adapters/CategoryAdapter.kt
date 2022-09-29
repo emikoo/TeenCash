@@ -65,12 +65,17 @@ class CategoryAdapter(
     private fun setupCategoryViewHolder(viewHolder: CategoryViewHolder , position: Int) {
         val item = dataSet[position]
         viewHolder.name.text = item.name
-        viewHolder.limit.text = "0/${item.secondAmount}"
+        viewHolder.limit.text = "${item.firstAmount}/${item.secondAmount}"
         viewHolder.icon.setBackgroundResource(getProjectIconType(item.iconId))
+        if(item.firstAmount >= item.secondAmount) {
+            viewHolder.limit.setTextColor(viewHolder.itemView.resources.getColor(R.color.red))
+        } else {
+            if (key == CategoryAdapterKeys.CATEGORY) viewHolder.limit.setTextColor(viewHolder.itemView.resources.getColor(R.color.grey58))
+            else viewHolder.limit.setTextColor(viewHolder.itemView.resources.getColor(R.color.brown))
+        }
         if (key == CategoryAdapterKeys.CATEGORY) {
             viewHolder.itemView.setBackgroundResource(R.drawable.bg_category_blue)
             viewHolder.name.setTextColor(viewHolder.itemView.resources.getColor(R.color.blue031952))
-            viewHolder.limit.setTextColor(viewHolder.itemView.resources.getColor(R.color.blue031952))
             viewHolder.dots.setOnClickListener {
                 buttonListener.onCategoryDotsClickListener(item)
             }
@@ -84,7 +89,6 @@ class CategoryAdapter(
         } else if (key == CategoryAdapterKeys.PIGGY_BANK) {
             viewHolder.itemView.setBackgroundResource(R.drawable.bg_category_orange)
             viewHolder.name.setTextColor(viewHolder.itemView.resources.getColor(R.color.dark_brown))
-            viewHolder.limit.setTextColor(viewHolder.itemView.resources.getColor(R.color.brown))
             viewHolder.dots.setOnClickListener {
                 buttonListener.onPiggyDotsClickListener(item)
             }

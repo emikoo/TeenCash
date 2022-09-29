@@ -27,6 +27,16 @@
         app:layout_constraintStart_toStartOf="@id/total"
         app:layout_constraintTop_toBottomOf="@id/total" />
 
+    <Button
+        android:id="@+id/btn_total_edit"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:background="@drawable/ic_add"
+        app:layout_constraintTop_toTopOf="@id/total_amount"
+        app:layout_constraintBottom_toBottomOf="@id/total_amount"
+        app:layout_constraintEnd_toStartOf="@id/total_amount"
+        />
+
     <TextView
         android:id="@+id/currency_total"
         style="@style/title_16sp_montserratBold_black030f28"
@@ -34,21 +44,20 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp_32"
         android:text="@string/kgs"
+        android:paddingEnd="@dimen/dp_8"
         app:layout_constraintBottom_toBottomOf="@id/total_amount"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/total_amount"
         style="@style/title_32sp_montserratBold_black030f28"
-        android:layout_width="@dimen/dp_0"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_24"
         android:layout_marginTop="@dimen/dp_8"
         android:layout_marginEnd="@dimen/dp_8"
-        android:text="0"
+        android:paddingStart="@dimen/dp_8"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toStartOf="@id/currency_total"
-        app:layout_constraintStart_toEndOf="@id/total"
         app:layout_constraintTop_toTopOf="@id/total" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -69,18 +78,18 @@
             android:layout_marginBottom="@dimen/dp_16"
             android:background="@drawable/bg_circle_shape"
             android:indeterminate="false"
-            android:max="100"
+            android:max="0"
             android:progressDrawable="@drawable/bg_circular_progressbar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:progress="50" />
+            tools:progress="0" />
 
         <TextView
+            android:id="@+id/progress_title"
             style="@style/title_18sp_montserratBold_black030f28"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0/0\nKGS"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="@id/progress_circular"
             app:layout_constraintEnd_toEndOf="@id/progress_circular"
@@ -108,13 +117,24 @@
             app:layout_constraintStart_toStartOf="@id/spent"
             app:layout_constraintTop_toBottomOf="@id/spent" />
 
+        <ImageButton
+            android:id="@+id/ib_edit_limit"
+            android:layout_width="@dimen/dp_18"
+            android:layout_height="@dimen/dp_18"
+            android:layout_marginEnd="@dimen/dp_4"
+            app:layout_constraintTop_toTopOf="@id/limit_title"
+            app:layout_constraintEnd_toStartOf="@id/limit_title"
+            app:layout_constraintBottom_toBottomOf="@id/limit_title"
+            android:layout_marginTop="@dimen/dp_2"
+            android:background="@drawable/ic_edit_black"/>
+
         <TextView
             android:id="@+id/limit_title"
             style="@style/title_18sp_montserratBold_black030f28"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_4"
-            android:text="@string/limit"
+            android:text="@string/limit_per_day"
             app:layout_constraintStart_toStartOf="@id/spent"
             app:layout_constraintTop_toBottomOf="@id/today" />
 
@@ -123,7 +143,6 @@
             style="@style/title_16sp_montserratSemiBold_grey58"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0 kgs"
             app:layout_constraintStart_toStartOf="@id/spent"
             app:layout_constraintTop_toBottomOf="@id/limit_title" />
 
@@ -142,19 +161,8 @@
             style="@style/title_16sp_montserratSemiBold_grey58"
             android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
-            android:text="0 kgs"
             app:layout_constraintStart_toStartOf="@id/spent"
             app:layout_constraintTop_toBottomOf="@id/saved_title" />
-
-        <ImageButton
-            android:id="@+id/ib_more_limit"
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
-            android:layout_marginTop="@dimen/dp_4"
-            android:layout_marginEnd="@dimen/dp_16"
-            android:background="@drawable/ic_dots"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.tabs.TabLayout
@@ -170,16 +178,23 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_0"
-        android:layout_marginStart="@dimen/dp_12"
         android:layout_marginTop="@dimen/dp_8"
-        android:layout_marginEnd="@dimen/dp_12"
-        android:paddingBottom="?attr/actionBarSize"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_8"
+        tools:listitem="@layout/item_category"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="3"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tab_layout" />
+
+    <nl.dionsegijn.konfetti.xml.KonfettiView
+        android:id="@+id/konfettiView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

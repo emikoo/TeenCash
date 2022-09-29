@@ -28,8 +28,6 @@ class AddCategoryBS(private val updater: UpdateData) :
         list.add(BsAddCategoryBinding.inflate(layoutInflater , container , attachToRoot))
     }
 
-    var categoryName = ""
-    var limit = 0
     var iconId = 0
 
     override fun setupViews() {
@@ -42,8 +40,6 @@ class AddCategoryBS(private val updater: UpdateData) :
             IconListBS(this).show(activity?.supportFragmentManager)
         }
         binding.btnAdd.setOnClickListener {
-            categoryName = binding.etCategoryName.text.toString()
-            limit = binding.etLimit.text.toString().toInt()
             checkFields()
         }
         binding.ibClose.setOnClickListener {
@@ -61,7 +57,7 @@ class AddCategoryBS(private val updater: UpdateData) :
 
     private fun checkIfDocExists() {
         val categoriesOfUser = usersCollection.document(prefs.getCurrentUserId())
-            .collection("categories").document(categoryName)
+            .collection("categories").document(binding.etCategoryName.text.toString() )
         categoriesOfUser.get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val document = task.result
@@ -77,15 +73,18 @@ class AddCategoryBS(private val updater: UpdateData) :
     }
 
     private fun addCategory() {
+        val docName = "${binding.etCategoryName.text}${binding.etLimit.text}$iconId"
         val newCategory = Category(
-            name = categoryName ,
-            secondAmount = limit ,
-            iconId = iconId
+            name = binding.etCategoryName.text.toString() ,
+            secondAmount = binding.etLimit.text.toString().toInt() ,
+            iconId = iconId,
+            firstAmount = 0,
+            docName = docName
         )
+        usersCollection.document(prefs.getCurrentUserId())
+            .collection("categories").document(docName).set(newCategory)
         dialog?.dismiss()
         updater.updateCategory()
-        usersCollection.document(prefs.getCurrentUserId())
-            .collection("categories").document(categoryName).set(newCategory)
     }
 
     private fun setupTextLimitations() {
@@ -107,26 +106,24 @@ class AddCategoryBS(private val updater: UpdateData) :
             override fun afterTextChanged(s: Editable) {}
         })
         binding.etLimit.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(
-                s: CharSequence ,
-                start: Int ,
-                count: Int ,
-                after: Int
-            ) {
-            }
-
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence , start: Int , before: Int , count: Int) {
                 val length: Int = binding.etLimit.length()
                 val convert = length.toString()
-                binding.maxLimit.text = "max: $convert/4"
+                binding.maxLimit.text = "max: $convert/6"
             }
-
-            override fun afterTextChanged(s: Editable) {}
+            override fun afterTextChanged(s: Editable) {
+                if (binding.etLimit.text.toString().startsWith("0")
+                    && binding.etLimit.text.length > 1) {
+                    binding.etLimit.setText("0")
+                    binding.etLimit.setSelection(binding.etLimit.text.toString().length)
+                }
+            }
         })
     }
 
     override fun chosenIcon(item: CategoryName) {
-        binding.icon.setBackgroundResource(item.name.toInt())
+        binding.icon.setImageResource(item.name.toInt())
         iconId = item.id
     }
 }
