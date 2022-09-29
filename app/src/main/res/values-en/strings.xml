@@ -55,7 +55,7 @@
     <string name="my_achievements">My achievements</string>
     <string name="ask_a_question">Ask a question</string>
     <string name="sign_out">Sign out</string>
-    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="no_internet_connection">No internet connection</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="item_exists">Item with such name already exists</string>
@@ -64,4 +64,23 @@
     <string name="are_u_sure_delete">Are you sure you want to permanently remove this item?</string>
     <string name="yes">Yes</string>
     <string name="delete_piggy">Delete Piggy Bank</string>
+    <string name="limit_per_day">Limit per day</string>
+    <string name="Balance">Balance</string>
+    <string name="loan_journal">Loan Journal</string>
+    <string name="add_person">Add person</string>
+    <string name="achieved">Achieved</string>
+    <string name="delete_achievement">Delete Achievement</string>
+    <string name="kyrgyz">Kyrgyz</string>
+    <string name="russian">Russian</string>
+    <string name="english">English</string>
+    <string name="kyrgyz_or">Кыргызча</string>
+    <string name="russian_or">Русский</string>
+    <string name="english_or">English</string>
+    <string name="select_lang">Select language</string>
+    <string name="do_you_have_any_questions">Do You Have Any Questions ?</string>
+    <string name="text_me_at">Text me at emikoomi13@gmail.com</string>
+    <string name="text">Text</string>
+    <string name="send_email_to_developer">Send email to developer</string>
+    <string name="retry">Retry</string>
+    <string name="set_image">Set image</string>
 </resources>
