@@ -299,16 +299,4 @@ object FirebaseHomeService {
             FirebaseCrashlytics.getInstance().recordException(e)
         }
     }
-
-    fun putToHistory(uid: String, item: History) {
-        try {
-            db.collection("users").document(uid).collection("history")
-                .document().set(item)
-        } catch (e: Exception) {
-            Log.e(TAG , "Error creating history" , e)
-            FirebaseCrashlytics.getInstance().log("Error creating history")
-            FirebaseCrashlytics.getInstance().setCustomKey("user id" , uid)
-            FirebaseCrashlytics.getInstance().recordException(e)
-        }
-    }
 }

@@ -8,6 +8,7 @@ import com.teenteen.teencash.data.model.Category
 import com.teenteen.teencash.data.model.Debtor
 import com.teenteen.teencash.data.model.History
 import com.teenteen.teencash.service.FirebaseDebtorService
+import com.teenteen.teencash.service.FirebaseHistoryService
 import com.teenteen.teencash.service.FirebaseHomeService
 import kotlinx.coroutines.launch
 
@@ -207,7 +208,7 @@ class MainViewModel() : ViewModel() {
 
     fun putToHistory(uid: String, item: History) {
         viewModelScope.launch {
-            FirebaseHomeService.putToHistory(uid, item)
+            FirebaseHistoryService.putToHistory(uid, item)
         }
     }
 }

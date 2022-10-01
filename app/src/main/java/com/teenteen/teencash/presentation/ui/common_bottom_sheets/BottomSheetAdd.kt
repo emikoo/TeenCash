@@ -264,7 +264,7 @@ class BottomSheetAdd(
             val gap = it.amount - binding.etAmount.text.toString().toInt()
             val newBalance = balance + gap
             val date = getCurrentDateTime()
-            val item = History(it.name, binding.etAmount.text.toString().toInt(), false, date, 666)
+            val item = History(it.name, gap, false, date, 666)
             viewModel.putToHistory(prefs.getCurrentUserId(), item)
             viewModel.updateMotherfucker(prefs.getCurrentUserId(), it.docName, binding.etName.text.toString(),
                 binding.etAmount.text.toString().toInt())
@@ -279,7 +279,7 @@ class BottomSheetAdd(
             val gap = it.amount - binding.etAmount.text.toString().toInt()
             val newBalance = balance - gap
             val date = getCurrentDateTime()
-            val item = History(it.name, binding.etAmount.text.toString().toInt(), true, date, 666)
+            val item = History(it.name, gap, true, date, 666)
             viewModel.putToHistory(prefs.getCurrentUserId(), item)
             viewModel.updateBloodsucker(prefs.getCurrentUserId(), it.docName, binding.etName.text.toString(),
                 binding.etAmount.text.toString().toInt())

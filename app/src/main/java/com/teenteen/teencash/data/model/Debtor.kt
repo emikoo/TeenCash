@@ -19,7 +19,7 @@ data class Debtor(
             } catch (e: Exception) {
                 Log.e(TAG , "Error converting debtor" , e)
                 FirebaseCrashlytics.getInstance().log("Error converting debtor")
-                FirebaseCrashlytics.getInstance().setCustomKey("categoryId" , id)
+                FirebaseCrashlytics.getInstance().setCustomKey("debtorId" , id)
                 FirebaseCrashlytics.getInstance().recordException(e)
                 return null
             }
