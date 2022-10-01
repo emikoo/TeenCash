@@ -12,3 +12,7 @@ interface UpdateData {
 interface UpdateAchievement {
     fun updateAchievement()
 }
+
+interface UpdateLanguage {
+    fun updateLanguage()
+}

@@ -11,12 +11,13 @@ import com.teenteen.teencash.databinding.FragmentSettingsBinding
 import com.teenteen.teencash.presentation.base.BaseFragment
 import com.teenteen.teencash.presentation.extensions.isVisible
 import com.teenteen.teencash.presentation.extensions.show
+import com.teenteen.teencash.presentation.interfaces.UpdateLanguage
 import com.teenteen.teencash.presentation.ui.activity.MainActivity
 import com.teenteen.teencash.presentation.ui.common_bottom_sheets.BottomSheetList
 import com.teenteen.teencash.presentation.ui.fragments.main.settings.bottom_sheets.AskQuestionBottomSheet
 import com.teenteen.teencash.presentation.utills.ListBottomSheetKeys
 
-class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
+class SettingsFragment : BaseFragment<FragmentSettingsBinding>() , UpdateLanguage {
 
     override fun attachBinding(
         list: MutableList<FragmentSettingsBinding> ,
@@ -58,7 +59,10 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
     private fun setupListener() {
         binding.btnLang.setOnClickListener {
-            BottomSheetList(ListBottomSheetKeys.CHANGE_LANGUAGE).show(activity?.supportFragmentManager)
+            BottomSheetList(
+                ListBottomSheetKeys.CHANGE_LANGUAGE ,
+                updateLang = this
+            ).show(activity?.supportFragmentManager)
         }
         binding.btnAchievements.setOnClickListener {
             val directions =
@@ -80,4 +84,9 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     }
 
     override fun subscribeToLiveData() {}
+    override fun updateLanguage() {
+        val directions =
+            SettingsFragmentDirections.actionSettingsFragmentSelf()
+        findNavController().navigate(directions)
+    }
 }
