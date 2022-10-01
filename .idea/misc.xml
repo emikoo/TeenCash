@@ -47,6 +47,7 @@
         <entry key="app/src/main/res/drawable/bg_oval_btn_solid_night.xml" value="0.187" />
         <entry key="app/src/main/res/drawable/bg_oval_btn_stroke.xml" value="0.256" />
         <entry key="app/src/main/res/drawable/bg_oval_btn_stroke_night.xml" value="0.187" />
+        <entry key="app/src/main/res/drawable/bg_progress_dialog.xml" value="0.198" />
         <entry key="app/src/main/res/drawable/bg_spinner.xml" value="0.1665" />
         <entry key="app/src/main/res/drawable/bg_stroke_black.xml" value="0.244" />
         <entry key="app/src/main/res/drawable/bg_trans_btn.xml" value="0.1085" />

@@ -60,7 +60,7 @@
     <string name="item_exists">Мындай аталыштагы нерсе мурунтан эле бар</string>
     <string name="check_all_data">Бардык маалыматтарды текшериңиз</string>
     <string name="delete_category">Категорияны жок кылуу</string>
-    <string name="are_u_sure_delete">Чын эле бул нерсени биротоло алып салгыңыз келеби?</string>
+    <string name="are_u_sure_delete">Чын эле бул нерсени алып салгыңыз келеби?</string>
     <string name="yes">Ооба</string>
     <string name="delete_piggy">Чочко банкты жок кылуу</string>
     <string name="limit_per_day">Күнүмдүк чектөө</string>

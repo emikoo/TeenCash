@@ -148,7 +148,7 @@
 
         <TextView
             android:id="@+id/saved_title"
-            style="@style/title_18sp_montserratBold_brown"
+            style="@style/title_16sp_montserratBold_brown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_4"

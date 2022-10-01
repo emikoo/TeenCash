@@ -7,11 +7,10 @@ import com.teenteen.teencash.R
 import com.teenteen.teencash.data.model.Category
 import com.teenteen.teencash.databinding.BsAchievementBinding
 import com.teenteen.teencash.presentation.base.BaseBottomSheetDialogFragment
-import com.teenteen.teencash.presentation.interfaces.UpdateAchievement
 import com.teenteen.teencash.presentation.utills.showAlertDialog
 import com.teenteen.teencash.view_model.MainViewModel
 
-class AchievementBottomSheet(val item: Category , val updater: UpdateAchievement) :
+class AchievementBottomSheet(val item: Category) :
     BaseBottomSheetDialogFragment<BsAchievementBinding>() {
 
     lateinit var viewModel: MainViewModel
@@ -43,7 +42,6 @@ class AchievementBottomSheet(val item: Category , val updater: UpdateAchievement
 
     private fun delete() {
         viewModel.deleteAchievement(prefs.getCurrentUserId() , item.docName)
-        updater.updateAchievement()
         dialog?.dismiss()
     }
 

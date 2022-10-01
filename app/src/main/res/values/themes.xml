@@ -217,10 +217,10 @@
         <item name="android:textSize">@dimen/sp_18</item>
     </style>
 
-    <style name="title_18sp_montserratBold_brown">
+    <style name="title_16sp_montserratBold_brown">
         <item name="android:textColor">@color/brown</item>
         <item name="android:fontFamily">@font/montserrat_bold</item>
-        <item name="android:textSize">@dimen/sp_18</item>
+        <item name="android:textSize">@dimen/sp_16</item>
     </style>
 
     <style name="title_16sp_montserratBold_black030f28">

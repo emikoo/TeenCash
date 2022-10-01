@@ -11,10 +11,11 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_16"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_delete"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_8"
         style="@style/title_14sp_poppinsMedium_black030f28"
         tools:text="Bookingem"/>
 
@@ -27,6 +28,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         style="@style/title_12sp_poppinsMedium_black030f28"
         tools:text="1500 KGS"/>
+
+    <ImageButton
+        android:id="@+id/btn_delete"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/title"
+        android:padding="@dimen/dp_16"
+        android:src="@drawable/ic_delete"
+        app:tint="@color/white"
+        android:background="@android:color/transparent"/>
 
     <ImageView
         android:layout_width="wrap_content"

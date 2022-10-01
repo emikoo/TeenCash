@@ -9,20 +9,20 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.teenteen.teencash.R
 import com.teenteen.teencash.data.model.Category
 import com.teenteen.teencash.databinding.FragmentAchievementsBinding
 import com.teenteen.teencash.presentation.base.BaseFragment
-import com.teenteen.teencash.presentation.extensions.show
-import com.teenteen.teencash.presentation.interfaces.UpdateAchievement
-import com.teenteen.teencash.presentation.ui.fragments.main.settings.bottom_sheets.AchievementBottomSheet
+import com.teenteen.teencash.presentation.utills.showAlertDialog
 import com.teenteen.teencash.view_model.MainViewModel
 
-class AchievementsFragment() : BaseFragment<FragmentAchievementsBinding>(),
-    AchievementAdapter.AchievementClickListener, UpdateAchievement {
+class AchievementsFragment : BaseFragment<FragmentAchievementsBinding>() ,
+    AchievementAdapter.AchievementClickListener {
 
     lateinit var adapter: AchievementAdapter
     lateinit var viewModel: MainViewModel
     private var array = listOf<Category>()
+    var docName = ""
 
     override fun setupViews() {
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
@@ -33,25 +33,41 @@ class AchievementsFragment() : BaseFragment<FragmentAchievementsBinding>(),
     }
 
     private fun setupRecyclerView() {
-        adapter = AchievementAdapter(array,this)
+        adapter = AchievementAdapter(array , this)
         binding.recyclerView.adapter = adapter
-        if (array.isEmpty()) binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        else binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
+        if (array.isEmpty()) binding.recyclerView.layoutManager =
+            LinearLayoutManager(requireContext())
+        else binding.recyclerView.layoutManager = GridLayoutManager(requireContext() , 3)
     }
 
     override fun onClickListener(item: Category) {
-        AchievementBottomSheet(item, this).show(activity?.supportFragmentManager)
+//        AchievementBottomSheet(item).show(activity?.supportFragmentManager)
+    }
+
+    override fun deleteAchievement(item: Category) {
+        docName = item.docName
+        showAlertDialog(
+            requireContext() ,
+            this ,
+            titleText = getString(R.string.delete_achievement) ,
+            subtitleText = getString(R.string.are_u_sure_delete) ,
+            buttonText = getString(R.string.yes) ,
+            action = this::delete
+        )
+    }
+
+    private fun delete() {
+        viewModel.deleteAchievement(prefs.getCurrentUserId() , docName)
+        viewModel.getAchievements(prefs.getCurrentUserId())
     }
 
     override fun subscribeToLiveData() {
-        viewModel.achievement.observe(viewLifecycleOwner, Observer {
+        viewModel.achievement.observe(viewLifecycleOwner , Observer {
             array = it
             setupRecyclerView()
             progressDialog.dismiss()
         })
     }
-
-    override fun updateAchievement() { viewModel.getAchievements(prefs.getCurrentUserId()) }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

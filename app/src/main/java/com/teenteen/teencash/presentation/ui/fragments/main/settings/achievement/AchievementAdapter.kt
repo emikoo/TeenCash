@@ -2,6 +2,7 @@ package com.teenteen.teencash.presentation.ui.fragments.main.settings.achievemen
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.antkotlinproject.base.BaseAdapter
@@ -18,6 +19,7 @@ class AchievementAdapter(private val dataSet: List<Category>,
     class AchievementViewHolder(binding: ItemAchievementBinding): BaseViewHolder(binding) {
         val title: TextView = binding.title
         val subtitle: TextView = binding.subtitle
+        val delete: ImageButton = binding.btnDelete
     }
 
     class EmptyViewHolder(binding: ItemEmptyBinding) : BaseViewHolder(binding) {
@@ -51,6 +53,7 @@ class AchievementAdapter(private val dataSet: List<Category>,
         holder.title.text = item.name
         holder.subtitle.text = item.secondAmount.toString()
         holder.itemView.setOnClickListener { listener.onClickListener(item) }
+        holder.delete.setOnClickListener { listener.deleteAchievement(item) }
     }
 
     private fun setupEmptyViewHolder(holder: EmptyViewHolder) {
@@ -64,5 +67,6 @@ class AchievementAdapter(private val dataSet: List<Category>,
 
     interface AchievementClickListener{
         fun onClickListener(item: Category)
+        fun deleteAchievement(item: Category)
     }
 }
