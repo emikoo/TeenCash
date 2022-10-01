@@ -9,8 +9,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
-import com.teenteen.teencash.presentation.extensions.activityNavController
-import com.teenteen.teencash.presentation.extensions.navigateSafely
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.teenteen.teencash.R
@@ -18,9 +16,7 @@ import com.teenteen.teencash.data.local.PrefsSettings.Companion.USER
 import com.teenteen.teencash.data.model.Category
 import com.teenteen.teencash.databinding.FragmentAuthBinding
 import com.teenteen.teencash.presentation.base.BaseFragment
-import com.teenteen.teencash.presentation.extensions.isInvisible
-import com.teenteen.teencash.presentation.extensions.isVisible
-import com.teenteen.teencash.presentation.extensions.showNoConnectionToast
+import com.teenteen.teencash.presentation.extensions.*
 import com.teenteen.teencash.presentation.utills.checkInternetConnection
 import com.teenteen.teencash.presentation.utills.showAlertDialog
 import com.teenteen.teencash.view_model.AuthViewModel
@@ -61,6 +57,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
 
     private fun loginUser() {
         progressDialog.show()
+        binding.tvError.isGone()
         auth.signInWithEmailAndPassword(
             binding.inputEditEmail.text.toString() ,
             binding.inputEditPassword.text.toString()
@@ -115,6 +112,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
                     resources.getString(R.string.verify_your_email),
                     resources.getString(R.string.verify_your_email_subtitle),
                     resources.getString(R.string.ok))
+                makeErrorTextVisible(R.string.verify_your_email_subtitle, R.color.red)
                 deleteUnverifiedUser()
             }
             ?.addOnFailureListener { e ->
@@ -179,7 +177,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
             makeErrorTextVisible(R.string.password_characters , R.color.red)
             return false
         }
-        binding.tvError.isInvisible()
+        binding.tvError.isGone()
         return true
     }
 
@@ -222,8 +220,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
             override fun onTextChanged(s: CharSequence? , start: Int , before: Int , count: Int) {
                 et1.background = context?.resources?.getDrawable(R.drawable.bg_field_gray)
                 et2.background = context?.resources?.getDrawable(R.drawable.bg_field_gray)
-                binding.tvError.isInvisible()
-                binding.tvError.text = ""
+                binding.tvError.isGone()
             }
         })
     }
