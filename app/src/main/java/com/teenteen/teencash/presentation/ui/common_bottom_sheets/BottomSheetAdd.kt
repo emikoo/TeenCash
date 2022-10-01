@@ -210,7 +210,7 @@ class BottomSheetAdd(
     private fun addBalance() {
         val newBalance = balance + binding.etAmount.text.toString().toInt()
         val date = getCurrentDateTime()
-        val item = History(getString(R.string.Balance), newBalance, false, date)
+        val item = History("Balance", binding.etAmount.text.toString().toInt(), false, date)
         viewModel.putToHistory(prefs.getCurrentUserId(), item)
         viewModel.updateBalance(prefs.getCurrentUserId() , newBalance)
         updater.updateStatistics()
