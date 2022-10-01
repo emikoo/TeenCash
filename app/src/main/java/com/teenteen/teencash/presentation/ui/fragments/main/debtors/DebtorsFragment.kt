@@ -89,16 +89,18 @@ class DebtorsFragment : BaseFragment<FragmentDebtorsBinding>(), UpdateData, Debt
             DebtorAdapterKeys.MOTHERFUCKER -> {
                 viewModel.deleteMotherfucker(prefs.getCurrentUserId(), item.docName)
                 newBalance = balance + item.amount
-                viewModel.putToHistory(prefs.getCurrentUserId(), History(item.name, item.amount,
-                    false, getCurrentDate(), getCurrentDateTime(), getCurrentMonth(),666))
+                if (item.amount != 0) viewModel.putToHistory(prefs.getCurrentUserId(),
+                    History(item.name, item.amount, false, getCurrentDate() ,
+                        getCurrentDateTime(), getCurrentMonth(),666))
                 viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
                 updateMFList()
             }
             DebtorAdapterKeys.BLOODSUCKER -> {
                 viewModel.deleteBloodsucker(prefs.getCurrentUserId(), item.docName)
                 newBalance = balance - item.amount
-                viewModel.putToHistory(prefs.getCurrentUserId(), History(item.name, item.amount,
-                    true, getCurrentDate(), getCurrentDateTime(), getCurrentMonth(),666))
+                if (item.amount != 0) viewModel.putToHistory(prefs.getCurrentUserId(),
+                    History(item.name, item.amount, true, getCurrentDate(),
+                        getCurrentDateTime(), getCurrentMonth(),666))
                 viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
                 updateBSList()
             }

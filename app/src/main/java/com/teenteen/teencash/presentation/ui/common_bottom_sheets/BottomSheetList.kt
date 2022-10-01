@@ -6,13 +6,11 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.teenteen.teencash.R
 import com.teenteen.teencash.data.model.Category
+import com.teenteen.teencash.data.model.History
 import com.teenteen.teencash.data.model.ListBS
 import com.teenteen.teencash.databinding.BsListBinding
 import com.teenteen.teencash.presentation.base.BaseBottomSheetDialogFragment
-import com.teenteen.teencash.presentation.extensions.isGone
-import com.teenteen.teencash.presentation.extensions.isVisible
-import com.teenteen.teencash.presentation.extensions.show
-import com.teenteen.teencash.presentation.extensions.updateLanguage
+import com.teenteen.teencash.presentation.extensions.*
 import com.teenteen.teencash.presentation.interfaces.UpdateData
 import com.teenteen.teencash.presentation.interfaces.UpdateLanguage
 import com.teenteen.teencash.presentation.utills.AddBottomSheetKeys
@@ -155,6 +153,11 @@ class BottomSheetList(
         itemCategory?.let {
             val newBalance = currentBalance + it.firstAmount
             val newSpentAmount = spentToday - it.firstAmount
+            if (it.firstAmount != 0) {
+                val history = History(it.name, it.firstAmount, false, getCurrentDate(),
+                    getCurrentDateTime(), getCurrentMonth(), it.iconId)
+                viewModel.putToHistory(prefs.getCurrentUserId(), history)
+            }
             viewModel.deleteCategory(prefs.getCurrentUserId() , it.docName)
             viewModel.updateSpentAmount(prefs.getCurrentUserId(), newSpentAmount)
             viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
@@ -167,6 +170,11 @@ class BottomSheetList(
         itemCategory?.let {
             val newBalance = currentBalance + it.firstAmount
             val newSavedAmount = savedAmount - it.firstAmount
+            if (it.firstAmount != 0) {
+                val history = History(it.name, it.firstAmount, false, getCurrentDate(),
+                    getCurrentDateTime(), getCurrentMonth(), it.iconId)
+                viewModel.putToHistory(prefs.getCurrentUserId(), history)
+            }
             viewModel.deletePiggy(prefs.getCurrentUserId() , it.docName)
             viewModel.updateSavedAmount(prefs.getCurrentUserId(), newSavedAmount)
             viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)

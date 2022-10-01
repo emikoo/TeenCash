@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.viewpager.widget.ViewPager
-import com.example.singleactivity.activityNavController
-import com.example.singleactivity.navigateSafely
+import com.teenteen.teencash.presentation.extensions.activityNavController
+import com.teenteen.teencash.presentation.extensions.navigateSafely
 import com.teenteen.teencash.R
 import com.teenteen.teencash.data.local.PrefsSettings
 import com.teenteen.teencash.databinding.FragmentOnboardingBinding

@@ -9,7 +9,6 @@ import androidx.preference.PreferenceManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.teenteen.teencash.R
 import com.teenteen.teencash.data.local.PrefsSettings
-import java.text.SimpleDateFormat
 import java.util.*
 
 fun View.isGone() {

@@ -1,8 +1,7 @@
-package com.example.singleactivity
+package com.teenteen.teencash.presentation.extensions
 
 import android.content.Context
 import android.util.TypedValue
-import android.view.View
 import android.view.animation.CycleInterpolator
 import android.view.animation.TranslateAnimation
 import android.widget.EditText

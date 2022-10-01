@@ -182,35 +182,41 @@ class BottomSheetAdd(
     }
 
     private fun spendMoney() {
-        val before = itemCategory !!.firstAmount
         val spentAmount = binding.etAmount.text.toString().toInt()
-        val value = before + spentAmount
-        val item = History(itemCategory.name, spentAmount, true, getCurrentDate(), getCurrentDateTime(), getCurrentMonth(), itemCategory.iconId)
-        viewModel.spendCategory(prefs.getCurrentUserId() , itemCategory.docName, value)
-        viewModel.updateBalance(prefs.getCurrentUserId() , balance - spentAmount)
-        viewModel.updateSpentAmount(prefs.getCurrentUserId() , spentToday + spentAmount)
-        viewModel.putToHistory(prefs.getCurrentUserId(), item)
-        updater.updateCategory()
+        if (spentAmount != 0) {
+            val before = itemCategory !!.firstAmount
+            val value = before + spentAmount
+            val item = History(itemCategory.name, spentAmount, true, getCurrentDate(), getCurrentDateTime(), getCurrentMonth(), itemCategory.iconId)
+            viewModel.spendCategory(prefs.getCurrentUserId() , itemCategory.docName, value)
+            viewModel.updateBalance(prefs.getCurrentUserId() , balance - spentAmount)
+            viewModel.updateSpentAmount(prefs.getCurrentUserId() , spentToday + spentAmount)
+            viewModel.putToHistory(prefs.getCurrentUserId(), item)
+            updater.updateCategory()
+        }
     }
 
     private fun saveMoney() {
         val input = binding.etAmount.text.toString().toInt()
-        val total = input + itemCategory !!.firstAmount
-        val item = History(itemCategory.name, input, true, getCurrentDate(), getCurrentDateTime(), getCurrentMonth(),777)
-        viewModel.updateSavedAmount(prefs.getCurrentUserId() , savedMoney+input)
-        viewModel.saveMoneyPiggy(prefs.getCurrentUserId() , itemCategory.docName , total)
-        viewModel.updateBalance(prefs.getCurrentUserId(), balance-input)
-        viewModel.putToHistory(prefs.getCurrentUserId(), item)
-        updater.updatePiggyBank()
+        if (input != 0) {
+            val total = input + itemCategory !!.firstAmount
+            val item = History(itemCategory.name, input, true, getCurrentDate(), getCurrentDateTime(), getCurrentMonth(),777)
+            viewModel.updateSavedAmount(prefs.getCurrentUserId() , savedMoney+input)
+            viewModel.saveMoneyPiggy(prefs.getCurrentUserId() , itemCategory.docName , total)
+            viewModel.updateBalance(prefs.getCurrentUserId(), balance-input)
+            viewModel.putToHistory(prefs.getCurrentUserId(), item)
+            updater.updatePiggyBank()
+        }
     }
 
     private fun addBalance() {
-        val newBalance = balance + binding.etAmount.text.toString().toInt()
-        val item = History("Balance", binding.etAmount.text.toString().toInt(), false, getCurrentDate(),
-            getCurrentDateTime(), getCurrentMonth(),1313)
-        viewModel.putToHistory(prefs.getCurrentUserId(), item)
-        viewModel.updateBalance(prefs.getCurrentUserId() , newBalance)
-        updater.updateStatistics()
+        if (binding.etAmount.text.toString().toInt() != 0) {
+            val newBalance = balance + binding.etAmount.text.toString().toInt()
+            val item = History("Balance", binding.etAmount.text.toString().toInt(), false, getCurrentDate(),
+                getCurrentDateTime(), getCurrentMonth(),1313)
+            viewModel.putToHistory(prefs.getCurrentUserId(), item)
+            viewModel.updateBalance(prefs.getCurrentUserId() , newBalance)
+            updater.updateStatistics()
+        }
     }
 
     private fun updateBalance() {
@@ -259,12 +265,14 @@ class BottomSheetAdd(
     private fun updateMotherfucker() {
         itemDebtor?.let {
             val gap = it.amount - binding.etAmount.text.toString().toInt()
-            val newBalance = balance + gap
-            val item = History(it.name, gap, false, getCurrentDate(), getCurrentDateTime(), getCurrentMonth(),666)
-            viewModel.putToHistory(prefs.getCurrentUserId(), item)
+            if (binding.etAmount.text.toString().toInt() != 0 || gap !=0) {
+                val newBalance = balance + gap
+                val item = History(it.name, gap, false, getCurrentDate(), getCurrentDateTime(), getCurrentMonth(),666)
+                viewModel.putToHistory(prefs.getCurrentUserId(), item)
+                viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
+            }
             viewModel.updateMotherfucker(prefs.getCurrentUserId(), it.docName, binding.etName.text.toString(),
                 binding.etAmount.text.toString().toInt())
-            viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
             updater.updateMFList()
             dialog?.dismiss()
         }
@@ -273,12 +281,14 @@ class BottomSheetAdd(
     private fun updateBloodsucker() {
         itemDebtor?.let {
             val gap = it.amount - binding.etAmount.text.toString().toInt()
-            val newBalance = balance - gap
-            val item = History(it.name, gap, true, getCurrentDate(), getCurrentDateTime(), getCurrentMonth(),666)
-            viewModel.putToHistory(prefs.getCurrentUserId(), item)
+            if (binding.etAmount.text.toString().toInt() != 0 || gap !=0) {
+                val newBalance = balance - gap
+                val item = History(it.name, gap, true, getCurrentDate(), getCurrentDateTime(), getCurrentMonth(),666)
+                viewModel.putToHistory(prefs.getCurrentUserId(), item)
+                viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
+            }
             viewModel.updateBloodsucker(prefs.getCurrentUserId(), it.docName, binding.etName.text.toString(),
                 binding.etAmount.text.toString().toInt())
-            viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
             updater.updateBSList()
             dialog?.dismiss()
         }
@@ -292,8 +302,15 @@ class BottomSheetAdd(
             val gap = it.firstAmount-amount.toInt()
             if (name.isNotBlank() && limit.isNotBlank() && amount.isNotBlank()) {
                 viewModel.updateCategory(prefs.getCurrentUserId(), it.docName, name, amount.toInt(), limit.toInt())
-                viewModel.updateSpentAmount(prefs.getCurrentUserId(), spentToday-gap)
-                viewModel.updateBalance(prefs.getCurrentUserId(), balance+gap)
+                if (amount.toInt() != 0) {
+                    val isSpent = gap < 0
+                    val historyAmount = if (gap < 0) amount.toInt()-it.firstAmount
+                    else gap
+                    viewModel.putToHistory(prefs.getCurrentUserId(), History(name, historyAmount, isSpent,
+                        getCurrentDate(), getCurrentDateTime(), getCurrentMonth(), it.iconId))
+                    viewModel.updateSpentAmount(prefs.getCurrentUserId(), spentToday-gap)
+                    viewModel.updateBalance(prefs.getCurrentUserId(), balance+gap)
+                }
                 updater.updateCategory()
                 dialog?.dismiss()
             } else Toast.makeText(
@@ -312,8 +329,15 @@ class BottomSheetAdd(
             val gap = it.firstAmount-amount.toInt()
             if (name.isNotBlank() && limit.isNotBlank() && amount.isNotBlank()) {
                 viewModel.updatePiggy(prefs.getCurrentUserId(), it.docName, name, amount.toInt(), limit.toInt())
-                viewModel.updateSavedAmount(prefs.getCurrentUserId(), savedMoney-gap)
-                viewModel.updateBalance(prefs.getCurrentUserId(), balance+gap)
+                if (amount.toInt() != 0) {
+                    val isSpent = gap < 0
+                    val historyAmount = if (gap < 0) amount.toInt()-it.firstAmount
+                    else gap
+                    viewModel.putToHistory(prefs.getCurrentUserId(), History(name, historyAmount, isSpent,
+                        getCurrentDate(), getCurrentDateTime(), getCurrentMonth(), it.iconId))
+                    viewModel.updateSavedAmount(prefs.getCurrentUserId(), savedMoney-gap)
+                    viewModel.updateBalance(prefs.getCurrentUserId(), balance+gap)
+                }
                 updater.updatePiggyBank()
                 dialog?.dismiss()
             } else Toast.makeText(

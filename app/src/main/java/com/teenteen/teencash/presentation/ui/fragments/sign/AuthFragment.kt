@@ -8,8 +8,8 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.EditText
-import com.example.singleactivity.activityNavController
-import com.example.singleactivity.navigateSafely
+import com.teenteen.teencash.presentation.extensions.activityNavController
+import com.teenteen.teencash.presentation.extensions.navigateSafely
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.teenteen.teencash.R
