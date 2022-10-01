@@ -51,5 +51,12 @@
         android:id="@+id/achievementsFragment"
         android:name="com.teenteen.teencash.presentation.ui.fragments.main.settings.achievement.AchievementsFragment"
         android:label="fragment_achievements"
-        tools:layout="@layout/fragment_achievements" />
+        tools:layout="@layout/fragment_achievements" >
+        <action
+            android:id="@+id/action_achievementsFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:popUpToSaveState="false"
+            app:popUpTo="@id/achievementsFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
 </navigation>
