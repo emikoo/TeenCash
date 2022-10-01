@@ -14,6 +14,7 @@ import com.teenteen.teencash.presentation.extensions.isVisible
 import com.teenteen.teencash.presentation.extensions.show
 import com.teenteen.teencash.presentation.extensions.updateLanguage
 import com.teenteen.teencash.presentation.interfaces.UpdateData
+import com.teenteen.teencash.presentation.interfaces.UpdateLanguage
 import com.teenteen.teencash.presentation.utills.AddBottomSheetKeys
 import com.teenteen.teencash.presentation.utills.ListBottomSheetKeys
 import com.teenteen.teencash.presentation.utills.showAlertDialog
@@ -22,7 +23,8 @@ import com.teenteen.teencash.view_model.MainViewModel
 class BottomSheetList(
     private val key: ListBottomSheetKeys ,
     private val updater: UpdateData? = null ,
-    private val itemCategory: Category? = null
+    private val itemCategory: Category? = null,
+    private val updateLang: UpdateLanguage? = null
 ) : BaseBottomSheetDialogFragment<BsListBinding>(), AddBSAdapter.onListClickedListener {
 
     lateinit var viewModel: MainViewModel
@@ -135,17 +137,16 @@ class BottomSheetList(
         when (item.subtitle) {
             getString(R.string.kyrgyz_or) -> {
                 PreferenceManager(requireContext()).updateLanguage("ky", requireContext(), prefs)
-                dismiss()
             }
             getString(R.string.russian_or) -> {
                 PreferenceManager(requireContext()).updateLanguage("ru", requireContext(), prefs)
-                dismiss()
             }
             getString(R.string.english_or) -> {
                 PreferenceManager(requireContext()).updateLanguage("eng", requireContext(), prefs)
-                dismiss()
             }
         }
+        updateLang?.updateLanguage()
+        dismiss()
     }
 
 
