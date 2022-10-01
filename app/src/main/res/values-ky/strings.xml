@@ -86,7 +86,7 @@
     <string name="borrowers">Эшектер</string>
     <string name="moneylenders">Кан соргучтар</string>
     <string name="history">Тарых</string>
-    <string name="your_goal">Сенин максатың</string>
+    <string name="your_goal">Максат</string>
 
     <string-array name="spinner_date">
         <item name="choose">баары</item>

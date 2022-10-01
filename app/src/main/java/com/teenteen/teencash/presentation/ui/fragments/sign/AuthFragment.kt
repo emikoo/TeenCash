@@ -8,6 +8,7 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.lifecycle.ViewModelProvider
 import com.teenteen.teencash.presentation.extensions.activityNavController
 import com.teenteen.teencash.presentation.extensions.navigateSafely
 import com.google.android.gms.tasks.OnCompleteListener
@@ -22,8 +23,12 @@ import com.teenteen.teencash.presentation.extensions.isVisible
 import com.teenteen.teencash.presentation.extensions.showNoConnectionToast
 import com.teenteen.teencash.presentation.utills.checkInternetConnection
 import com.teenteen.teencash.presentation.utills.showAlertDialog
+import com.teenteen.teencash.view_model.AuthViewModel
 
 class AuthFragment : BaseFragment<FragmentAuthBinding>() {
+
+    lateinit var viewModel: AuthViewModel
+
     override fun attachBinding(
         list: MutableList<FragmentAuthBinding> ,
         layoutInflater: LayoutInflater ,
@@ -34,6 +39,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
     }
 
     override fun setupViews() {
+        viewModel = ViewModelProvider(this)[AuthViewModel::class.java]
         setupListeners()
         setupTextWatcher(binding.inputEditEmail , binding.inputEditPassword)
         setupTextWatcher(binding.inputEditPassword , binding.inputEditEmail)
@@ -191,29 +197,15 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
 
     private fun addNewUserToFirestore(){
         val email = binding.inputEditEmail.text.toString()
-        currentUser?.uid?.let { usersCollection.document(it).set(mapOf("email" to email)) }
-        createDefaultItems()
+        currentUser?.uid?.let {
+            usersCollection.document(it).set(mapOf("email" to email))
+            createDefaultItems(it)}
     }
 
-    private fun createDefaultItems() {
-        val defaultCategory = Category(
-            name = getString(R.string.transport) ,
-            secondAmount = 50 ,
-            iconId = 0 ,
-            firstAmount = 0,
-            docName = "${getString(R.string.transport)}50"
-        )
-        usersCollection.document(prefs.getCurrentUserId())
-            .collection("categories").document("${getString(R.string.transport)}50").set(defaultCategory)
-        val defaultGoal = Category(
-            name = getString(R.string.your_goal),
-            secondAmount = 5000 ,
-            iconId = 777 ,
-            firstAmount = 0,
-            docName = "${getString(R.string.your_goal)}5000"
-        )
-        usersCollection.document(prefs.getCurrentUserId())
-            .collection("piggy_banks").document("${getString(R.string.your_goal)}5000").set(defaultGoal)
+    private fun createDefaultItems(uid: String) {
+        viewModel.createDefaultCategory(uid, getString(R.string.transport))
+        viewModel.createDefaultGoal(uid, getString(R.string.your_goal))
+        viewModel.createInfoDoc(uid)
     }
 
     private fun setupTextWatcher(et1: EditText , et2: EditText) {

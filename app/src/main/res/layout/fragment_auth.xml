@@ -15,7 +15,7 @@
         android:layout_marginBottom="@dimen/dp_20"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/authorization"
-        android:textColor="@color/grey58"
+        android:textColor="@color/grey80"
         android:textSize="@dimen/sp_32" />
 
     <com.google.android.material.textfield.TextInputLayout

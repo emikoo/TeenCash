@@ -91,14 +91,14 @@
     </style>
 
     <style name="button_solid">
-        <item name="android:background">@drawable/bg_oval_btn_solid_night</item>
+        <item name="android:background">@drawable/bg_oval_btn_solid</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">@font/poppins_semibold</item>
         <item name="android:textSize">@dimen/sp_18</item>
     </style>
 
     <style name="button_stroke">
-        <item name="android:background">@drawable/bg_oval_btn_stroke_night</item>
+        <item name="android:background">@drawable/bg_oval_btn_stroke</item>
         <item name="android:textColor">@color/blue7584A3</item>
         <item name="android:fontFamily">@font/poppins_semibold</item>
         <item name="android:textSize">@dimen/sp_18</item>
