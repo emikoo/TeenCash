@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayout
 import com.teenteen.teencash.R
 import com.teenteen.teencash.data.model.Debtor
+import com.teenteen.teencash.data.model.History
 import com.teenteen.teencash.databinding.FragmentDebtorsBinding
 import com.teenteen.teencash.presentation.base.BaseFragment
 import com.teenteen.teencash.presentation.extensions.*
@@ -88,12 +89,16 @@ class DebtorsFragment : BaseFragment<FragmentDebtorsBinding>(), UpdateData, Debt
             DebtorAdapterKeys.MOTHERFUCKER -> {
                 viewModel.deleteMotherfucker(prefs.getCurrentUserId(), item.docName)
                 newBalance = balance + item.amount
+                viewModel.putToHistory(prefs.getCurrentUserId(), History(item.name, item.amount,
+                    false, getCurrentDateTime(), 666))
                 viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
                 updateMFList()
             }
             DebtorAdapterKeys.BLOODSUCKER -> {
                 viewModel.deleteBloodsucker(prefs.getCurrentUserId(), item.docName)
                 newBalance = balance - item.amount
+                viewModel.putToHistory(prefs.getCurrentUserId(), History(item.name, item.amount,
+                    true, getCurrentDateTime(), 666))
                 viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
                 updateBSList()
             }
