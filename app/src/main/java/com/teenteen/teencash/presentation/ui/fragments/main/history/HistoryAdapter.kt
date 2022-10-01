@@ -10,7 +10,7 @@ import com.teenteen.teencash.R
 import com.teenteen.teencash.data.model.History
 import com.teenteen.teencash.databinding.ItemEmptyBinding
 import com.teenteen.teencash.databinding.ItemHistoryBinding
-import com.teenteen.teencash.presentation.extensions.dateToString
+import com.teenteen.teencash.presentation.extensions.dateTimeToString
 import com.teenteen.teencash.presentation.utills.IconType.getProjectIconType
 
 class HistoryAdapter(private val dataSet: List<History>) : BaseAdapter() {
@@ -60,7 +60,7 @@ class HistoryAdapter(private val dataSet: List<History>) : BaseAdapter() {
             holder.amount.setTextColor(holder.itemView.resources.getColor(R.color.green))
         }
         holder.name.text = item.name
-        holder.date.text = item.date.dateToString()
+        holder.date.text = item.time.dateTimeToString()
         holder.image.setImageResource(getProjectIconType(item.image))
     }
 

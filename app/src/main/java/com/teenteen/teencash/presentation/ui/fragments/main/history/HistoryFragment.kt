@@ -11,6 +11,9 @@ import com.teenteen.teencash.R
 import com.teenteen.teencash.data.model.History
 import com.teenteen.teencash.databinding.FragmentHistoryBinding
 import com.teenteen.teencash.presentation.base.BaseFragment
+import com.teenteen.teencash.presentation.extensions.getCurrentDate
+import com.teenteen.teencash.presentation.extensions.getCurrentMonth
+import com.teenteen.teencash.presentation.extensions.getCurrentWeek
 import com.teenteen.teencash.view_model.HistoryViewModel
 
 class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
@@ -35,13 +38,18 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
     private fun setupSpinner() {
         val adapter =
             ArrayAdapter.createFromResource(requireActivity(), R.array.spinner_date , R.layout.spinner_item)
-
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
         binding.spinner.adapter = adapter
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {}
             override fun onItemSelected(p0: AdapterView<*>? , p1: View? , p2: Int , p3: Long) {
-//                categoryId = p0?.getItemIdAtPosition(p2).toString().toInt()
+                when (binding.spinner.selectedItemPosition) {
+                    0 -> viewModel.getHistory(prefs.getCurrentUserId())
+                    1 -> viewModel.getHistoryToday(prefs.getCurrentUserId(), getCurrentDate())
+                    2 -> viewModel.getHistoryByRange(prefs.getCurrentUserId(), getCurrentWeek())
+                    3 -> viewModel.getHistoryByMonth(prefs.getCurrentUserId(), getCurrentMonth())
+                    else -> viewModel.getHistory(prefs.getCurrentUserId())
+                }
             }
         }
     }
@@ -49,7 +57,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
     override fun subscribeToLiveData() {
         viewModel.history.observe(viewLifecycleOwner, Observer {
             historyArray.clear()
-            historyArray.addAll(it)
+            historyArray.addAll(it.sortedByDescending { it.time })
             adapter.notifyDataSetChanged()
             progressDialog.dismiss()
         })

@@ -34,15 +34,6 @@ fun BottomSheetDialogFragment.show(fragmentManager: FragmentManager?) {
     }
 }
 
-fun Date.dateToString(locale: Locale = Locale.getDefault()): String {
-    val formatter = SimpleDateFormat("dd.MM.yyyy", locale)
-    return formatter.format(this)
-}
-
-fun getCurrentDateTime(): Date {
-    return Calendar.getInstance().time
-}
-
 fun PreferenceManager.updateLanguage(lang: String, context: Context, prefsSettings: PrefsSettings) {
     val locale = Locale(lang)
     Locale.setDefault(locale)

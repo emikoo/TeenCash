@@ -90,7 +90,7 @@ class DebtorsFragment : BaseFragment<FragmentDebtorsBinding>(), UpdateData, Debt
                 viewModel.deleteMotherfucker(prefs.getCurrentUserId(), item.docName)
                 newBalance = balance + item.amount
                 viewModel.putToHistory(prefs.getCurrentUserId(), History(item.name, item.amount,
-                    false, getCurrentDateTime(), 666))
+                    false, getCurrentDate(), getCurrentDateTime(), getCurrentMonth(),666))
                 viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
                 updateMFList()
             }
@@ -98,7 +98,7 @@ class DebtorsFragment : BaseFragment<FragmentDebtorsBinding>(), UpdateData, Debt
                 viewModel.deleteBloodsucker(prefs.getCurrentUserId(), item.docName)
                 newBalance = balance - item.amount
                 viewModel.putToHistory(prefs.getCurrentUserId(), History(item.name, item.amount,
-                    true, getCurrentDateTime(), 666))
+                    true, getCurrentDate(), getCurrentDateTime(), getCurrentMonth(),666))
                 viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
                 updateBSList()
             }

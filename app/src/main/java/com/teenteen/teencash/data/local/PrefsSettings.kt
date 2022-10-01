@@ -2,13 +2,11 @@ package com.teenteen.teencash.data.local
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatDelegate
-import com.teenteen.teencash.presentation.extensions.dateToString
-import com.teenteen.teencash.presentation.extensions.getCurrentDateTime
 import java.util.*
 
 class PrefsSettings(private val context: Context) {
-    private var prefs: SharedPreferences = context.getSharedPreferences(PREFS_NAME , Context.MODE_PRIVATE)
+    private var prefs: SharedPreferences =
+        context.getSharedPreferences(PREFS_NAME , Context.MODE_PRIVATE)
     private var prefsEditor: SharedPreferences.Editor = prefs.edit()
     private val LANGUAGE = "LANGUAGE"
     private val DARK_THEME_MODE = "DARK_THEME_MODE"

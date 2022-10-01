@@ -10,6 +10,8 @@ data class History(
     var amount: Int,
     var spent: Boolean,
     var date: Date,
+    var time: Date,
+    var month: Date,
     var image: Int
 ) {
     companion object {
@@ -19,8 +21,10 @@ data class History(
                 val amount = get("amount").toString().toInt()
                 val spent = getBoolean("spent") !!
                 val date = getDate("date") !!
+                val time = getDate("time") !!
+                val month = getDate("month") !!
                 val image = get("image").toString().toInt()
-                return History(name , amount, spent, date, image)
+                return History(name , amount, spent, date, time, month, image)
             } catch (e: Exception) {
                 Log.e(TAG , "Error converting history" , e)
                 FirebaseCrashlytics.getInstance().log("Error converting history")

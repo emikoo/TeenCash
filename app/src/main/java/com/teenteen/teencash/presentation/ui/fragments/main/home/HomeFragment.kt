@@ -50,15 +50,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
     override fun setupViews() {
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         setupTabLayout()
-        checkInternetConnection(this::getData , requireContext(), this::showNoInternetConnectionToast)
+        checkInternetConnection(
+            this::getData ,
+            requireContext() ,
+            this::showNoInternetConnectionToast
+        )
         setupRecyclerView(categoryArray , CategoryAdapterKeys.CATEGORY)
         addBalance()
         binding.ibEditLimit.setOnClickListener {
-            BottomSheetAdd(this, AddBottomSheetKeys.SET_LIMIT)
+            BottomSheetAdd(this , AddBottomSheetKeys.SET_LIMIT)
                 .show(activity?.supportFragmentManager)
         }
         binding.totalAmount.setOnLongClickListener {
-            BottomSheetAdd(this, AddBottomSheetKeys.UPDATE_BALANCE)
+            BottomSheetAdd(this , AddBottomSheetKeys.UPDATE_BALANCE)
                 .show(activity?.supportFragmentManager)
             true
         }
@@ -76,6 +80,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
                     setupRecyclerView(piggyArray , CategoryAdapterKeys.PIGGY_BANK)
                 }
             }
+
             override fun onTabUnselected(tab: TabLayout.Tab) {}
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
@@ -110,7 +115,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
         val date = getCurrentDateTime()
         val dateInString = date.dateToString()
         if (prefs.getCurrentDay() != dateInString) {
-            viewModel.updateSpentAmount(prefs.getCurrentUserId(), 0)
+            viewModel.updateSpentAmount(prefs.getCurrentUserId() , 0)
             viewModel.getSpentAmount(prefs.getCurrentUserId())
         }
     }
@@ -127,12 +132,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
     }
 
     override fun onCategoryDotsClickListener(item: Category) {
-        BottomSheetList(ListBottomSheetKeys.CATEGORY_SETTINGS, this, itemCategory = item)
+        BottomSheetList(ListBottomSheetKeys.CATEGORY_SETTINGS , this , itemCategory = item)
             .show(activity?.supportFragmentManager)
     }
 
     override fun onPiggyDotsClickListener(item: Category) {
-        BottomSheetList(ListBottomSheetKeys.PIGGY_BANK_SETTINGS, this, itemCategory = item)
+        BottomSheetList(ListBottomSheetKeys.PIGGY_BANK_SETTINGS , this , itemCategory = item)
             .show(activity?.supportFragmentManager)
     }
 
@@ -146,10 +151,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
             .show(activity?.supportFragmentManager)
     }
 
-    private fun updateArray(array: MutableList<Category>, newList: List<Category>) {
+    private fun updateArray(array: MutableList<Category> , newList: List<Category>) {
         array.clear()
         array.addAll(newList)
-        array.add(Category(0 , 0 , "", "",0))
+        array.add(Category(0 , 0 , "" , "" , 0))
         categoryAdapter.notifyDataSetChanged()
     }
 
@@ -159,12 +164,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
         viewModel.getBalance(prefs.getCurrentUserId())
         viewModel.getSpentAmount(prefs.getCurrentUserId())
     }
+
     override fun updatePiggyBank() {
         progressDialog.show()
         viewModel.getPiggyBanks(prefs.getCurrentUserId())
         viewModel.getBalance(prefs.getCurrentUserId())
         viewModel.getSavedAmount(prefs.getCurrentUserId())
     }
+
     override fun updateStatistics() {
         progressDialog.show()
         viewModel.getBalance(prefs.getCurrentUserId())
@@ -220,18 +227,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
         }
     }
 
-    private fun showNoInternetConnectionToast() { requireContext().showNoConnectionToast() }
+    private fun showNoInternetConnectionToast() {
+        requireContext().showNoConnectionToast()
+    }
 
     override fun updateBSList() {}
     override fun achieved() {
         val party = Party(
-            speed = 0f,
-            maxSpeed = 30f,
-            damping = 0.9f,
-            spread = 360,
-            colors = listOf(0xfce18a, 0xff726d, 0xf4306d, 0xb48def),
-            emitter = Emitter(duration = 100, TimeUnit.MILLISECONDS).max(100),
-            position = Position.Relative(0.5, 0.3)
+            speed = 0f ,
+            maxSpeed = 30f ,
+            damping = 0.9f ,
+            spread = 360 ,
+            colors = listOf(0xfce18a , 0xff726d , 0xf4306d , 0xb48def) ,
+            emitter = Emitter(duration = 100 , TimeUnit.MILLISECONDS).max(100) ,
+            position = Position.Relative(0.5 , 0.3)
         )
         binding.konfettiView.start(party)
     }
