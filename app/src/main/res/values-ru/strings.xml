@@ -85,6 +85,7 @@
     <string name="borrowers">Должники</string>
     <string name="moneylenders">Ростовщики</string>
     <string name="history">История</string>
+    <string name="your_goal">Твоя цель</string>
 
     <string-array name="spinner_date">
         <item name="choose">все</item>

@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.teenteen.teencash.R
 import com.teenteen.teencash.data.local.PrefsSettings.Companion.USER
+import com.teenteen.teencash.data.model.Category
 import com.teenteen.teencash.databinding.FragmentAuthBinding
 import com.teenteen.teencash.presentation.base.BaseFragment
 import com.teenteen.teencash.presentation.extensions.isInvisible
@@ -191,6 +192,28 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
     private fun addNewUserToFirestore(){
         val email = binding.inputEditEmail.text.toString()
         currentUser?.uid?.let { usersCollection.document(it).set(mapOf("email" to email)) }
+        createDefaultItems()
+    }
+
+    private fun createDefaultItems() {
+        val defaultCategory = Category(
+            name = getString(R.string.transport) ,
+            secondAmount = 50 ,
+            iconId = 0 ,
+            firstAmount = 0,
+            docName = "${getString(R.string.transport)}50"
+        )
+        usersCollection.document(prefs.getCurrentUserId())
+            .collection("categories").document("${getString(R.string.transport)}50").set(defaultCategory)
+        val defaultGoal = Category(
+            name = getString(R.string.your_goal),
+            secondAmount = 5000 ,
+            iconId = 777 ,
+            firstAmount = 0,
+            docName = "${getString(R.string.your_goal)}5000"
+        )
+        usersCollection.document(prefs.getCurrentUserId())
+            .collection("piggy_banks").document("${getString(R.string.your_goal)}5000").set(defaultGoal)
     }
 
     private fun setupTextWatcher(et1: EditText , et2: EditText) {
