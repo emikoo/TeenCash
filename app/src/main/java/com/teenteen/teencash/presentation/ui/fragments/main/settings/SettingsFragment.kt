@@ -50,7 +50,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() , UpdateLanguag
 
     private fun switchDeviceThemeMode() {
         binding.switchMode.setOnCheckedChangeListener { _ , isChecked ->
-            progressDialog.show()
             if (isChecked) prefs.saveDarkThemeMode(true)
             else prefs.saveDarkThemeMode(false)
             getDeviceThemeMode()
