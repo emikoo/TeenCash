@@ -30,7 +30,9 @@ enum class Icons(val iconPath: Int , val id: Int) {
     CANDY(R.drawable.ic_candy , 23),
     BOTTLE(R.drawable.ic_bottle , 24),
     ANDROID(R.drawable.ic_android , 25),
-    PIGGY_BANK(R.drawable.ic_piggy_bank , 777)
+    PIGGY_BANK(R.drawable.ic_piggy_bank , 777),
+    DEBTOR_PERSON(R.drawable.ic_debtors , 666),
+    BALANCE(R.drawable.ic_balance , 1313)
 }
 
 object IconType {
@@ -63,6 +65,8 @@ object IconType {
             Icons.BOTTLE.id -> Icons.BOTTLE.iconPath
             Icons.ANDROID.id -> Icons.ANDROID.iconPath
             Icons.PIGGY_BANK.id -> Icons.PIGGY_BANK.iconPath
+            Icons.DEBTOR_PERSON.id -> Icons.DEBTOR_PERSON.iconPath
+            Icons.BALANCE.id -> Icons.BALANCE.iconPath
             else -> Icons.PIGGY_BANK.iconPath
         }
         return icon

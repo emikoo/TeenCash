@@ -6,5 +6,6 @@ data class History(
     var name: String,
     var amount: Int,
     var isSpent: Boolean,
-    var date: Date
+    var date: Date,
+    var image: Int
 )
