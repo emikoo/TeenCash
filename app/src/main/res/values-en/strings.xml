@@ -86,4 +86,11 @@
     <string name="borrowers">Borrowers</string>
     <string name="moneylenders">Moneylenders</string>
     <string name="history">History</string>
+
+    <string-array name="spinner_date">
+        <item name="today">today</item>
+        <item name="week">week</item>
+        <item name="month">month</item>
+        <item name="year">year</item>
+    </string-array>
 </resources>

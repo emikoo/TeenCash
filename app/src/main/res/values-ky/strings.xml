@@ -86,4 +86,11 @@
     <string name="borrowers">Эшектер</string>
     <string name="moneylenders">Кан соргучтар</string>
     <string name="history">Тарых</string>
+
+    <string-array name="spinner_date">
+        <item name="today">бүгүн</item>
+        <item name="week">жума</item>
+        <item name="month">ай</item>
+        <item name="year">жыл</item>
+    </string-array>
 </resources>

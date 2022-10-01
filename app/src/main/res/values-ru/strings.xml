@@ -85,4 +85,11 @@
     <string name="borrowers">Должники</string>
     <string name="moneylenders">Ростовщики</string>
     <string name="history">История</string>
+
+    <string-array name="spinner_date">
+        <item name="today">сегодня</item>
+        <item name="week">неделя</item>
+        <item name="month">месяц</item>
+        <item name="year">год</item>
+    </string-array>
 </resources>
