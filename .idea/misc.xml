@@ -64,6 +64,7 @@
         <entry key="app/src/main/res/drawable/ic_edit_icon.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_edit_rectangle.xml" value="0.251" />
         <entry key="app/src/main/res/drawable/ic_edit_white.xml" value="0.1715" />
+        <entry key="app/src/main/res/drawable/ic_history.xml" value="0.1665" />
         <entry key="app/src/main/res/drawable/ic_home.xml" value="0.159" />
         <entry key="app/src/main/res/drawable/ic_home_selected.xml" value="0.159" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2015" />
@@ -81,6 +82,7 @@
         <entry key="app/src/main/res/drawable/ic_splash_screen.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_splash_screen_night.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_tick.xml" value="0.1045" />
+        <entry key="app/src/main/res/drawable/ic_trofy.xml" value="0.1665" />
         <entry key="app/src/main/res/drawable/ic_wifi_off.xml" value="0.1825" />
         <entry key="app/src/main/res/drawable/progress_bar.xml" value="0.172" />
         <entry key="app/src/main/res/drawable/splash_scree.xml" value="0.1" />
