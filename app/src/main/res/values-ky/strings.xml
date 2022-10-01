@@ -83,6 +83,7 @@
     <string name="send_email_to_developer">Send email to developer</string>
     <string name="retry">Retry</string>
     <string name="set_image">Set image</string>
-    <string name="borrowers">Должники</string>
-    <string name="moneylenders">Ростовщики</string>
+    <string name="borrowers">Эшектер</string>
+    <string name="moneylenders">Кан соргучтар</string>
+    <string name="history">History</string>
 </resources>

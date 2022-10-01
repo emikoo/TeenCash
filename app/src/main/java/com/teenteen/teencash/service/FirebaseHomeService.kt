@@ -5,6 +5,7 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.firestore.FirebaseFirestore
 import com.teenteen.teencash.data.model.Category
 import com.teenteen.teencash.data.model.Category.Companion.toCategory
+import com.teenteen.teencash.data.model.History
 import kotlinx.coroutines.tasks.await
 
 object FirebaseHomeService {
@@ -294,6 +295,18 @@ object FirebaseHomeService {
         } catch (e: Exception) {
             Log.e(TAG , "Error setting image" , e)
             FirebaseCrashlytics.getInstance().log("Error setting image")
+            FirebaseCrashlytics.getInstance().setCustomKey("user id" , uid)
+            FirebaseCrashlytics.getInstance().recordException(e)
+        }
+    }
+
+    fun putToHistory(uid: String, item: History) {
+        try {
+            db.collection("users").document(uid).collection("history")
+                .document().set(item)
+        } catch (e: Exception) {
+            Log.e(TAG , "Error creating history" , e)
+            FirebaseCrashlytics.getInstance().log("Error creating history")
             FirebaseCrashlytics.getInstance().setCustomKey("user id" , uid)
             FirebaseCrashlytics.getInstance().recordException(e)
         }

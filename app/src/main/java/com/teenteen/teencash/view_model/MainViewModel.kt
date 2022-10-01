@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teenteen.teencash.data.model.Category
 import com.teenteen.teencash.data.model.Debtor
+import com.teenteen.teencash.data.model.History
 import com.teenteen.teencash.service.FirebaseDebtorService
 import com.teenteen.teencash.service.FirebaseHomeService
 import kotlinx.coroutines.launch
@@ -201,6 +202,12 @@ class MainViewModel() : ViewModel() {
     fun setImage(uid: String, docName: String, image: String) {
         viewModelScope.launch {
             FirebaseHomeService.setImage(uid, docName, image)
+        }
+    }
+
+    fun putToHistory(uid: String, item: History) {
+        viewModelScope.launch {
+            FirebaseHomeService.putToHistory(uid, item)
         }
     }
 }

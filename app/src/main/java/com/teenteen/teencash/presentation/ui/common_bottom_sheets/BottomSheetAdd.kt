@@ -10,12 +10,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.teenteen.teencash.R
 import com.teenteen.teencash.data.model.Category
 import com.teenteen.teencash.data.model.Debtor
+import com.teenteen.teencash.data.model.History
 import com.teenteen.teencash.data.model.InfoStatistic
 import com.teenteen.teencash.databinding.BsAddBinding
 import com.teenteen.teencash.presentation.base.BaseBottomSheetDialogFragment
-import com.teenteen.teencash.presentation.extensions.isGone
-import com.teenteen.teencash.presentation.extensions.isInvisible
-import com.teenteen.teencash.presentation.extensions.isVisible
+import com.teenteen.teencash.presentation.extensions.*
 import com.teenteen.teencash.presentation.interfaces.UpdateData
 import com.teenteen.teencash.presentation.utills.AddBottomSheetKeys
 import com.teenteen.teencash.view_model.MainViewModel
@@ -187,23 +186,32 @@ class BottomSheetAdd(
         val before = itemCategory !!.firstAmount
         val spentAmount = binding.etAmount.text.toString().toInt()
         val value = before + spentAmount
+        val date = getCurrentDateTime()
+        val item = History(itemCategory.name, spentAmount, true, date)
         viewModel.spendCategory(prefs.getCurrentUserId() , itemCategory.docName, value)
         viewModel.updateBalance(prefs.getCurrentUserId() , balance - spentAmount)
         viewModel.updateSpentAmount(prefs.getCurrentUserId() , spentToday + spentAmount)
+        viewModel.putToHistory(prefs.getCurrentUserId(), item)
         updater.updateCategory()
     }
 
     private fun saveMoney() {
         val input = binding.etAmount.text.toString().toInt()
         val total = input + itemCategory !!.firstAmount
+        val date = getCurrentDateTime()
+        val item = History(itemCategory.name, input, true, date)
         viewModel.updateSavedAmount(prefs.getCurrentUserId() , savedMoney+input)
         viewModel.saveMoneyPiggy(prefs.getCurrentUserId() , itemCategory.docName , total)
         viewModel.updateBalance(prefs.getCurrentUserId(), balance-input)
+        viewModel.putToHistory(prefs.getCurrentUserId(), item)
         updater.updatePiggyBank()
     }
 
     private fun addBalance() {
         val newBalance = balance + binding.etAmount.text.toString().toInt()
+        val date = getCurrentDateTime()
+        val item = History(getString(R.string.Balance), newBalance, false, date)
+        viewModel.putToHistory(prefs.getCurrentUserId(), item)
         viewModel.updateBalance(prefs.getCurrentUserId() , newBalance)
         updater.updateStatistics()
     }
@@ -229,6 +237,9 @@ class BottomSheetAdd(
         val docName = "$name$amount"
         val newBalance = balance - amount
         val default: Debtor = Debtor("$name$amount", name, amount)
+        val date = getCurrentDateTime()
+        val item = History(name, amount, true, date)
+        viewModel.putToHistory(prefs.getCurrentUserId(), item)
         viewModel.createMotherfucker(prefs.getCurrentUserId(), docName, default)
         viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
         updater.updateMFList()
@@ -240,6 +251,9 @@ class BottomSheetAdd(
         val docName = "$name$amount"
         val newBalance = balance + amount
         val default: Debtor = Debtor("$name$amount", name, amount)
+        val date = getCurrentDateTime()
+        val item = History(name, amount, false, date)
+        viewModel.putToHistory(prefs.getCurrentUserId(), item)
         viewModel.createBloodsucker(prefs.getCurrentUserId(), docName, default)
         viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
         updater.updateBSList()
@@ -249,6 +263,9 @@ class BottomSheetAdd(
         itemDebtor?.let {
             val gap = it.amount - binding.etAmount.text.toString().toInt()
             val newBalance = balance + gap
+            val date = getCurrentDateTime()
+            val item = History(it.name, binding.etAmount.text.toString().toInt(), false, date)
+            viewModel.putToHistory(prefs.getCurrentUserId(), item)
             viewModel.updateMotherfucker(prefs.getCurrentUserId(), it.docName, binding.etName.text.toString(),
                 binding.etAmount.text.toString().toInt())
             viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
@@ -261,6 +278,9 @@ class BottomSheetAdd(
         itemDebtor?.let {
             val gap = it.amount - binding.etAmount.text.toString().toInt()
             val newBalance = balance - gap
+            val date = getCurrentDateTime()
+            val item = History(it.name, binding.etAmount.text.toString().toInt(), true, date)
+            viewModel.putToHistory(prefs.getCurrentUserId(), item)
             viewModel.updateBloodsucker(prefs.getCurrentUserId(), it.docName, binding.etName.text.toString(),
                 binding.etAmount.text.toString().toInt())
             viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)

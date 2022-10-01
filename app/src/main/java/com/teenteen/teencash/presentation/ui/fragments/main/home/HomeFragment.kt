@@ -213,7 +213,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
                 binding.progressTitle.text = "$it/\n${binding.limit.text}\nKGS"
             } else binding.progressTitle.text = "$it/${binding.limit.text}\nKGS"
             progressDialog.dismiss()
-            binding.progressCircular.max = binding.limit.text.toString().toInt()
+            if (binding.limit.text.toString() == "") binding.progressCircular.max = 0
+            else binding.progressCircular.max = binding.limit.text.toString().toInt()
             binding.progressCircular.progress = it
             spentToday = it
         }

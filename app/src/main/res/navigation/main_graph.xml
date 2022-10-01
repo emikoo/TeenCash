@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/spendingFragment"
-        android:name="com.teenteen.teencash.presentation.ui.fragments.main.spendings.SpendingFragment"
+        android:name="com.teenteen.teencash.presentation.ui.fragments.main.history.HistoryFragment"
         android:label="fragment_spending"
         tools:layout="@layout/fragment_spending" >
         <action
