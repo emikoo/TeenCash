@@ -19,7 +19,7 @@
         android:id="@+id/et_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Name"
+        android:hint="@string/name"
         android:maxLength="9"
         android:textColorHint="@color/grey_6c"
         android:backgroundTint="@color/black030f28_to_whitef9"
@@ -126,6 +126,7 @@
         android:layout_height="@dimen/dp_40"
         android:layout_marginTop="@dimen/dp_32"
         android:layout_marginBottom="@dimen/dp_24"
+        android:layout_marginEnd="@dimen/dp_8"
         android:fontFamily="@font/poppins_semibold"
         android:text="@string/save"
         android:textAllCaps="false"
@@ -137,7 +138,7 @@
 
     <Button
         android:id="@+id/btn_cancel"
-        android:layout_width="@dimen/dp_70"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_32"
         android:layout_marginTop="@dimen/dp_32"
         android:layout_marginEnd="@dimen/dp_16"

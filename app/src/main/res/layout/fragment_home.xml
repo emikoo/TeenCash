@@ -98,7 +98,7 @@
 
         <TextView
             android:id="@+id/spent"
-            style="@style/title_18sp_montserratBold_black030f28"
+            style="@style/title_16sp_montserratBold_black030f28"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_16"
@@ -130,7 +130,7 @@
 
         <TextView
             android:id="@+id/limit_title"
-            style="@style/title_18sp_montserratBold_black030f28"
+            style="@style/title_16sp_montserratBold_black030f28"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_4"

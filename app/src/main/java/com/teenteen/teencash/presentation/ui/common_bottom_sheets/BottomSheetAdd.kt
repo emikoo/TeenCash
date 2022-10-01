@@ -63,7 +63,7 @@ class BottomSheetAdd(
     private fun setupTitlesByKey() {
         when (key) {
             AddBottomSheetKeys.ADD_PIGGY_BANK -> setupTextByKey(etAmountHint = resources.getString(R.string.goal) , btnAddText = false)
-            AddBottomSheetKeys.SET_LIMIT -> setupTextByKey(title = "Your Daily Limit",
+            AddBottomSheetKeys.SET_LIMIT -> setupTextByKey(title = getString(R.string.your_daily_limit),
                 etAmountHint = resources.getString(R.string.limit) , btnAddText = false)
             AddBottomSheetKeys.SPENT_CATEGORY -> {
                 setupTextByKey(title = itemCategory !!.name, etAmountHint = resources.getString(R.string.spent) , btnAddText = true)

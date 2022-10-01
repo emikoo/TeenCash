@@ -112,7 +112,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
                     resources.getString(R.string.verify_your_email),
                     resources.getString(R.string.verify_your_email_subtitle),
                     resources.getString(R.string.ok))
-                makeErrorTextVisible(R.string.verify_your_email_subtitle, R.color.red)
+                makeErrorTextVisible(R.string.verify_your_email_subtitle, R.color.grey80)
                 deleteUnverifiedUser()
             }
             ?.addOnFailureListener { e ->

@@ -65,7 +65,7 @@
     <string name="delete_piggy">Удалить Копилку</string>
     <string name="limit_per_day">Дневной лимит</string>
     <string name="Balance">Баланс</string>
-    <string name="loan_journal">Журнал займов</string>
+    <string name="loan_journal">Журнал Займов</string>
     <string name="add_person">Добавить человека</string>
     <string name="achieved">Достигнуто</string>
     <string name="delete_achievement">Удалить Достижение</string>
@@ -86,6 +86,8 @@
     <string name="moneylenders">Ростовщики</string>
     <string name="history">История</string>
     <string name="your_goal">Твоя цель</string>
+    <string name="your_daily_limit">Ежедневный лими</string>
+    <string name="name">Название</string>
 
     <string-array name="spinner_date">
         <item name="choose">все</item>

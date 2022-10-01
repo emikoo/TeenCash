@@ -27,11 +27,14 @@
 
     <TextView
         android:id="@+id/subtitle"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textAlignment="textStart"
         android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_16"
         style="@style/title_18sp_poppinsMedium_black030f28"
         android:text="@string/text_me_at"
         android:layout_marginStart="@dimen/dp_16"/>
@@ -43,6 +46,7 @@
         android:layout_height="@dimen/dp_32"
         android:layout_marginTop="@dimen/dp_32"
         android:layout_marginBottom="@dimen/dp_24"
+        android:layout_marginEnd="@dimen/dp_8"
         android:fontFamily="@font/poppins_semibold"
         android:text="@string/text"
         android:textAllCaps="false"
@@ -54,7 +58,7 @@
 
     <Button
         android:id="@+id/btn_cancel"
-        android:layout_width="@dimen/dp_70"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_32"
         android:layout_marginTop="@dimen/dp_32"
         android:layout_marginEnd="@dimen/dp_16"

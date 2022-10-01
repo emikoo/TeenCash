@@ -87,6 +87,8 @@
     <string name="moneylenders">Moneylenders</string>
     <string name="history">History</string>
     <string name="your_goal">Your goal</string>
+    <string name="your_daily_limit">Your Daily Limit</string>
+    <string name="name">Name</string>
 
     <string-array name="spinner_date">
         <item name="choose">all</item>
