@@ -21,7 +21,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
     }
 
     override fun subscribeToLiveData() {
-        
+
     }
 
     override fun attachBinding(

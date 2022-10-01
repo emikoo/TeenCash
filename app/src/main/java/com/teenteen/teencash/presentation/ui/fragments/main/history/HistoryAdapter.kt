@@ -63,7 +63,7 @@ class HistoryAdapter(private val dataSet: List<History>) : BaseAdapter() {
     }
 
     private fun setupEmptyViewHolder(holder: EmptyViewHolder) {
-        holder.image.setImageResource(R.drawable.ic_debtors)
+        holder.image.setImageResource(R.drawable.ic_history)
     }
 
     companion object {
