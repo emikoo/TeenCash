@@ -94,6 +94,10 @@
     <string name="kyrgyz_som">Kyrgyzstani Som</string>
     <string name="usa_dollar">US Dollar</string>
     <string name="european_euro">Euro</string>
+    <string name="attention">Attention!</string>
+    <string name="info_changing_currency">when changing currencies or using several currencies
+        at the same time, the data may be inaccurate because auto-conversion is used</string>
+    <string name="continue_">Continue</string>
 
     <string-array name="spinner_date">
         <item name="choose">all</item>

@@ -128,9 +128,13 @@ class BottomSheetList(
     override fun onAchieved() {
         itemCategory?.let {
             if (internetIsConnected(requireContext())) {
-                val newSavedAmount = savedAmount - itemCategory.firstAmount
+                val newSavedAmount = savedAmount - itemCategory.firstAmount.convertAmount(prefs.getSettingsCurrency(),
+                    itemCategory.currency.toString())
+                val gap = itemCategory.secondAmount - itemCategory.firstAmount
                 viewModel.deletePiggy(prefs.getCurrentUserId() , itemCategory.docName)
                 viewModel.updateSavedAmount(prefs.getCurrentUserId(), newSavedAmount)
+                viewModel.updateBalance(prefs.getCurrentUserId(), currentBalance - gap.convertAmount(prefs.getSettingsCurrency(),
+                    itemCategory.currency.toString()))
                 viewModel.createAchievement(prefs.getCurrentUserId(), "${itemCategory.name}${itemCategory.secondAmount}", itemCategory)
                 updater!!.achieved()
                 updater.updatePiggyBank()
@@ -158,16 +162,33 @@ class BottomSheetList(
     }
 
     override fun onCurrencySelected(item: ListBS) {
-        viewModel.updateCurrency(prefs.getCurrentUserId(), item.title)
-        dismiss()
+        showAlertDialog(
+            requireContext() ,
+            this ,
+            titleText = getString(R.string.attention) ,
+            subtitleText = getString(R.string.info_changing_currency) ,
+            buttonText = getString(R.string.continue_)
+        ) { this.changeCurrency(item.title) }
+
     }
 
+    private fun changeCurrency(currency: String) {
+        val newBalance = currentBalance.convertAmount(prefs.getSettingsCurrency(), currency)
+        val newSpending = spentToday.convertAmount(prefs.getSettingsCurrency(), currency)
+        val newSaving = savedAmount.convertAmount(prefs.getSettingsCurrency(), currency)
+        viewModel.updateCurrency(prefs.getCurrentUserId(), currency)
+        viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
+        viewModel.updateSpentAmount(prefs.getCurrentUserId(), newSpending)
+        viewModel.updateSavedAmount(prefs.getCurrentUserId(), newSaving)
+        prefs.saveSettingsCurrency(currency)
+        dismiss()
+    }
 
     private fun deleteCategory() {
         itemCategory?.let {
             if (internetIsConnected(requireContext())) {
-                val newBalance = currentBalance + it.firstAmount
-                val newSpentAmount = spentToday - it.firstAmount
+                val newBalance = currentBalance + it.firstAmount.convertAmount(prefs.getSettingsCurrency(), it.currency.toString())
+                val newSpentAmount = spentToday - it.firstAmount.convertAmount(prefs.getSettingsCurrency(), it.currency.toString())
                 if (it.firstAmount != 0) {
                     val history = History(it.name, it.firstAmount, false, getCurrentDate(),
                         getCurrentDateTime(), getCurrentMonth(), it.iconId, it.currency.toString())
@@ -185,8 +206,8 @@ class BottomSheetList(
     private fun deletePiggy() {
         itemCategory?.let {
             if (internetIsConnected(requireContext())) {
-                val newBalance = currentBalance + it.firstAmount
-                val newSavedAmount = savedAmount - it.firstAmount
+                val newBalance = currentBalance + it.firstAmount.convertAmount(prefs.getSettingsCurrency(), it.currency.toString())
+                val newSavedAmount = savedAmount - it.firstAmount.convertAmount(prefs.getSettingsCurrency(), it.currency.toString())
                 if (it.firstAmount != 0) {
                     val history = History(it.name, it.firstAmount, false, getCurrentDate(),
                         getCurrentDateTime(), getCurrentMonth(), it.iconId, it.currency.toString())

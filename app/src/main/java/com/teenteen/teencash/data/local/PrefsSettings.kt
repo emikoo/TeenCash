@@ -12,6 +12,7 @@ class PrefsSettings(private val context: Context) {
     private val DARK_THEME_MODE = "DARK_THEME_MODE"
     private val CURRENT_DAY = "CURRENT_DAY"
     private val UID = "UID"
+    private val SETTINGS_CURRENCY = "SETTINGS_CURRENCY"
 
     fun setFirstTimeLaunch(isFirstTime: Int) {
         prefsEditor.putInt(IS_FIRST_TIME_LAUNCH , isFirstTime).commit()
@@ -42,6 +43,14 @@ class PrefsSettings(private val context: Context) {
 
     fun getCurrentUserId(): String {
         return prefs.getString(UID , "") ?: ""
+    }
+
+    fun saveSettingsCurrency(currency: String?) {
+        prefsEditor.putString(SETTINGS_CURRENCY , currency).apply()
+    }
+
+    fun getSettingsCurrency(): String {
+        return prefs.getString(SETTINGS_CURRENCY , "") ?: "KGS"
     }
 
     fun saveCurrentDay(dateInString: String) {

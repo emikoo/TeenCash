@@ -60,17 +60,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
 
     private fun setupListeners() {
         binding.ibEditLimit.setOnClickListener {
-            BottomSheetAdd(this , AddBottomSheetKeys.SET_LIMIT, currency = viewModel.currency.value)
+            BottomSheetAdd(this , AddBottomSheetKeys.SET_LIMIT)
                 .show(activity?.supportFragmentManager)
         }
         binding.totalAmount.setOnLongClickListener {
-            BottomSheetAdd(this , AddBottomSheetKeys.UPDATE_BALANCE, currency = viewModel.currency.value)
+            BottomSheetAdd(this , AddBottomSheetKeys.UPDATE_BALANCE)
                 .show(activity?.supportFragmentManager)
             true
         }
         binding.btnTotalEdit.setOnClickListener {
             BottomSheetAdd(
-                this , AddBottomSheetKeys.CURRENT_BALANCE, currency = viewModel.currency.value
+                this , AddBottomSheetKeys.CURRENT_BALANCE
             ).show(activity !!.supportFragmentManager)
         }
     }
@@ -205,7 +205,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
             progressDialog.dismiss()
         }
         viewModel.balance.observe(viewLifecycleOwner) {
-            if (it == null || it == 0) binding.totalAmount.text = "0 $currency"
+            if (it == null || it == 0) binding.totalAmount.text = "0"
             else binding.totalAmount.text = it.toString()
             progressDialog.dismiss()
         }

@@ -14,10 +14,7 @@ import com.teenteen.teencash.presentation.base.BaseFragment
 import com.teenteen.teencash.presentation.extensions.*
 import com.teenteen.teencash.presentation.interfaces.UpdateData
 import com.teenteen.teencash.presentation.ui.common_bottom_sheets.BottomSheetAdd
-import com.teenteen.teencash.presentation.utills.AddBottomSheetKeys
-import com.teenteen.teencash.presentation.utills.DebtorAdapterKeys
-import com.teenteen.teencash.presentation.utills.checkInternetConnection
-import com.teenteen.teencash.presentation.utills.internetIsConnected
+import com.teenteen.teencash.presentation.utills.*
 import com.teenteen.teencash.view_model.MainViewModel
 
 class DebtorsFragment : BaseFragment<FragmentDebtorsBinding>(), UpdateData, DebtorsAdapter.DebtorClickListener {
@@ -43,6 +40,7 @@ class DebtorsFragment : BaseFragment<FragmentDebtorsBinding>(), UpdateData, Debt
         setupTabLayout()
         createDebtor()
         setupRecyclerView(mfArray, DebtorAdapterKeys.MOTHERFUCKER)
+        viewModel.getCurrency(prefs.getCurrentUserId())
         viewModel.getMotherfuckers(prefs.getCurrentUserId())
         viewModel.getBloodsuckers(prefs.getCurrentUserId())
         viewModel.getBalance(prefs.getCurrentUserId())
@@ -78,9 +76,11 @@ class DebtorsFragment : BaseFragment<FragmentDebtorsBinding>(), UpdateData, Debt
     private fun createDebtor() {
         binding.btnAdd.setOnClickListener {
             when (key) {
-                DebtorAdapterKeys.MOTHERFUCKER -> BottomSheetAdd(this, AddBottomSheetKeys.CREATE_MOTHERFUCKER)
+                DebtorAdapterKeys.MOTHERFUCKER -> BottomSheetAdd(this,
+                    AddBottomSheetKeys.CREATE_MOTHERFUCKER)
                     .show(activity?.supportFragmentManager)
-                DebtorAdapterKeys.BLOODSUCKER -> BottomSheetAdd(this, AddBottomSheetKeys.CREATE_BLOODSUCKER)
+                DebtorAdapterKeys.BLOODSUCKER -> BottomSheetAdd(this,
+                    AddBottomSheetKeys.CREATE_BLOODSUCKER)
                     .show(activity?.supportFragmentManager)
             }
         }
@@ -92,21 +92,21 @@ class DebtorsFragment : BaseFragment<FragmentDebtorsBinding>(), UpdateData, Debt
             when (key) {
                 DebtorAdapterKeys.MOTHERFUCKER -> {
                     viewModel.deleteMotherfucker(prefs.getCurrentUserId(), item.docName)
-                    newBalance = balance + item.amount
+                    newBalance = balance + item.amount.convertAmount(prefs.getSettingsCurrency(), item.currency.toString())
+                    viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
+                    updateMFList()
                     if (item.amount != 0) viewModel.putToHistory(prefs.getCurrentUserId(),
                         History(item.name, item.amount, false, getCurrentDate() ,
                             getCurrentDateTime(), getCurrentMonth(),666, item.currency.toString()))
-                    viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
-                    updateMFList()
                 }
                 DebtorAdapterKeys.BLOODSUCKER -> {
                     viewModel.deleteBloodsucker(prefs.getCurrentUserId(), item.docName)
-                    newBalance = balance - item.amount
+                    newBalance = balance - item.amount.convertAmount(prefs.getSettingsCurrency(), item.currency.toString())
+                    viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
+                    updateBSList()
                     if (item.amount != 0) viewModel.putToHistory(prefs.getCurrentUserId(),
                         History(item.name, item.amount, true, getCurrentDate(),
                             getCurrentDateTime(), getCurrentMonth(),666, item.currency.toString()))
-                    viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
-                    updateBSList()
                 }
             }
         } else Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show()

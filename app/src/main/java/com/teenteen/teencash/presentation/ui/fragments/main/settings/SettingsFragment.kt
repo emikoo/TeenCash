@@ -80,6 +80,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() , UpdateLanguag
 
         binding.btnSignOut.setOnClickListener {
             prefs.saveCurrentUserId("")
+            prefs.saveSettingsCurrency("KGS")
             prefs.setFirstTimeLaunch(PrefsSettings.NOT_AUTH)
             val intent = Intent(requireContext() , MainActivity::class.java)
             startActivity(intent)

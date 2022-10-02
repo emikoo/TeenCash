@@ -93,6 +93,10 @@
     <string name="kyrgyz_som">Кыргыз сому</string>
     <string name="usa_dollar">АКШ Доллары</string>
     <string name="european_euro">Евро</string>
+    <string name="attention">Көңүл буруңуз!</string>
+    <string name="info_changing_currency">Валюталарды алмаштырууда же бир эле учурда бир нече валютаны колдонууда,
+        маалыматтарда ката болушу мүмкүн, анткени авто-конвертация колдонулат.</string>
+    <string name="continue_">Улантуу</string>
 
     <string-array name="spinner_date">
         <item name="choose">баары</item>
