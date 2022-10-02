@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.teenteen.teencash.R
@@ -14,6 +15,7 @@ import com.teenteen.teencash.presentation.base.BaseFragment
 import com.teenteen.teencash.presentation.extensions.getCurrentDate
 import com.teenteen.teencash.presentation.extensions.getCurrentMonth
 import com.teenteen.teencash.presentation.extensions.getCurrentWeek
+import com.teenteen.teencash.presentation.utills.internetIsConnected
 import com.teenteen.teencash.view_model.HistoryViewModel
 
 class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
@@ -55,12 +57,14 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
     }
 
     override fun subscribeToLiveData() {
-        viewModel.history.observe(viewLifecycleOwner, Observer {
-            historyArray.clear()
-            historyArray.addAll(it.sortedByDescending { it.time })
-            adapter.notifyDataSetChanged()
-            progressDialog.dismiss()
-        })
+        if (internetIsConnected(requireContext())) {
+            viewModel.history.observe(viewLifecycleOwner, Observer {
+                historyArray.clear()
+                historyArray.addAll(it.sortedByDescending { it.time })
+                adapter.notifyDataSetChanged()
+                progressDialog.dismiss()
+            })
+        } else Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show()
     }
 
     override fun attachBinding(

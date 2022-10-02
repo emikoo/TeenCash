@@ -36,7 +36,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
 
     override fun setupViews() {
         viewModel = ViewModelProvider(this)[AuthViewModel::class.java]
-        setupListeners()
+        checkInternetConnection(this::setupListeners, requireContext())
         setupTextWatcher(binding.inputEditEmail , binding.inputEditPassword)
         setupTextWatcher(binding.inputEditPassword , binding.inputEditEmail)
     }

@@ -2,6 +2,7 @@ package com.teenteen.teencash.presentation.ui.fragments.main.debtors
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayout
@@ -15,6 +16,8 @@ import com.teenteen.teencash.presentation.interfaces.UpdateData
 import com.teenteen.teencash.presentation.ui.common_bottom_sheets.BottomSheetAdd
 import com.teenteen.teencash.presentation.utills.AddBottomSheetKeys
 import com.teenteen.teencash.presentation.utills.DebtorAdapterKeys
+import com.teenteen.teencash.presentation.utills.checkInternetConnection
+import com.teenteen.teencash.presentation.utills.internetIsConnected
 import com.teenteen.teencash.view_model.MainViewModel
 
 class DebtorsFragment : BaseFragment<FragmentDebtorsBinding>(), UpdateData, DebtorsAdapter.DebtorClickListener {
@@ -39,10 +42,10 @@ class DebtorsFragment : BaseFragment<FragmentDebtorsBinding>(), UpdateData, Debt
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         setupTabLayout()
         createDebtor()
+        setupRecyclerView(mfArray, DebtorAdapterKeys.MOTHERFUCKER)
         viewModel.getMotherfuckers(prefs.getCurrentUserId())
         viewModel.getBloodsuckers(prefs.getCurrentUserId())
         viewModel.getBalance(prefs.getCurrentUserId())
-        setupRecyclerView(mfArray, DebtorAdapterKeys.MOTHERFUCKER)
     }
 
     private fun setupTabLayout() {
@@ -85,39 +88,43 @@ class DebtorsFragment : BaseFragment<FragmentDebtorsBinding>(), UpdateData, Debt
 
     override fun deleteDebtor(item: Debtor, key: DebtorAdapterKeys) {
         var newBalance = 0
-        when (key) {
-            DebtorAdapterKeys.MOTHERFUCKER -> {
-                viewModel.deleteMotherfucker(prefs.getCurrentUserId(), item.docName)
-                newBalance = balance + item.amount
-                if (item.amount != 0) viewModel.putToHistory(prefs.getCurrentUserId(),
-                    History(item.name, item.amount, false, getCurrentDate() ,
-                        getCurrentDateTime(), getCurrentMonth(),666))
-                viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
-                updateMFList()
+        if (internetIsConnected(requireContext())) {
+            when (key) {
+                DebtorAdapterKeys.MOTHERFUCKER -> {
+                    viewModel.deleteMotherfucker(prefs.getCurrentUserId(), item.docName)
+                    newBalance = balance + item.amount
+                    if (item.amount != 0) viewModel.putToHistory(prefs.getCurrentUserId(),
+                        History(item.name, item.amount, false, getCurrentDate() ,
+                            getCurrentDateTime(), getCurrentMonth(),666))
+                    viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
+                    updateMFList()
+                }
+                DebtorAdapterKeys.BLOODSUCKER -> {
+                    viewModel.deleteBloodsucker(prefs.getCurrentUserId(), item.docName)
+                    newBalance = balance - item.amount
+                    if (item.amount != 0) viewModel.putToHistory(prefs.getCurrentUserId(),
+                        History(item.name, item.amount, true, getCurrentDate(),
+                            getCurrentDateTime(), getCurrentMonth(),666))
+                    viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
+                    updateBSList()
+                }
             }
-            DebtorAdapterKeys.BLOODSUCKER -> {
-                viewModel.deleteBloodsucker(prefs.getCurrentUserId(), item.docName)
-                newBalance = balance - item.amount
-                if (item.amount != 0) viewModel.putToHistory(prefs.getCurrentUserId(),
-                    History(item.name, item.amount, true, getCurrentDate(),
-                        getCurrentDateTime(), getCurrentMonth(),666))
-                viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
-                updateBSList()
-            }
-        }
+        } else Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show()
     }
 
     override fun editDebtor(item: Debtor, key: DebtorAdapterKeys) {
-        when (key) {
-            DebtorAdapterKeys.MOTHERFUCKER -> {
-                BottomSheetAdd(this, AddBottomSheetKeys.UPDATE_MOTHERFUCKER, itemDebtor = item)
-                    .show(activity?.supportFragmentManager)
+        if (internetIsConnected(requireContext())) {
+            when (key) {
+                DebtorAdapterKeys.MOTHERFUCKER -> {
+                    BottomSheetAdd(this, AddBottomSheetKeys.UPDATE_MOTHERFUCKER, itemDebtor = item)
+                        .show(activity?.supportFragmentManager)
+                }
+                DebtorAdapterKeys.BLOODSUCKER -> {
+                    BottomSheetAdd(this, AddBottomSheetKeys.UPDATE_BLOODSUCKER, itemDebtor = item)
+                        .show(activity?.supportFragmentManager)
+                }
             }
-            DebtorAdapterKeys.BLOODSUCKER -> {
-                BottomSheetAdd(this, AddBottomSheetKeys.UPDATE_BLOODSUCKER, itemDebtor = item)
-                    .show(activity?.supportFragmentManager)
-            }
-        }
+        } else Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show()
     }
     override fun updateMFList() {
         viewModel.getMotherfuckers(prefs.getCurrentUserId())
@@ -128,15 +135,17 @@ class DebtorsFragment : BaseFragment<FragmentDebtorsBinding>(), UpdateData, Debt
     }
 
     override fun subscribeToLiveData() {
-        viewModel.mf.observe(viewLifecycleOwner , Observer {
-            updateArray(mfArray , it)
-            progressDialog.dismiss()
-        })
-        viewModel.bs.observe(viewLifecycleOwner , Observer {
-            updateArray(bsArray , it)
-            progressDialog.dismiss()
-        })
-        viewModel.balance.observe(viewLifecycleOwner, Observer { balance = it })
+        if (internetIsConnected(requireContext())) {
+            viewModel.mf.observe(viewLifecycleOwner , Observer {
+                updateArray(mfArray , it)
+                progressDialog.dismiss()
+            })
+            viewModel.bs.observe(viewLifecycleOwner , Observer {
+                updateArray(bsArray , it)
+                progressDialog.dismiss()
+            })
+            viewModel.balance.observe(viewLifecycleOwner, Observer { balance = it })
+        } else Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show()
     }
     private fun updateArray(array: MutableList<Debtor> , newList: List<Debtor>) {
         array.clear()

@@ -3,6 +3,7 @@ package com.teenteen.teencash.presentation.ui.common_bottom_sheets
 import androidx.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.teenteen.teencash.R
 import com.teenteen.teencash.data.model.Category
@@ -13,9 +14,7 @@ import com.teenteen.teencash.presentation.base.BaseBottomSheetDialogFragment
 import com.teenteen.teencash.presentation.extensions.*
 import com.teenteen.teencash.presentation.interfaces.UpdateData
 import com.teenteen.teencash.presentation.interfaces.UpdateLanguage
-import com.teenteen.teencash.presentation.utills.AddBottomSheetKeys
-import com.teenteen.teencash.presentation.utills.ListBottomSheetKeys
-import com.teenteen.teencash.presentation.utills.showAlertDialog
+import com.teenteen.teencash.presentation.utills.*
 import com.teenteen.teencash.view_model.MainViewModel
 
 class BottomSheetList(
@@ -43,7 +42,7 @@ class BottomSheetList(
 
     override fun setupViews() {
         viewModel = MainViewModel()
-        subscribeTolIveData()
+        checkInternetConnection(this::subscribeTolIveData, requireContext())
         when (key) {
             ListBottomSheetKeys.CHANGE_CURRENCY -> {
                 binding.title.isVisible()
@@ -121,13 +120,17 @@ class BottomSheetList(
 
     override fun onAchieved() {
         itemCategory?.let {
-            val newSavedAmount = savedAmount - itemCategory.firstAmount
-            viewModel.deletePiggy(prefs.getCurrentUserId() , itemCategory.docName)
-            viewModel.updateSavedAmount(prefs.getCurrentUserId(), newSavedAmount)
-            viewModel.createAchievement(prefs.getCurrentUserId(), "${itemCategory.name}${itemCategory.secondAmount}", itemCategory)
-            updater!!.achieved()
-            updater.updatePiggyBank()
-            this.dismiss()
+            if (internetIsConnected(requireContext())) {
+                val newSavedAmount = savedAmount - itemCategory.firstAmount
+                viewModel.deletePiggy(prefs.getCurrentUserId() , itemCategory.docName)
+                viewModel.updateSavedAmount(prefs.getCurrentUserId(), newSavedAmount)
+                viewModel.createAchievement(prefs.getCurrentUserId(), "${itemCategory.name}${itemCategory.secondAmount}", itemCategory)
+                updater!!.achieved()
+                updater.updatePiggyBank()
+                this.dismiss()
+            } else {
+                Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show()
+            }
         }
     }
 
@@ -151,35 +154,39 @@ class BottomSheetList(
 
     private fun deleteCategory() {
         itemCategory?.let {
-            val newBalance = currentBalance + it.firstAmount
-            val newSpentAmount = spentToday - it.firstAmount
-            if (it.firstAmount != 0) {
-                val history = History(it.name, it.firstAmount, false, getCurrentDate(),
-                    getCurrentDateTime(), getCurrentMonth(), it.iconId)
-                viewModel.putToHistory(prefs.getCurrentUserId(), history)
-            }
-            viewModel.deleteCategory(prefs.getCurrentUserId() , it.docName)
-            viewModel.updateSpentAmount(prefs.getCurrentUserId(), newSpentAmount)
-            viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
-            updater!!.updateCategory()
-            this.dismiss()
+            if (internetIsConnected(requireContext())) {
+                val newBalance = currentBalance + it.firstAmount
+                val newSpentAmount = spentToday - it.firstAmount
+                if (it.firstAmount != 0) {
+                    val history = History(it.name, it.firstAmount, false, getCurrentDate(),
+                        getCurrentDateTime(), getCurrentMonth(), it.iconId)
+                    viewModel.putToHistory(prefs.getCurrentUserId(), history)
+                }
+                viewModel.deleteCategory(prefs.getCurrentUserId() , it.docName)
+                viewModel.updateSpentAmount(prefs.getCurrentUserId(), newSpentAmount)
+                viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
+                updater!!.updateCategory()
+                this.dismiss()
+            } else Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show()
         }
     }
 
     private fun deletePiggy() {
         itemCategory?.let {
-            val newBalance = currentBalance + it.firstAmount
-            val newSavedAmount = savedAmount - it.firstAmount
-            if (it.firstAmount != 0) {
-                val history = History(it.name, it.firstAmount, false, getCurrentDate(),
-                    getCurrentDateTime(), getCurrentMonth(), it.iconId)
-                viewModel.putToHistory(prefs.getCurrentUserId(), history)
-            }
-            viewModel.deletePiggy(prefs.getCurrentUserId() , it.docName)
-            viewModel.updateSavedAmount(prefs.getCurrentUserId(), newSavedAmount)
-            viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
-            updater!!.updatePiggyBank()
-            this.dismiss()
+            if (internetIsConnected(requireContext())) {
+                val newBalance = currentBalance + it.firstAmount
+                val newSavedAmount = savedAmount - it.firstAmount
+                if (it.firstAmount != 0) {
+                    val history = History(it.name, it.firstAmount, false, getCurrentDate(),
+                        getCurrentDateTime(), getCurrentMonth(), it.iconId)
+                    viewModel.putToHistory(prefs.getCurrentUserId(), history)
+                }
+                viewModel.deletePiggy(prefs.getCurrentUserId() , it.docName)
+                viewModel.updateSavedAmount(prefs.getCurrentUserId(), newSavedAmount)
+                viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
+                updater!!.updatePiggyBank()
+                this.dismiss()
+            } else Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show()
         }
     }
 

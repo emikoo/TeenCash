@@ -7,12 +7,13 @@ import android.view.ViewGroup
 import com.teenteen.teencash.R
 import com.teenteen.teencash.databinding.BsAskQuestionBinding
 import com.teenteen.teencash.presentation.base.BaseBottomSheetDialogFragment
+import com.teenteen.teencash.presentation.utills.checkInternetConnection
 
 
 class AskQuestionBottomSheet: BaseBottomSheetDialogFragment<BsAskQuestionBinding>() {
     override fun setupViews() {
         binding.btnCancel.setOnClickListener { dismiss() }
-        binding.btnText.setOnClickListener { composeEmail() }
+        binding.btnText.setOnClickListener { checkInternetConnection(this::composeEmail, requireContext()) }
     }
 
     private fun composeEmail() {

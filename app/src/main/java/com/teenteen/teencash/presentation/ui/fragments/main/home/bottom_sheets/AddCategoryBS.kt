@@ -14,6 +14,7 @@ import com.teenteen.teencash.presentation.base.BaseBottomSheetDialogFragment
 import com.teenteen.teencash.presentation.extensions.show
 import com.teenteen.teencash.presentation.interfaces.PickerItem
 import com.teenteen.teencash.presentation.interfaces.UpdateData
+import com.teenteen.teencash.presentation.utills.checkInternetConnection
 
 class AddCategoryBS(private val updater: UpdateData) :
     BaseBottomSheetDialogFragment<BsAddCategoryBinding>() ,
@@ -32,7 +33,10 @@ class AddCategoryBS(private val updater: UpdateData) :
 
     override fun setupViews() {
         setupTextLimitations()
-        setupListeners()
+        checkInternetConnection(this::setupListeners, requireContext())
+        binding.ibClose.setOnClickListener {
+            dialog?.dismiss()
+        }
     }
 
     private fun setupListeners() {
@@ -41,9 +45,6 @@ class AddCategoryBS(private val updater: UpdateData) :
         }
         binding.btnAdd.setOnClickListener {
             checkFields()
-        }
-        binding.ibClose.setOnClickListener {
-            dialog?.dismiss()
         }
     }
 

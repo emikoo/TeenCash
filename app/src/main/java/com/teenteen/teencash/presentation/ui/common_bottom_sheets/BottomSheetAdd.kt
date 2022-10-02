@@ -17,6 +17,7 @@ import com.teenteen.teencash.presentation.base.BaseBottomSheetDialogFragment
 import com.teenteen.teencash.presentation.extensions.*
 import com.teenteen.teencash.presentation.interfaces.UpdateData
 import com.teenteen.teencash.presentation.utills.AddBottomSheetKeys
+import com.teenteen.teencash.presentation.utills.checkInternetConnection
 import com.teenteen.teencash.view_model.MainViewModel
 
 class BottomSheetAdd(
@@ -33,7 +34,7 @@ class BottomSheetAdd(
 
     override fun setupViews() {
         viewModel = MainViewModel()
-        subscribeToLiveData()
+        checkInternetConnection(this::subscribeToLiveData, requireContext())
         when (key) {
             AddBottomSheetKeys.ADD_PIGGY_BANK , AddBottomSheetKeys.CREATE_MOTHERFUCKER ,
             AddBottomSheetKeys.CREATE_BLOODSUCKER , AddBottomSheetKeys.UPDATE_BLOODSUCKER ,
@@ -57,6 +58,8 @@ class BottomSheetAdd(
             }
         }
         setupTitlesByKey()
+        checkInternetConnection(this::setupListener, requireContext())
+        binding.btnCancel.setOnClickListener { dialog !!.dismiss() }
         setupListener()
     }
 
@@ -145,18 +148,17 @@ class BottomSheetAdd(
                     whenDocExistAction = this::toastItemExists, whenDocNotExistAction = this::createMFDoc)
                 AddBottomSheetKeys.CREATE_BLOODSUCKER -> checkIfDocExists("bloodsuckers" , binding.etName.text.toString() ,
                     whenDocExistAction = this::toastItemExists, whenDocNotExistAction = this::createBSDoc)
-                AddBottomSheetKeys.UPDATE_MOTHERFUCKER -> if (binding.etName.text.isNotBlank()) {
-                    checkField(this::updateMotherfucker)
-                }
-                AddBottomSheetKeys.UPDATE_BLOODSUCKER -> if (binding.etName.text.isNotBlank()) {
-                    checkField(this::updateBloodsucker)
-                }
+                AddBottomSheetKeys.UPDATE_MOTHERFUCKER -> if (binding.etName.text.isNotBlank()
+                    && binding.etAmount.text.isNotBlank()) updateMotherfucker()
+                    else Toast.makeText(requireContext(), getString(R.string.check_all_data), Toast.LENGTH_SHORT).show()
+                AddBottomSheetKeys.UPDATE_BLOODSUCKER -> if (binding.etName.text.isNotBlank()
+                    && binding.etAmount.text.isNotBlank()) updateBloodsucker()
+                else Toast.makeText(requireContext(), getString(R.string.check_all_data), Toast.LENGTH_SHORT).show()
                 AddBottomSheetKeys.UPDATE_CATEGORY -> updateCategory()
                 AddBottomSheetKeys.UPDATE_PIGGY -> updatePiggy()
                 AddBottomSheetKeys.UPDATE_BALANCE -> checkField(this::updateBalance)
             }
         }
-        binding.btnCancel.setOnClickListener { dialog !!.dismiss() }
     }
 
     private fun addPiggy() {
@@ -236,17 +238,6 @@ class BottomSheetAdd(
 
     private fun createMFDoc() {
         val name = binding.etName.text.toString()
-        val amount = binding.etAmount.text.toString().toInt()
-        val docName = "$name$amount"
-        val newBalance = balance - amount
-        val default: Debtor = Debtor("$name$amount", name, amount)
-        val time = getCurrentDateTime()
-        val date = getCurrentDate()
-        val item = History(name, amount, true, date, time, getCurrentMonth(),666)
-        viewModel.putToHistory(prefs.getCurrentUserId(), item)
-        viewModel.createMotherfucker(prefs.getCurrentUserId(), docName, default)
-        viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
-        updater.updateMFList()
     }
 
     private fun createBSDoc() {

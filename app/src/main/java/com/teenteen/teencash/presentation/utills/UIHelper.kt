@@ -48,6 +48,14 @@ fun checkInternetConnection(connectedAction: () -> Unit, context: Context, noInt
     }
 }
 
+fun checkInternetConnection(connectedAction: () -> Unit, context: Context) {
+    if (internetIsConnected(context)) {
+        connectedAction()
+    } else {
+        Toast.makeText(context, context.getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show()
+    }
+}
+
 fun internetIsConnected(context: Context): Boolean {
     var connected = false
     val connectivityManager =
@@ -55,10 +63,5 @@ fun internetIsConnected(context: Context): Boolean {
     connected =
         connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)!!.state == NetworkInfo.State.CONNECTED ||
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)!!.state == NetworkInfo.State.CONNECTED
-    return if (!connected) {
-        Toast.makeText(context, context.getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show()
-        false
-    } else {
-        true
-    }
+    return connected
 }

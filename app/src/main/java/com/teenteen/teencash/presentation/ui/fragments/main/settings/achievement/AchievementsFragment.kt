@@ -3,6 +3,7 @@ package com.teenteen.teencash.presentation.ui.fragments.main.settings.achievemen
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +14,7 @@ import com.teenteen.teencash.R
 import com.teenteen.teencash.data.model.Category
 import com.teenteen.teencash.databinding.FragmentAchievementsBinding
 import com.teenteen.teencash.presentation.base.BaseFragment
+import com.teenteen.teencash.presentation.utills.internetIsConnected
 import com.teenteen.teencash.presentation.utills.showAlertDialog
 import com.teenteen.teencash.view_model.MainViewModel
 
@@ -57,16 +59,20 @@ class AchievementsFragment : BaseFragment<FragmentAchievementsBinding>() ,
     }
 
     private fun delete() {
-        viewModel.deleteAchievement(prefs.getCurrentUserId() , docName)
-        viewModel.getAchievements(prefs.getCurrentUserId())
+        if (internetIsConnected(requireContext())) {
+            viewModel.deleteAchievement(prefs.getCurrentUserId() , docName)
+            viewModel.getAchievements(prefs.getCurrentUserId())
+        } else Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show()
     }
 
     override fun subscribeToLiveData() {
-        viewModel.achievement.observe(viewLifecycleOwner , Observer {
-            array = it
-            setupRecyclerView()
-            progressDialog.dismiss()
-        })
+        if (internetIsConnected(requireContext())) {
+            viewModel.achievement.observe(viewLifecycleOwner , Observer {
+                array = it
+                setupRecyclerView()
+                progressDialog.dismiss()
+            })
+        } else Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show()
     }
 
     override fun onAttach(context: Context) {
