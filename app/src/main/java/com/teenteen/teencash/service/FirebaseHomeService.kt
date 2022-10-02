@@ -72,6 +72,21 @@ object FirebaseHomeService {
         }
     }
 
+    suspend fun getBalanceCurrency(uid: String): String? {
+        return try {
+            db.collection("users")
+                .document(uid)
+                .collection("statistics").document("info")
+                .get().await().get("balanceCurrency").toString()
+        } catch (e: Exception) {
+            Log.e(TAG , "Error getting balance" , e)
+            FirebaseCrashlytics.getInstance().log("Error getting balance")
+            FirebaseCrashlytics.getInstance().setCustomKey("user id" , uid)
+            FirebaseCrashlytics.getInstance().recordException(e)
+            null
+        }
+    }
+
     suspend fun getLimit(uid: String): Int? {
         return try {
             db.collection("users")
@@ -81,6 +96,21 @@ object FirebaseHomeService {
         } catch (e: Exception) {
             Log.e(TAG , "Error getting limitPerDay" , e)
             FirebaseCrashlytics.getInstance().log("Error getting limitPerDay")
+            FirebaseCrashlytics.getInstance().setCustomKey("user id" , uid)
+            FirebaseCrashlytics.getInstance().recordException(e)
+            null
+        }
+    }
+
+    suspend fun getLimitCurrency(uid: String): String? {
+        return try {
+            db.collection("users")
+                .document(uid)
+                .collection("statistics").document("info")
+                .get().await().get("limitCurrency").toString()
+        } catch (e: Exception) {
+            Log.e(TAG , "Error getting balance" , e)
+            FirebaseCrashlytics.getInstance().log("Error getting balance")
             FirebaseCrashlytics.getInstance().setCustomKey("user id" , uid)
             FirebaseCrashlytics.getInstance().recordException(e)
             null
@@ -283,6 +313,18 @@ object FirebaseHomeService {
         } catch (e: Exception) {
             Log.e(TAG , "Error creating achievement" , e)
             FirebaseCrashlytics.getInstance().log("Error creating achievement")
+            FirebaseCrashlytics.getInstance().setCustomKey("user id" , uid)
+            FirebaseCrashlytics.getInstance().recordException(e)
+        }
+    }
+
+    fun updateCurrency(uid: String, field: String, currency: String) {
+        try {
+            db.collection("users").document(uid)
+                .collection("statistics").document("info").update(field, currency)
+        } catch (e: Exception) {
+            Log.e(TAG , "Error updating currency" , e)
+            FirebaseCrashlytics.getInstance().log("Error updating currency")
             FirebaseCrashlytics.getInstance().setCustomKey("user id" , uid)
             FirebaseCrashlytics.getInstance().recordException(e)
         }

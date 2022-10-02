@@ -3,6 +3,7 @@ package com.teenteen.teencash.data.model
 import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.firestore.DocumentSnapshot
+import java.util.*
 
 data class Category(
     var iconId: Int ,
@@ -10,7 +11,8 @@ data class Category(
     var name: String ,
     var docName: String,
     var firstAmount: Int,
-    var image: String = ""
+    var image: String = "",
+    var currency: String? = "KGS"
 ) {
     companion object {
         fun DocumentSnapshot.toCategory(): Category? {
@@ -21,7 +23,8 @@ data class Category(
                 val docName = getString("docName") !!
                 val firstAmount = get("firstAmount").toString().toInt()
                 val image = getString("image") !!
-                return Category(icon , secondAmount , name , docName, firstAmount, image)
+                val currency = getString("currency") !!
+                return Category(icon , secondAmount , name , docName, firstAmount, image, currency)
             } catch (e: Exception) {
                 Log.e(TAG , "Error converting category" , e)
                 FirebaseCrashlytics.getInstance().log("Error converting category")

@@ -45,3 +45,15 @@ fun PreferenceManager.updateLanguage(lang: String, context: Context, prefsSettin
 fun Context.showNoConnectionToast() {
     Toast.makeText(this, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show()
 }
+
+fun String.toSymbol(): String {
+    var textWithoutCaps = ""
+    when(this) {
+        "KGS" -> textWithoutCaps = "kgs"
+        "KZT" -> textWithoutCaps = "kzt"
+        "UZS" -> textWithoutCaps = "uzs"
+        "EUR" -> textWithoutCaps = "€"
+        "USD" -> textWithoutCaps = "$"
+    }
+    return  textWithoutCaps
+}

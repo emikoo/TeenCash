@@ -96,4 +96,10 @@
         <item name="week">жума</item>
         <item name="month">ай</item>
     </string-array>
+
+    <string-array name="spinner_currency">
+        <item name="kgs">KGS</item>
+        <item name="eur">EUR</item>
+        <item name="usd">USD</item>
+    </string-array>
 </resources>

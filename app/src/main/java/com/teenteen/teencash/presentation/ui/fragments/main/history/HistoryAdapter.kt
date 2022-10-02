@@ -11,6 +11,7 @@ import com.teenteen.teencash.data.model.History
 import com.teenteen.teencash.databinding.ItemEmptyBinding
 import com.teenteen.teencash.databinding.ItemHistoryBinding
 import com.teenteen.teencash.presentation.extensions.dateTimeToString
+import com.teenteen.teencash.presentation.extensions.toSymbol
 import com.teenteen.teencash.presentation.utills.IconType.getProjectIconType
 
 class HistoryAdapter(private val dataSet: List<History>) : BaseAdapter() {
@@ -53,10 +54,10 @@ class HistoryAdapter(private val dataSet: List<History>) : BaseAdapter() {
     private fun setupHistoryViewHolder(holder: HistoryViewHolder , position: Int) {
         val item = dataSet[position]
         if (item.spent) {
-            holder.amount.text = "- ${item.amount} kgs"
+            holder.amount.text = "- ${item.amount} ${item.currency.toSymbol()}"
             holder.amount.setTextColor(holder.itemView.resources.getColor(R.color.red))
         } else {
-            holder.amount.text = "+ ${item.amount} kgs"
+            holder.amount.text = "+ ${item.amount} ${item.currency.toSymbol()}"
             holder.amount.setTextColor(holder.itemView.resources.getColor(R.color.green))
         }
         holder.name.text = item.name

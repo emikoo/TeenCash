@@ -97,4 +97,10 @@
         <item name="week">week</item>
         <item name="month">month</item>
     </string-array>
+
+    <string-array name="spinner_currency">
+        <item name="kgs">KGS</item>
+        <item name="eur">EUR</item>
+        <item name="usd">USD</item>
+    </string-array>
 </resources>

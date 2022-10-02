@@ -36,7 +36,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
     private var piggyArray = mutableListOf<Category>()
     private lateinit var categoryAdapter: CategoryAdapter
     lateinit var viewModel: MainViewModel
-    var spentToday = 0
 
     override fun attachBinding(
         list: MutableList<FragmentHomeBinding> ,
@@ -49,22 +48,30 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
 
     override fun setupViews() {
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        setupTabLayout()
         checkInternetConnection(
             this::getData ,
             requireContext() ,
             this::showNoInternetConnectionToast
         )
+        setupTabLayout()
         setupRecyclerView(categoryArray , CategoryAdapterKeys.CATEGORY)
-        addBalance()
+        setupListeners()
+    }
+
+    private fun setupListeners() {
         binding.ibEditLimit.setOnClickListener {
-            BottomSheetAdd(this , AddBottomSheetKeys.SET_LIMIT)
+            BottomSheetAdd(this , AddBottomSheetKeys.SET_LIMIT, currency = viewModel.limit_currency.value)
                 .show(activity?.supportFragmentManager)
         }
         binding.totalAmount.setOnLongClickListener {
-            BottomSheetAdd(this , AddBottomSheetKeys.UPDATE_BALANCE)
+            BottomSheetAdd(this , AddBottomSheetKeys.UPDATE_BALANCE, currency = viewModel.balance_currency.value)
                 .show(activity?.supportFragmentManager)
             true
+        }
+        binding.btnTotalEdit.setOnClickListener {
+            BottomSheetAdd(
+                this , AddBottomSheetKeys.CURRENT_BALANCE, currency = viewModel.balance_currency.value
+            ).show(activity !!.supportFragmentManager)
         }
     }
 
@@ -95,20 +102,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
     private fun getData() {
         progressDialog.show()
         checkDate()
+        viewModel.getBalanceCurrency(prefs.getCurrentUserId())
+        viewModel.getLimitCurrency(prefs.getCurrentUserId())
         viewModel.getBalance(prefs.getCurrentUserId())
         viewModel.getSavedAmount(prefs.getCurrentUserId())
         viewModel.getLimit(prefs.getCurrentUserId())
         viewModel.getSpentAmount(prefs.getCurrentUserId())
         viewModel.getCategories(prefs.getCurrentUserId())
         viewModel.getPiggyBanks(prefs.getCurrentUserId())
-    }
-
-    private fun addBalance() {
-        binding.btnTotalEdit.setOnClickListener {
-            BottomSheetAdd(
-                this , AddBottomSheetKeys.CURRENT_BALANCE
-            ).show(activity !!.supportFragmentManager)
-        }
     }
 
     private fun checkDate() {
@@ -174,6 +175,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
 
     override fun updateStatistics() {
         progressDialog.show()
+        viewModel.getBalanceCurrency(prefs.getCurrentUserId())
+        viewModel.getLimitCurrency(prefs.getCurrentUserId())
         viewModel.getBalance(prefs.getCurrentUserId())
         viewModel.getSavedAmount(prefs.getCurrentUserId())
         viewModel.getLimit(prefs.getCurrentUserId())
@@ -213,17 +216,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
             progressDialog.dismiss()
         }
         viewModel.spentAmount.observe(viewLifecycleOwner) {
-            if (it == null || it == 0) binding.progressTitle.text = "0/${binding.limit.text}\nKGS"
+            val limitCurrency = viewModel.limit_currency.value
+            if (it == null || it == 0) binding.progressTitle.text = "0/${binding.limit.text}\n$limitCurrency"
             else if (it.toString().length >= 3 && binding.limit.text.length >= 5) {
-                binding.progressTitle.text = "$it/\n${binding.limit.text}\nKGS"
+                binding.progressTitle.text = "$it/\n${binding.limit.text}\n$limitCurrency"
             } else if (it.toString().length >= 5 && binding.limit.text.length >= 3) {
-                binding.progressTitle.text = "$it/\n${binding.limit.text}\nKGS"
-            } else binding.progressTitle.text = "$it/${binding.limit.text}\nKGS"
+                binding.progressTitle.text = "$it/\n${binding.limit.text}\n$limitCurrency"
+            } else binding.progressTitle.text = "$it/${binding.limit.text}\n$limitCurrency"
             progressDialog.dismiss()
             if (binding.limit.text.toString() == "") binding.progressCircular.max = 0
             else binding.progressCircular.max = binding.limit.text.toString().toInt()
             binding.progressCircular.progress = it
-            spentToday = it
+        }
+        viewModel.balance_currency.observe(viewLifecycleOwner) {
+            binding.currencyTotal.text = it
         }
     }
 

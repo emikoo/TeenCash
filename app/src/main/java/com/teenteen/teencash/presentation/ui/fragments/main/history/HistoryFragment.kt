@@ -39,8 +39,8 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
 
     private fun setupSpinner() {
         val adapter =
-            ArrayAdapter.createFromResource(requireActivity(), R.array.spinner_date , R.layout.spinner_item)
-        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+            ArrayAdapter.createFromResource(requireActivity(), R.array.spinner_date , R.layout.spinner_history)
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_history)
         binding.spinner.adapter = adapter
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {}

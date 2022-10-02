@@ -7,7 +7,8 @@ import com.google.firebase.firestore.DocumentSnapshot
 data class Debtor(
     val docName: String,
     val name: String,
-    val amount: Int
+    val amount: Int,
+    var currency: String? = "KGS"
 ) {
     companion object {
         fun DocumentSnapshot.toDebtor(): Debtor? {
@@ -15,7 +16,8 @@ data class Debtor(
                 val docName = getString("docName") !!
                 val name = getString("name") !!
                 val amount = get("amount").toString().toInt()
-                return Debtor(docName, name , amount)
+                val currency = getString("currency") !!
+                return Debtor(docName, name , amount, currency)
             } catch (e: Exception) {
                 Log.e(TAG , "Error converting debtor" , e)
                 FirebaseCrashlytics.getInstance().log("Error converting debtor")

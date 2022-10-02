@@ -12,7 +12,8 @@ data class History(
     var date: Date,
     var time: Date,
     var month: Date,
-    var image: Int
+    var image: Int,
+    var currency: String
 ) {
     companion object {
         fun DocumentSnapshot.toHistory(): History? {
@@ -24,7 +25,8 @@ data class History(
                 val time = getDate("time") !!
                 val month = getDate("month") !!
                 val image = get("image").toString().toInt()
-                return History(name , amount, spent, date, time, month, image)
+                val currency = getString("currency") !!
+                return History(name , amount, spent, date, time, month, image, currency)
             } catch (e: Exception) {
                 Log.e(TAG , "Error converting history" , e)
                 FirebaseCrashlytics.getInstance().log("Error converting history")

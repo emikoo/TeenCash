@@ -3,7 +3,10 @@ package com.teenteen.teencash.presentation.ui.fragments.main.home.bottom_sheets
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.example.teencash.ui.bottom_sheet.icon.IconListBS
 import com.teenteen.teencash.R
@@ -37,6 +40,7 @@ class AddCategoryBS(private val updater: UpdateData) :
         binding.ibClose.setOnClickListener {
             dialog?.dismiss()
         }
+        setupSpinner()
     }
 
     private fun setupListeners() {
@@ -45,6 +49,19 @@ class AddCategoryBS(private val updater: UpdateData) :
         }
         binding.btnAdd.setOnClickListener {
             checkFields()
+        }
+    }
+
+    private fun setupSpinner() {
+        val adapter =
+            ArrayAdapter.createFromResource(requireActivity(), R.array.spinner_currency , R.layout.spinner_currency)
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_currency)
+        binding.spinner.adapter = adapter
+        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+            override fun onItemSelected(p0: AdapterView<*>? , p1: View? , p2: Int , p3: Long) {
+                binding.tvCurrency.text = binding.spinner.selectedItem.toString()
+            }
         }
     }
 
@@ -80,7 +97,8 @@ class AddCategoryBS(private val updater: UpdateData) :
             secondAmount = binding.etLimit.text.toString().toInt() ,
             iconId = iconId,
             firstAmount = 0,
-            docName = docName
+            docName = docName,
+            currency = binding.tvCurrency.text.toString()
         )
         usersCollection.document(prefs.getCurrentUserId())
             .collection("categories").document(docName).set(newCategory)
@@ -111,7 +129,7 @@ class AddCategoryBS(private val updater: UpdateData) :
             override fun onTextChanged(s: CharSequence , start: Int , before: Int , count: Int) {
                 val length: Int = binding.etLimit.length()
                 val convert = length.toString()
-                binding.maxLimit.text = "max: $convert/6"
+                binding.maxLimit.text = "max: $convert/5"
             }
             override fun afterTextChanged(s: Editable) {
                 if (binding.etLimit.text.toString().startsWith("0")

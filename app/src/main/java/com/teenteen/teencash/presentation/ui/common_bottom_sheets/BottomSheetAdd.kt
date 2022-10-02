@@ -3,7 +3,10 @@ package com.teenteen.teencash.presentation.ui.common_bottom_sheets
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.google.firebase.firestore.FirebaseFirestore
@@ -22,7 +25,7 @@ import com.teenteen.teencash.view_model.MainViewModel
 
 class BottomSheetAdd(
     private val updater: UpdateData , private val key: AddBottomSheetKeys , private val itemCategory: Category? = null ,
-    val itemDebtor: Debtor? = null) :
+    val itemDebtor: Debtor? = null, val currency: String? = null) :
     BaseBottomSheetDialogFragment<BsAddBinding>() {
 
     lateinit var viewModel: MainViewModel
@@ -37,24 +40,43 @@ class BottomSheetAdd(
         checkInternetConnection(this::subscribeToLiveData, requireContext())
         when (key) {
             AddBottomSheetKeys.ADD_PIGGY_BANK , AddBottomSheetKeys.CREATE_MOTHERFUCKER ,
-            AddBottomSheetKeys.CREATE_BLOODSUCKER , AddBottomSheetKeys.UPDATE_BLOODSUCKER ,
+            AddBottomSheetKeys.CREATE_BLOODSUCKER -> {
+                binding.title.isInvisible()
+                binding.limit.isInvisible()
+                binding.etName.isVisible()
+                binding.etLimit.isGone()
+                binding.tvCurrency1.isGone()
+                binding.spinner.isVisible()
+                binding.ivSpinner.isVisible()
+                setupSpinner()
+            }
+            AddBottomSheetKeys.UPDATE_BLOODSUCKER ,
             AddBottomSheetKeys.UPDATE_MOTHERFUCKER -> {
                 binding.title.isInvisible()
                 binding.limit.isInvisible()
                 binding.etName.isVisible()
                 binding.etLimit.isGone()
+                binding.tvCurrency1.isGone()
+                binding.spinner.isGone()
+                binding.ivSpinner.isGone()
             }
             AddBottomSheetKeys.UPDATE_PIGGY , AddBottomSheetKeys.UPDATE_CATEGORY -> {
                 binding.title.isInvisible()
                 binding.limit.isInvisible()
                 binding.etName.isVisible()
                 binding.etLimit.isVisible()
+                binding.tvCurrency1.isVisible()
+                binding.spinner.isGone()
+                binding.ivSpinner.isGone()
             }
             else -> {
                 binding.title.isVisible()
                 binding.limit.isVisible()
                 binding.etName.isInvisible()
                 binding.etLimit.isGone()
+                binding.tvCurrency1.isGone()
+                binding.spinner.isGone()
+                binding.ivSpinner.isGone()
             }
         }
         setupTitlesByKey()
@@ -63,20 +85,45 @@ class BottomSheetAdd(
         setupListener()
     }
 
+    private fun setupSpinner() {
+        val adapter =
+            ArrayAdapter.createFromResource(requireActivity(), R.array.spinner_currency , R.layout.spinner_currency)
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_currency)
+        binding.spinner.adapter = adapter
+        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+            override fun onItemSelected(p0: AdapterView<*>? , p1: View? , p2: Int , p3: Long) {
+                binding.tvCurrency.text = binding.spinner.selectedItem.toString()
+            }
+        }
+    }
+
     private fun setupTitlesByKey() {
         when (key) {
             AddBottomSheetKeys.ADD_PIGGY_BANK -> setupTextByKey(etAmountHint = resources.getString(R.string.goal) , btnAddText = false)
-            AddBottomSheetKeys.SET_LIMIT -> setupTextByKey(title = getString(R.string.your_daily_limit),
-                etAmountHint = resources.getString(R.string.limit) , btnAddText = false)
+            AddBottomSheetKeys.SET_LIMIT -> {
+                setupTextByKey(title = getString(R.string.your_daily_limit),
+                    etAmountHint = resources.getString(R.string.limit) , btnAddText = false)
+                binding.spinner.isVisible()
+                binding.ivSpinner.isVisible()
+                setupSpinner()
+            }
             AddBottomSheetKeys.SPENT_CATEGORY -> {
                 setupTextByKey(title = itemCategory !!.name, etAmountHint = resources.getString(R.string.spent) , btnAddText = true)
                 val limit = resources.getString(R.string.limit)
                 binding.limit.text = "$limit: ${itemCategory.firstAmount}/${itemCategory.secondAmount}"
+                binding.tvCurrency.text = itemCategory.currency
             }
-            AddBottomSheetKeys.SAVED_PIGGY -> setupTextByKey(title = itemCategory !!.name,
-                etAmountHint = "0" , btnAddText = false)
-            AddBottomSheetKeys.CURRENT_BALANCE -> setupTextByKey(title = getString(R.string.Balance),
-                etAmountHint = "0" , btnAddText = true)
+            AddBottomSheetKeys.SAVED_PIGGY -> {
+                setupTextByKey(title = itemCategory !!.name,
+                    etAmountHint = "0" , btnAddText = false)
+                binding.tvCurrency.text = itemCategory.currency
+            }
+            AddBottomSheetKeys.CURRENT_BALANCE -> {
+                setupTextByKey(title = getString(R.string.Balance),
+                    etAmountHint = "0" , btnAddText = true)
+                binding.tvCurrency.text = currency
+            }
             AddBottomSheetKeys.CREATE_MOTHERFUCKER -> setupTextByKey(etAmountHint = "0" , btnAddText = false)
             AddBottomSheetKeys.CREATE_BLOODSUCKER -> setupTextByKey(etAmountHint = "0" , btnAddText = false)
             AddBottomSheetKeys.UPDATE_MOTHERFUCKER -> setupUpdateTexts(true)
@@ -86,6 +133,9 @@ class BottomSheetAdd(
             AddBottomSheetKeys.UPDATE_BALANCE -> {
                 binding.title.text = getString(R.string.Balance)
                 binding.btnAdd.text = resources.getString(R.string.save)
+                binding.spinner.isVisible()
+                binding.ivSpinner.isVisible()
+                setupSpinner()
             }
         }
     }
@@ -112,10 +162,13 @@ class BottomSheetAdd(
         if (isDebtor) {
             binding.etName.setText(itemDebtor?.name)
             binding.etAmount.setText("${itemDebtor?.amount}")
+            binding.tvCurrency.text = "${itemDebtor?.currency}"
         } else {
             binding.etName.setText(itemCategory?.name)
             binding.etAmount.setText("${itemCategory?.firstAmount}")
             binding.etLimit.setText("${itemCategory?.secondAmount}")
+            binding.tvCurrency.text = "${itemCategory?.currency}"
+            binding.tvCurrency1.text = "${itemCategory?.currency}"
         }
         binding.etName.setSelection(binding.etName.length())
         binding.etAmount.setSelection(binding.etAmount.length())
@@ -167,7 +220,8 @@ class BottomSheetAdd(
             secondAmount = limit ,
             iconId = 777 ,
             firstAmount = 0,
-            docName = "$categoryName$limit"
+            docName = "$categoryName$limit",
+            currency = binding.tvCurrency.text.toString()
         )
         dialog?.dismiss()
         updater.updatePiggyBank()
@@ -180,6 +234,7 @@ class BottomSheetAdd(
             prefs.getCurrentUserId() ,
             binding.etAmount.text.toString().toInt()
         )
+        viewModel.updateCurrency(prefs.getCurrentUserId(), "limitCurrency", binding.tvCurrency.text.toString())
         updater.updateStatistics()
     }
 
@@ -188,7 +243,8 @@ class BottomSheetAdd(
         if (spentAmount != 0) {
             val before = itemCategory !!.firstAmount
             val value = before + spentAmount
-            val item = History(itemCategory.name, spentAmount, true, getCurrentDate(), getCurrentDateTime(), getCurrentMonth(), itemCategory.iconId)
+            val item = History(itemCategory.name, spentAmount, true, getCurrentDate(),
+                getCurrentDateTime(), getCurrentMonth(), itemCategory.iconId, itemCategory.currency.toString())
             viewModel.spendCategory(prefs.getCurrentUserId() , itemCategory.docName, value)
             viewModel.updateBalance(prefs.getCurrentUserId() , balance - spentAmount)
             viewModel.updateSpentAmount(prefs.getCurrentUserId() , spentToday + spentAmount)
@@ -201,7 +257,8 @@ class BottomSheetAdd(
         val input = binding.etAmount.text.toString().toInt()
         if (input != 0) {
             val total = input + itemCategory !!.firstAmount
-            val item = History(itemCategory.name, input, true, getCurrentDate(), getCurrentDateTime(), getCurrentMonth(),777)
+            val item = History(itemCategory.name, input, true, getCurrentDate(),
+                getCurrentDateTime(), getCurrentMonth(),777, itemCategory.currency.toString())
             viewModel.updateSavedAmount(prefs.getCurrentUserId() , savedMoney+input)
             viewModel.saveMoneyPiggy(prefs.getCurrentUserId() , itemCategory.docName , total)
             viewModel.updateBalance(prefs.getCurrentUserId(), balance-input)
@@ -214,7 +271,7 @@ class BottomSheetAdd(
         if (binding.etAmount.text.toString().toInt() != 0) {
             val newBalance = balance + binding.etAmount.text.toString().toInt()
             val item = History("Balance", binding.etAmount.text.toString().toInt(), false, getCurrentDate(),
-                getCurrentDateTime(), getCurrentMonth(),1313)
+                getCurrentDateTime(), getCurrentMonth(),1313, binding.tvCurrency.text.toString())
             viewModel.putToHistory(prefs.getCurrentUserId(), item)
             viewModel.updateBalance(prefs.getCurrentUserId() , newBalance)
             updater.updateStatistics()
@@ -223,12 +280,13 @@ class BottomSheetAdd(
 
     private fun updateBalance() {
         viewModel.updateBalance(prefs.getCurrentUserId(), binding.etAmount.text.toString().toInt())
+        viewModel.updateCurrency(prefs.getCurrentUserId(), "balanceCurrency", binding.tvCurrency.text.toString())
         updater.updateStatistics()
         dialog?.dismiss()
     }
 
     private fun createInfoDoc() {
-        val defaultInfo: InfoStatistic = InfoStatistic(0 , 0 , 0 , 0)
+        val defaultInfo: InfoStatistic = InfoStatistic(0 , "KGD",0 , 0 , "KGS",0)
         val db = FirebaseFirestore.getInstance()
         db.collection("users")
             .document(prefs.getCurrentUserId())
@@ -242,10 +300,11 @@ class BottomSheetAdd(
             val amount = binding.etAmount.text.toString().toInt()
             val docName = "$name$amount"
             val newBalance = balance - amount
-            val default: Debtor = Debtor("$name$amount", name, amount)
+            val currency = binding.tvCurrency.text.toString()
+            val default: Debtor = Debtor("$name$amount", name, amount, currency)
             val time = getCurrentDateTime()
             val date = getCurrentDate()
-            val item = History(name, amount, true, date, time, getCurrentMonth(),666)
+            val item = History(name, amount, true, date, time, getCurrentMonth(),666, currency)
             viewModel.putToHistory(prefs.getCurrentUserId(), item)
             viewModel.createMotherfucker(prefs.getCurrentUserId(), docName, default)
             viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
@@ -259,8 +318,10 @@ class BottomSheetAdd(
             val amount = binding.etAmount.text.toString().toInt()
             val docName = "$name$amount"
             val newBalance = balance + amount
-            val default: Debtor = Debtor("$name$amount", name, amount)
-            val item = History(name, amount, false, getCurrentDate(), getCurrentDateTime(), getCurrentMonth(),666)
+            val currency = binding.tvCurrency.text.toString()
+            val default: Debtor = Debtor("$name$amount", name, amount, currency)
+            val item = History(name, amount, false, getCurrentDate(), getCurrentDateTime(),
+                getCurrentMonth(),666, currency)
             viewModel.putToHistory(prefs.getCurrentUserId(), item)
             viewModel.createBloodsucker(prefs.getCurrentUserId(), docName, default)
             viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
@@ -273,7 +334,8 @@ class BottomSheetAdd(
             val gap = it.amount - binding.etAmount.text.toString().toInt()
             if (binding.etAmount.text.toString().toInt() != 0 || gap !=0) {
                 val newBalance = balance + gap
-                val item = History(it.name, gap, false, getCurrentDate(), getCurrentDateTime(), getCurrentMonth(),666)
+                val item = History(it.name, gap, false, getCurrentDate(),
+                    getCurrentDateTime(), getCurrentMonth(),666, binding.tvCurrency.text.toString())
                 viewModel.putToHistory(prefs.getCurrentUserId(), item)
                 viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
             }
@@ -289,7 +351,8 @@ class BottomSheetAdd(
             val gap = it.amount - binding.etAmount.text.toString().toInt()
             if (binding.etAmount.text.toString().toInt() != 0 || gap !=0) {
                 val newBalance = balance - gap
-                val item = History(it.name, gap, true, getCurrentDate(), getCurrentDateTime(), getCurrentMonth(),666)
+                val item = History(it.name, gap, true, getCurrentDate(),
+                    getCurrentDateTime(), getCurrentMonth(),666, binding.tvCurrency.text.toString())
                 viewModel.putToHistory(prefs.getCurrentUserId(), item)
                 viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
             }
@@ -313,7 +376,7 @@ class BottomSheetAdd(
                     val historyAmount = if (gap < 0) amount.toInt()-it.firstAmount
                     else gap
                     viewModel.putToHistory(prefs.getCurrentUserId(), History(name, historyAmount, isSpent,
-                        getCurrentDate(), getCurrentDateTime(), getCurrentMonth(), it.iconId))
+                        getCurrentDate(), getCurrentDateTime(), getCurrentMonth(), it.iconId, binding.tvCurrency.text.toString()))
                     viewModel.updateSpentAmount(prefs.getCurrentUserId(), spentToday-gap)
                     viewModel.updateBalance(prefs.getCurrentUserId(), balance+gap)
                 }
@@ -340,7 +403,7 @@ class BottomSheetAdd(
                     val historyAmount = if (gap < 0) amount.toInt()-it.firstAmount
                     else gap
                     viewModel.putToHistory(prefs.getCurrentUserId(), History(name, historyAmount, isSpent,
-                        getCurrentDate(), getCurrentDateTime(), getCurrentMonth(), it.iconId))
+                        getCurrentDate(), getCurrentDateTime(), getCurrentMonth(), it.iconId, binding.tvCurrency.text.toString()))
                     viewModel.updateSavedAmount(prefs.getCurrentUserId(), savedMoney-gap)
                     viewModel.updateBalance(prefs.getCurrentUserId(), balance+gap)
                 }

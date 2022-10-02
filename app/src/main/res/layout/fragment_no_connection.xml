@@ -7,7 +7,6 @@
     android:orientation="vertical"
     tools:context=".presentation.ui.fragments.noconnection.NoConnectionFragment">
 
-
     <ImageView
         android:layout_width="@dimen/dp_250"
         android:layout_height="@dimen/dp_250"

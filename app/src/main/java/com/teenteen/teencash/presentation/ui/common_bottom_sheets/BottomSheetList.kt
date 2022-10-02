@@ -159,7 +159,7 @@ class BottomSheetList(
                 val newSpentAmount = spentToday - it.firstAmount
                 if (it.firstAmount != 0) {
                     val history = History(it.name, it.firstAmount, false, getCurrentDate(),
-                        getCurrentDateTime(), getCurrentMonth(), it.iconId)
+                        getCurrentDateTime(), getCurrentMonth(), it.iconId, it.currency.toString())
                     viewModel.putToHistory(prefs.getCurrentUserId(), history)
                 }
                 viewModel.deleteCategory(prefs.getCurrentUserId() , it.docName)
@@ -178,7 +178,7 @@ class BottomSheetList(
                 val newSavedAmount = savedAmount - it.firstAmount
                 if (it.firstAmount != 0) {
                     val history = History(it.name, it.firstAmount, false, getCurrentDate(),
-                        getCurrentDateTime(), getCurrentMonth(), it.iconId)
+                        getCurrentDateTime(), getCurrentMonth(), it.iconId, it.currency.toString())
                     viewModel.putToHistory(prefs.getCurrentUserId(), history)
                 }
                 viewModel.deletePiggy(prefs.getCurrentUserId() , it.docName)

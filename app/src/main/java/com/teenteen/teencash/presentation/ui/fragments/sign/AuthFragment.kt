@@ -94,14 +94,8 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
                 email ,
                 binding.inputEditPassword.text.toString()
             )
-            .addOnCompleteListener(OnCompleteListener<AuthResult?> { task ->
-                if (task.isSuccessful) {
-                    sendVerificationEmail()
-                    addNewUserToFirestore()
-                } else {
-                    makeErrorTextVisible(R.string.registration_failed , R.color.red)
-                }
-            })
+        sendVerificationEmail()
+        addNewUserToFirestore()
     }
 
     private fun sendVerificationEmail() {

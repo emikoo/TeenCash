@@ -65,7 +65,7 @@ class CategoryAdapter(
     private fun setupCategoryViewHolder(viewHolder: CategoryViewHolder , position: Int) {
         val item = dataSet[position]
         viewHolder.name.text = item.name
-        viewHolder.limit.text = "${item.firstAmount}/${item.secondAmount}"
+        viewHolder.limit.text = "${item.firstAmount}/${item.secondAmount} ${item.currency}"
         viewHolder.icon.setBackgroundResource(getProjectIconType(item.iconId))
         if(item.firstAmount >= item.secondAmount) {
             viewHolder.limit.setTextColor(viewHolder.itemView.resources.getColor(R.color.red))

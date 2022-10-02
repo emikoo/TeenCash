@@ -95,7 +95,7 @@ class DebtorsFragment : BaseFragment<FragmentDebtorsBinding>(), UpdateData, Debt
                     newBalance = balance + item.amount
                     if (item.amount != 0) viewModel.putToHistory(prefs.getCurrentUserId(),
                         History(item.name, item.amount, false, getCurrentDate() ,
-                            getCurrentDateTime(), getCurrentMonth(),666))
+                            getCurrentDateTime(), getCurrentMonth(),666, item.currency.toString()))
                     viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
                     updateMFList()
                 }
@@ -104,7 +104,7 @@ class DebtorsFragment : BaseFragment<FragmentDebtorsBinding>(), UpdateData, Debt
                     newBalance = balance - item.amount
                     if (item.amount != 0) viewModel.putToHistory(prefs.getCurrentUserId(),
                         History(item.name, item.amount, true, getCurrentDate(),
-                            getCurrentDateTime(), getCurrentMonth(),666))
+                            getCurrentDateTime(), getCurrentMonth(),666, item.currency.toString()))
                     viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
                     updateBSList()
                 }

@@ -17,7 +17,8 @@ object FirebaseAuthService {
             iconId = 777 ,
             firstAmount = 0,
             docName = "${name}5000",
-            image = ""
+            image = "",
+            currency = "KGS"
         )
         try {
             db.collection("users").document(uid).collection("piggy_banks")
@@ -37,7 +38,8 @@ object FirebaseAuthService {
             iconId = 0 ,
             firstAmount = 0,
             docName = "${name}50",
-            image = ""
+            image = "",
+            currency = "KGS"
         )
         try {
             db.collection("users").document(uid).collection("categories")
@@ -53,7 +55,8 @@ object FirebaseAuthService {
     fun createInfoDoc(uid: String) {
         try {
             db.collection("users").document(uid).collection("statistics")
-                .document("info").set(InfoStatistic(0 , 0 , 0 , 0))
+                .document("info").set(InfoStatistic(0 , "KGS",
+                    0 , 0 , "KGS",0))
         } catch (e: Exception) {
             Log.e(TAG , "Error creating default info" , e)
             FirebaseCrashlytics.getInstance().log("Error creating default info")

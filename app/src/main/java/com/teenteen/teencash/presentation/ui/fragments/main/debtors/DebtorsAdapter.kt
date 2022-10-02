@@ -11,6 +11,7 @@ import com.teenteen.teencash.R
 import com.teenteen.teencash.data.model.Debtor
 import com.teenteen.teencash.databinding.ItemDebtorBinding
 import com.teenteen.teencash.databinding.ItemEmptyBinding
+import com.teenteen.teencash.presentation.extensions.toSymbol
 import com.teenteen.teencash.presentation.utills.DebtorAdapterKeys
 
 class DebtorsAdapter(private val dataSet: List<Debtor>, val listener: DebtorClickListener, val key: DebtorAdapterKeys) : BaseAdapter() {
@@ -52,7 +53,7 @@ class DebtorsAdapter(private val dataSet: List<Debtor>, val listener: DebtorClic
 
     private fun setupDebtorViewHolder(holder: DebtorViewHolder , position: Int) {
         val item = dataSet[position]
-        holder.amount.text = "${item.amount} kgs"
+        holder.amount.text = "${item.amount} ${item.currency!!.toSymbol()}"
         holder.name.text = item.name
         holder.delete.setOnClickListener { listener.deleteDebtor(item, key) }
         holder.edit.setOnClickListener { listener.editDebtor(item, key) }
