@@ -11,13 +11,13 @@
     <string name="subtitle_onboarding3">Максат коюп, акчаңызды үнөмдөңүз</string>
     <string name="next_onboarding3">Баштоо!</string>
     <string name="email">Эл. почта</string>
-    <string name="password">Купуя сөз</string>
+    <string name="password">Сырсөз</string>
     <string name="sign_in">Кирүү</string>
     <string name="sign_up">Түзүү</string>
     <string name="authorization">Авторизация</string>
     <string name="fill_in_the_field">Тилкелерди толтуруңуз</string>
     <string name="password_characters">Сырсөз 6 же андан көп белгиден турушу керек</string>
-    <string name="not_valid_email">Сиз киргизген электрондук почта дареги туура эмес.</string>
+    <string name="not_valid_email">Сиз киргизген электрондук почта туура эмес.</string>
     <string name="not_authorized_email">Сиз киргизген электрондук почта дарегине уруксат берилген эмес.</string>
     <string name="verify_your_email">Электрондук почтаңызды текшериңиз</string>
     <string name="verify_your_email_subtitle">Биз сизге электрондук кат жөнөттүк\n\nУлантуу үчүн электрондук почтаңызды
@@ -88,6 +88,7 @@
     <string name="your_goal">Максат</string>
     <string name="your_daily_limit">Күнүмдүк чектөө</string>
     <string name="name">Аталышы</string>
+    <string name="enter_the_name">Аталышын киргизиңиз</string>
 
     <string-array name="spinner_date">
         <item name="choose">баары</item>

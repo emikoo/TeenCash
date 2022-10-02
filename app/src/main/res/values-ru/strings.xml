@@ -86,8 +86,9 @@
     <string name="moneylenders">Ростовщики</string>
     <string name="history">История</string>
     <string name="your_goal">Твоя цель</string>
-    <string name="your_daily_limit">Ежедневный лими</string>
+    <string name="your_daily_limit">Дневной лимит</string>
     <string name="name">Название</string>
+    <string name="enter_the_name">Введите название</string>
 
     <string-array name="spinner_date">
         <item name="choose">все</item>

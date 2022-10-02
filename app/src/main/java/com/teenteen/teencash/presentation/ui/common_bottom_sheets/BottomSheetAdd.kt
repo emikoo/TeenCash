@@ -238,19 +238,34 @@ class BottomSheetAdd(
 
     private fun createMFDoc() {
         val name = binding.etName.text.toString()
+        if (name.isNotBlank()) {
+            val amount = binding.etAmount.text.toString().toInt()
+            val docName = "$name$amount"
+            val newBalance = balance - amount
+            val default: Debtor = Debtor("$name$amount", name, amount)
+            val time = getCurrentDateTime()
+            val date = getCurrentDate()
+            val item = History(name, amount, true, date, time, getCurrentMonth(),666)
+            viewModel.putToHistory(prefs.getCurrentUserId(), item)
+            viewModel.createMotherfucker(prefs.getCurrentUserId(), docName, default)
+            viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
+            updater.updateMFList()
+        } else Toast.makeText(requireContext(), getString(R.string.enter_the_name), Toast.LENGTH_SHORT).show()
     }
 
     private fun createBSDoc() {
         val name = binding.etName.text.toString()
-        val amount = binding.etAmount.text.toString().toInt()
-        val docName = "$name$amount"
-        val newBalance = balance + amount
-        val default: Debtor = Debtor("$name$amount", name, amount)
-        val item = History(name, amount, false, getCurrentDate(), getCurrentDateTime(), getCurrentMonth(),666)
-        viewModel.putToHistory(prefs.getCurrentUserId(), item)
-        viewModel.createBloodsucker(prefs.getCurrentUserId(), docName, default)
-        viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
-        updater.updateBSList()
+        if (name.isNotBlank()) {
+            val amount = binding.etAmount.text.toString().toInt()
+            val docName = "$name$amount"
+            val newBalance = balance + amount
+            val default: Debtor = Debtor("$name$amount", name, amount)
+            val item = History(name, amount, false, getCurrentDate(), getCurrentDateTime(), getCurrentMonth(),666)
+            viewModel.putToHistory(prefs.getCurrentUserId(), item)
+            viewModel.createBloodsucker(prefs.getCurrentUserId(), docName, default)
+            viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
+            updater.updateBSList()
+        } else Toast.makeText(requireContext(), getString(R.string.enter_the_name), Toast.LENGTH_SHORT).show()
     }
 
     private fun updateMotherfucker() {
