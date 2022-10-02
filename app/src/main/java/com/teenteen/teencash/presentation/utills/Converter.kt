@@ -14,6 +14,17 @@ fun Int.convertAmount(settingsCurrency: String, currentCurrency: String): Int {
     } else this
 }
 
+fun Int.convertSettingsAmount(settingsCurrency: String, currentCurrency: String): Int {
+    Log.d("gfhgjgjh", settingsCurrency)
+    return if (settingsCurrency != currentCurrency) {
+        val link = "from${settingsCurrency}to$currentCurrency"
+        var convertedAmount = this.toDouble()
+        val gap = link.getExchangeRates()
+        convertedAmount *= gap
+        convertedAmount.toInt()
+    } else this
+}
+
 fun String.getExchangeRates(): Double {
     return when(this) {
         "fromEURtoKGS" -> 78.597881

@@ -173,9 +173,9 @@ class BottomSheetList(
     }
 
     private fun changeCurrency(currency: String) {
-        val newBalance = currentBalance.convertAmount(prefs.getSettingsCurrency(), currency)
-        val newSpending = spentToday.convertAmount(prefs.getSettingsCurrency(), currency)
-        val newSaving = savedAmount.convertAmount(prefs.getSettingsCurrency(), currency)
+        val newBalance = currentBalance.convertSettingsAmount(prefs.getSettingsCurrency(), currency)
+        val newSpending = spentToday.convertSettingsAmount(prefs.getSettingsCurrency(), currency)
+        val newSaving = savedAmount.convertSettingsAmount(prefs.getSettingsCurrency(), currency)
         viewModel.updateCurrency(prefs.getCurrentUserId(), currency)
         viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
         viewModel.updateSpentAmount(prefs.getCurrentUserId(), newSpending)
