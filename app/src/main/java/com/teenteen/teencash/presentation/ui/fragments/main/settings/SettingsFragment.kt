@@ -63,6 +63,12 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() , UpdateLanguag
                 updateLang = this
             ).show(activity?.supportFragmentManager)
         }
+        binding.btnCurrency.setOnClickListener {
+            BottomSheetList(
+                ListBottomSheetKeys.CHANGE_CURRENCY ,
+                updateLang = this
+            ).show(activity?.supportFragmentManager)
+        }
         binding.btnAchievements.setOnClickListener {
             val directions =
                 SettingsFragmentDirections.actionSettingsFragmentToAchievementsFragment()

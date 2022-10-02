@@ -104,9 +104,7 @@ class BottomSheetAdd(
             AddBottomSheetKeys.SET_LIMIT -> {
                 setupTextByKey(title = getString(R.string.your_daily_limit),
                     etAmountHint = resources.getString(R.string.limit) , btnAddText = false)
-                binding.spinner.isVisible()
-                binding.ivSpinner.isVisible()
-                setupSpinner()
+                binding.tvCurrency.text = currency
             }
             AddBottomSheetKeys.SPENT_CATEGORY -> {
                 setupTextByKey(title = itemCategory !!.name, etAmountHint = resources.getString(R.string.spent) , btnAddText = true)
@@ -133,9 +131,7 @@ class BottomSheetAdd(
             AddBottomSheetKeys.UPDATE_BALANCE -> {
                 binding.title.text = getString(R.string.Balance)
                 binding.btnAdd.text = resources.getString(R.string.save)
-                binding.spinner.isVisible()
-                binding.ivSpinner.isVisible()
-                setupSpinner()
+                binding.tvCurrency.text = currency
             }
         }
     }
@@ -234,7 +230,6 @@ class BottomSheetAdd(
             prefs.getCurrentUserId() ,
             binding.etAmount.text.toString().toInt()
         )
-        viewModel.updateCurrency(prefs.getCurrentUserId(), "limitCurrency", binding.tvCurrency.text.toString())
         updater.updateStatistics()
     }
 
@@ -280,13 +275,12 @@ class BottomSheetAdd(
 
     private fun updateBalance() {
         viewModel.updateBalance(prefs.getCurrentUserId(), binding.etAmount.text.toString().toInt())
-        viewModel.updateCurrency(prefs.getCurrentUserId(), "balanceCurrency", binding.tvCurrency.text.toString())
         updater.updateStatistics()
         dialog?.dismiss()
     }
 
     private fun createInfoDoc() {
-        val defaultInfo: InfoStatistic = InfoStatistic(0 , "KGD",0 , 0 , "KGS",0)
+        val defaultInfo: InfoStatistic = InfoStatistic(0 , "KGD",0 , 0 , 0)
         val db = FirebaseFirestore.getInstance()
         db.collection("users")
             .document(prefs.getCurrentUserId())

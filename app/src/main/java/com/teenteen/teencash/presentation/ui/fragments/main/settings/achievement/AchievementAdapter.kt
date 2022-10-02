@@ -11,6 +11,7 @@ import com.teenteen.teencash.R
 import com.teenteen.teencash.data.model.Category
 import com.teenteen.teencash.databinding.ItemAchievementBinding
 import com.teenteen.teencash.databinding.ItemEmptyBinding
+import com.teenteen.teencash.presentation.extensions.toSymbol
 
 class AchievementAdapter(private val dataSet: List<Category>,
                          private val listener: AchievementClickListener
@@ -51,7 +52,7 @@ class AchievementAdapter(private val dataSet: List<Category>,
     private fun setupAchievementViewHolder(holder: AchievementViewHolder , position: Int) {
         val item = dataSet[position]
         holder.title.text = item.name
-        holder.subtitle.text = item.secondAmount.toString()
+        holder.subtitle.text = "${item.secondAmount} ${item.currency.toString().toSymbol()}"
         holder.itemView.setOnClickListener { listener.onClickListener(item) }
         holder.delete.setOnClickListener { listener.deleteAchievement(item) }
     }

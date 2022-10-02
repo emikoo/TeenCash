@@ -70,7 +70,14 @@ class AddBSAdapter(
                     listener.onLanguageSelected(item)
                 }
             }
-            ListBottomSheetKeys.CHANGE_CURRENCY -> {}
+            ListBottomSheetKeys.CHANGE_CURRENCY -> {
+                holder.subtitle.isVisible()
+                holder.image.isGone()
+                holder.subtitle.text = item.subtitle.toString()
+                holder.btn.setOnClickListener {
+                    listener.onCurrencySelected(item)
+                }
+            }
         }
     }
 
@@ -83,5 +90,6 @@ class AddBSAdapter(
         fun onEditPiggyBank()
         fun onAchieved()
         fun onLanguageSelected(item: ListBS)
+        fun onCurrencySelected(item: ListBS)
     }
 }

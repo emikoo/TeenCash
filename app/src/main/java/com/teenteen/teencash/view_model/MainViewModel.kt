@@ -20,10 +20,8 @@ class MainViewModel() : ViewModel() {
     private val _bs = MutableLiveData<List<Debtor>>()
     private val _balance = MutableLiveData<Int>()
     val balance: LiveData<Int> = _balance
-    private val _balance_currency = MutableLiveData<String>()
-    val balance_currency: LiveData<String> = _balance_currency
-    private val _limit_currency = MutableLiveData<String>()
-    val limit_currency: LiveData<String> = _limit_currency
+    private val _currency = MutableLiveData<String>()
+    val currency: LiveData<String> = _currency
     private val _saved = MutableLiveData<Int>()
     val saved: LiveData<Int> = _saved
     private val _limit = MutableLiveData<Int>()
@@ -90,9 +88,9 @@ class MainViewModel() : ViewModel() {
         }
     }
 
-    fun getBalanceCurrency(uid: String) {
+    fun getCurrency(uid: String) {
         viewModelScope.launch {
-            _balance_currency.value = FirebaseHomeService.getBalanceCurrency(uid)
+            _currency.value = FirebaseHomeService.getCurrency(uid)
         }
     }
 
@@ -105,12 +103,6 @@ class MainViewModel() : ViewModel() {
     fun getLimit(uid: String) {
         viewModelScope.launch {
             _limit.value = FirebaseHomeService.getLimit(uid)
-        }
-    }
-
-    fun getLimitCurrency(uid: String) {
-        viewModelScope.launch {
-            _limit_currency.value = FirebaseHomeService.getLimitCurrency(uid)
         }
     }
 
@@ -150,9 +142,9 @@ class MainViewModel() : ViewModel() {
         }
     }
 
-    fun updateCurrency(uid: String, field: String, currency: String) {
+    fun updateCurrency(uid: String, currency: String) {
         viewModelScope.launch {
-            FirebaseHomeService.updateCurrency(uid, field, currency)
+            FirebaseHomeService.updateCurrency(uid, currency)
         }
     }
 

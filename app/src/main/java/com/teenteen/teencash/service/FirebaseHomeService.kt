@@ -72,12 +72,12 @@ object FirebaseHomeService {
         }
     }
 
-    suspend fun getBalanceCurrency(uid: String): String? {
+    suspend fun getCurrency(uid: String): String? {
         return try {
             db.collection("users")
                 .document(uid)
                 .collection("statistics").document("info")
-                .get().await().get("balanceCurrency").toString()
+                .get().await().get("currency").toString()
         } catch (e: Exception) {
             Log.e(TAG , "Error getting balance" , e)
             FirebaseCrashlytics.getInstance().log("Error getting balance")
@@ -96,21 +96,6 @@ object FirebaseHomeService {
         } catch (e: Exception) {
             Log.e(TAG , "Error getting limitPerDay" , e)
             FirebaseCrashlytics.getInstance().log("Error getting limitPerDay")
-            FirebaseCrashlytics.getInstance().setCustomKey("user id" , uid)
-            FirebaseCrashlytics.getInstance().recordException(e)
-            null
-        }
-    }
-
-    suspend fun getLimitCurrency(uid: String): String? {
-        return try {
-            db.collection("users")
-                .document(uid)
-                .collection("statistics").document("info")
-                .get().await().get("limitCurrency").toString()
-        } catch (e: Exception) {
-            Log.e(TAG , "Error getting balance" , e)
-            FirebaseCrashlytics.getInstance().log("Error getting balance")
             FirebaseCrashlytics.getInstance().setCustomKey("user id" , uid)
             FirebaseCrashlytics.getInstance().recordException(e)
             null
@@ -318,10 +303,10 @@ object FirebaseHomeService {
         }
     }
 
-    fun updateCurrency(uid: String, field: String, currency: String) {
+    fun updateCurrency(uid: String, currency: String) {
         try {
             db.collection("users").document(uid)
-                .collection("statistics").document("info").update(field, currency)
+                .collection("statistics").document("info").update("currency", currency)
         } catch (e: Exception) {
             Log.e(TAG , "Error updating currency" , e)
             FirebaseCrashlytics.getInstance().log("Error updating currency")

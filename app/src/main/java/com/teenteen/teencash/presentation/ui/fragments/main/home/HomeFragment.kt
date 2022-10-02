@@ -60,17 +60,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
 
     private fun setupListeners() {
         binding.ibEditLimit.setOnClickListener {
-            BottomSheetAdd(this , AddBottomSheetKeys.SET_LIMIT, currency = viewModel.limit_currency.value)
+            BottomSheetAdd(this , AddBottomSheetKeys.SET_LIMIT, currency = viewModel.currency.value)
                 .show(activity?.supportFragmentManager)
         }
         binding.totalAmount.setOnLongClickListener {
-            BottomSheetAdd(this , AddBottomSheetKeys.UPDATE_BALANCE, currency = viewModel.balance_currency.value)
+            BottomSheetAdd(this , AddBottomSheetKeys.UPDATE_BALANCE, currency = viewModel.currency.value)
                 .show(activity?.supportFragmentManager)
             true
         }
         binding.btnTotalEdit.setOnClickListener {
             BottomSheetAdd(
-                this , AddBottomSheetKeys.CURRENT_BALANCE, currency = viewModel.balance_currency.value
+                this , AddBottomSheetKeys.CURRENT_BALANCE, currency = viewModel.currency.value
             ).show(activity !!.supportFragmentManager)
         }
     }
@@ -102,8 +102,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
     private fun getData() {
         progressDialog.show()
         checkDate()
-        viewModel.getBalanceCurrency(prefs.getCurrentUserId())
-        viewModel.getLimitCurrency(prefs.getCurrentUserId())
+        viewModel.getCurrency(prefs.getCurrentUserId())
         viewModel.getBalance(prefs.getCurrentUserId())
         viewModel.getSavedAmount(prefs.getCurrentUserId())
         viewModel.getLimit(prefs.getCurrentUserId())
@@ -175,8 +174,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
 
     override fun updateStatistics() {
         progressDialog.show()
-        viewModel.getBalanceCurrency(prefs.getCurrentUserId())
-        viewModel.getLimitCurrency(prefs.getCurrentUserId())
+        viewModel.getCurrency(prefs.getCurrentUserId())
         viewModel.getBalance(prefs.getCurrentUserId())
         viewModel.getSavedAmount(prefs.getCurrentUserId())
         viewModel.getLimit(prefs.getCurrentUserId())
@@ -184,6 +182,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
     }
 
     override fun subscribeToLiveData() {
+        var currency = ""
+        var limit = 0
+        viewModel.currency.observe(viewLifecycleOwner) {
+            currency = it
+            binding.currencyTotal.text = it
+        }
         viewModel.category.observe(viewLifecycleOwner) {
             val date = getCurrentDateTime()
             val dateInString = date.dateToString()
@@ -201,35 +205,34 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
             progressDialog.dismiss()
         }
         viewModel.balance.observe(viewLifecycleOwner) {
-            if (it == null || it == 0) binding.totalAmount.text = "0"
+            if (it == null || it == 0) binding.totalAmount.text = "0 $currency"
             else binding.totalAmount.text = it.toString()
             progressDialog.dismiss()
         }
         viewModel.saved.observe(viewLifecycleOwner) {
-            if (it == null || it == 0) binding.saved.text = "0"
-            else binding.saved.text = it.toString()
+            if (it == null || it == 0) binding.saved.text = "0 $currency"
+            else binding.saved.text = "$it $currency"
             progressDialog.dismiss()
         }
         viewModel.limit.observe(viewLifecycleOwner) {
-            if (it == null || it == 0) binding.limit.text = "0"
-            else binding.limit.text = it.toString()
+            if (it == null || it == 0) binding.limit.text = "0 $currency"
+            else {
+                binding.limit.text = "$it $currency"
+                limit = it
+            }
             progressDialog.dismiss()
         }
         viewModel.spentAmount.observe(viewLifecycleOwner) {
-            val limitCurrency = viewModel.limit_currency.value
-            if (it == null || it == 0) binding.progressTitle.text = "0/${binding.limit.text}\n$limitCurrency"
+            if (it == null || it == 0) binding.progressTitle.text = "0/$limit\n$currency"
             else if (it.toString().length >= 3 && binding.limit.text.length >= 5) {
-                binding.progressTitle.text = "$it/\n${binding.limit.text}\n$limitCurrency"
+                binding.progressTitle.text = "$it/\n$limit\n$currency"
             } else if (it.toString().length >= 5 && binding.limit.text.length >= 3) {
-                binding.progressTitle.text = "$it/\n${binding.limit.text}\n$limitCurrency"
-            } else binding.progressTitle.text = "$it/${binding.limit.text}\n$limitCurrency"
+                binding.progressTitle.text = "$it/\n$limit\n$currency"
+            } else binding.progressTitle.text = "$it/$limit\n$currency"
             progressDialog.dismiss()
             if (binding.limit.text.toString() == "") binding.progressCircular.max = 0
-            else binding.progressCircular.max = binding.limit.text.toString().toInt()
+            else binding.progressCircular.max = limit
             binding.progressCircular.progress = it
-        }
-        viewModel.balance_currency.observe(viewLifecycleOwner) {
-            binding.currencyTotal.text = it
         }
     }
 

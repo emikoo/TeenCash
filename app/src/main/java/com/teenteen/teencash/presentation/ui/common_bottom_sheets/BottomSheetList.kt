@@ -46,6 +46,13 @@ class BottomSheetList(
         when (key) {
             ListBottomSheetKeys.CHANGE_CURRENCY -> {
                 binding.title.isVisible()
+                binding.title.text = getString(R.string.select_currency)
+                list = mutableListOf(
+                    ListBS(title = "KGS", subtitle = getString(R.string.kyrgyz_som)),
+                    ListBS(title = "USD", subtitle = getString(R.string.usa_dollar)),
+                    ListBS(title = "EUR", subtitle = getString(R.string.european_euro))
+                )
+                setupSettingsView(list, ListBottomSheetKeys.CHANGE_CURRENCY)
             }
             ListBottomSheetKeys.CHANGE_LANGUAGE -> {
                 binding.title.isVisible()
@@ -150,6 +157,10 @@ class BottomSheetList(
         dismiss()
     }
 
+    override fun onCurrencySelected(item: ListBS) {
+        viewModel.updateCurrency(prefs.getCurrentUserId(), item.title)
+        dismiss()
+    }
 
 
     private fun deleteCategory() {

@@ -48,6 +48,7 @@ object FirebaseAuthService {
             Log.e(TAG , "Error creating default category" , e)
             FirebaseCrashlytics.getInstance().log("Error creating default category")
             FirebaseCrashlytics.getInstance().setCustomKey("user id" , uid)
+
             FirebaseCrashlytics.getInstance().recordException(e)
         }
     }
@@ -56,7 +57,7 @@ object FirebaseAuthService {
         try {
             db.collection("users").document(uid).collection("statistics")
                 .document("info").set(InfoStatistic(0 , "KGS",
-                    0 , 0 , "KGS",0))
+                    0 , 0 , 0))
         } catch (e: Exception) {
             Log.e(TAG , "Error creating default info" , e)
             FirebaseCrashlytics.getInstance().log("Error creating default info")

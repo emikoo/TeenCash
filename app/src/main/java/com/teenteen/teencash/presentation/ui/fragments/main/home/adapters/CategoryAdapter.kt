@@ -12,6 +12,7 @@ import com.teenteen.teencash.R
 import com.teenteen.teencash.data.model.Category
 import com.teenteen.teencash.databinding.ItemButtonCategoryBinding
 import com.teenteen.teencash.databinding.ItemCategoryBinding
+import com.teenteen.teencash.presentation.extensions.toSymbol
 import com.teenteen.teencash.presentation.utills.CategoryAdapterKeys
 import com.teenteen.teencash.presentation.utills.IconType.getProjectIconType
 
@@ -65,7 +66,7 @@ class CategoryAdapter(
     private fun setupCategoryViewHolder(viewHolder: CategoryViewHolder , position: Int) {
         val item = dataSet[position]
         viewHolder.name.text = item.name
-        viewHolder.limit.text = "${item.firstAmount}/${item.secondAmount} ${item.currency}"
+        viewHolder.limit.text = "${item.firstAmount}/${item.secondAmount} ${item.currency.toString().toSymbol()}"
         viewHolder.icon.setBackgroundResource(getProjectIconType(item.iconId))
         if(item.firstAmount >= item.secondAmount) {
             viewHolder.limit.setTextColor(viewHolder.itemView.resources.getColor(R.color.red))

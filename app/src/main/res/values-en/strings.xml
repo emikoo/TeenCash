@@ -90,6 +90,10 @@
     <string name="your_daily_limit">Your Daily Limit</string>
     <string name="name">Name</string>
     <string name="enter_the_name">Enter the name</string>
+    <string name="select_currency">Select currency for balance and daily limit</string>
+    <string name="kyrgyz_som">Kyrgyzstani Som</string>
+    <string name="usa_dollar">US Dollar</string>
+    <string name="european_euro">Euro</string>
 
     <string-array name="spinner_date">
         <item name="choose">all</item>
