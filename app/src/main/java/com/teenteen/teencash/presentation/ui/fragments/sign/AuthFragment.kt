@@ -9,11 +9,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.AuthResult
 import com.teenteen.teencash.R
 import com.teenteen.teencash.data.local.PrefsSettings.Companion.USER
-import com.teenteen.teencash.data.model.Category
 import com.teenteen.teencash.databinding.FragmentAuthBinding
 import com.teenteen.teencash.presentation.base.BaseFragment
 import com.teenteen.teencash.presentation.extensions.*
@@ -58,19 +55,21 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
     private fun loginUser() {
         progressDialog.show()
         binding.tvError.isGone()
-        auth.signInWithEmailAndPassword(
+        firebaseAuth.signInWithEmailAndPassword(
             binding.inputEditEmail.text.toString() ,
             binding.inputEditPassword.text.toString()
         )
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    if (checkIfEmailVerified()) {
-                        prefs.setFirstTimeLaunch(USER)
-                        prefs.saveCurrentUserId(currentUser?.uid)
-                        activityNavController().navigateSafely(R.id.action_global_mainFlowFragment)
-                        progressDialog.dismiss()
-                    } else if (!checkIfEmailVerified()) {
-                        makeErrorTextVisible(R.string.verify_account , R.color.red)
+                    firebaseAuth.addAuthStateListener { auth ->
+                        if (auth.currentUser!!.isEmailVerified) {
+                            prefs.setFirstTimeLaunch(USER)
+                            prefs.saveCurrentUserId(currentUser?.uid)
+                            activityNavController().navigateSafely(R.id.action_global_mainFlowFragment)
+                            progressDialog.dismiss()
+                        } else {
+                            makeErrorTextVisible(R.string.verify_account , R.color.red)
+                        }
                     }
                 } else {
                     makeErrorTextVisible(R.string.login_failed , R.color.red)
@@ -89,24 +88,37 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
 
     private fun createNewUser() {
         val email = binding.inputEditEmail.text.toString()
-        auth
+        firebaseAuth
             .createUserWithEmailAndPassword(
                 email ,
                 binding.inputEditPassword.text.toString()
-            )
-        sendVerificationEmail()
-        addNewUserToFirestore()
+            ).addOnCompleteListener { task ->
+                var user = firebaseAuth.currentUser
+                user!!.reload()
+                if (firebaseAuth.currentUser !!.isEmailVerified) {
+                    makeErrorTextVisible(R.string.now_log_in, R.color.grey80)
+                } else {
+                    addNewUserToFirestore()
+                    sendVerificationEmail()
+                }
+                if (task.isSuccessful) {
+                    addNewUserToFirestore()
+                    sendVerificationEmail()
+                }
+            }
     }
 
     private fun sendVerificationEmail() {
         currentUser?.sendEmailVerification()
-            ?.addOnSuccessListener {
+            ?.addOnCompleteListener {
                 progressDialog.dismiss()
-                showAlertDialog(requireContext() , this,
-                    resources.getString(R.string.verify_your_email),
-                    resources.getString(R.string.verify_your_email_subtitle),
-                    resources.getString(R.string.ok))
-                makeErrorTextVisible(R.string.verify_your_email_subtitle, R.color.grey80)
+                showAlertDialog(
+                    requireContext() , this ,
+                    resources.getString(R.string.verify_your_email) ,
+                    resources.getString(R.string.verify_your_email_subtitle) ,
+                    resources.getString(R.string.ok)
+                )
+                makeErrorTextVisible(R.string.verify_your_email_subtitle , R.color.grey80)
                 deleteUnverifiedUser()
             }
             ?.addOnFailureListener { e ->
@@ -125,7 +137,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
     }
 
     private fun resetPassword() {
-        auth.sendPasswordResetEmail(binding.inputEditEmail.text.toString())
+        firebaseAuth.sendPasswordResetEmail(binding.inputEditEmail.text.toString())
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     makeErrorTextVisible(R.string.password_reset_email , R.color.grey80)
@@ -189,7 +201,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
 
     private fun addNewUserToFirestore(){
         val email = binding.inputEditEmail.text.toString()
-        currentUser?.uid?.let {
+        firebaseAuth.currentUser?.uid?.let {
             usersCollection.document(it).set(mapOf("email" to email))
             createDefaultItems(it)}
     }

@@ -37,7 +37,7 @@ object FirebaseAuthService {
             secondAmount = 50 ,
             iconId = 0 ,
             firstAmount = 0,
-            docName = "${name}50",
+            docName = "${name}5000",
             image = "",
             currency = "KGS"
         )

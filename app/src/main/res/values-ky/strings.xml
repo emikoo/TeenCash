@@ -97,6 +97,7 @@
     <string name="info_changing_currency">Валюталарды алмаштырууда же бир эле учурда бир нече валютаны колдонууда,
         маалыматтарда ката болушу мүмкүн, анткени авто-конвертация колдонулат.</string>
     <string name="continue_">Улантуу</string>
+    <string name="now_log_in">Success ! Now you can lon into your account..</string>
 
     <string-array name="spinner_date">
         <item name="choose">баары</item>

@@ -97,6 +97,7 @@
     <string name="info_changing_currency">При смене валюты или использовании нескольких валют
         одновременно данные могут иметь погрешность, так как используется автоконвертация</string>
     <string name="continue_">Продолжать</string>
+    <string name="now_log_in">Success ! Now you can lon into your account..</string>
 
     <string-array name="spinner_date">
         <item name="choose">все</item>

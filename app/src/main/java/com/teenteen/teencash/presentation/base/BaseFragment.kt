@@ -20,7 +20,7 @@ abstract class BaseFragment<VB_CHILD : ViewBinding> : Fragment() {
     lateinit var binding: VB_CHILD
     lateinit var progressDialog: Dialog
     lateinit var prefs: PrefsSettings
-    lateinit var auth: FirebaseAuth
+    lateinit var firebaseAuth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
     var currentUser: FirebaseUser? = null
     lateinit var usersCollection: CollectionReference
@@ -56,8 +56,8 @@ abstract class BaseFragment<VB_CHILD : ViewBinding> : Fragment() {
     private fun init() {
         db = FirebaseFirestore.getInstance()
         prefs = PrefsSettings(requireActivity())
-        auth = FirebaseAuth.getInstance()
-        currentUser = auth.currentUser
+        firebaseAuth = FirebaseAuth.getInstance()
+        currentUser = firebaseAuth.currentUser
         progressDialog = ProgressDialog.progressDialog(requireActivity())
         usersCollection = db.collection("users")
     }

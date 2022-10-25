@@ -98,6 +98,7 @@
     <string name="info_changing_currency">when changing currencies or using several currencies
         at the same time, the data may be inaccurate because auto-conversion is used</string>
     <string name="continue_">Continue</string>
+    <string name="now_log_in">Success ! Now you can lon into your account..</string>
 
     <string-array name="spinner_date">
         <item name="choose">all</item>
