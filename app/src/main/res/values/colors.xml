@@ -32,4 +32,5 @@
     <color name="blueC6E3ED_to_blue414A61">#c6e3ed</color>
     <color name="blue031952_to_blueC6e3ed">#031952</color>
     <color name="black030f28_to_whitef9">#030f28</color>
+    <color name="blackTransparent_to_whiteTransparent">#80000000</color>
 </resources>
