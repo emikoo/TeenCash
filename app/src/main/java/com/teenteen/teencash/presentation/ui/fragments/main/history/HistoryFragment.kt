@@ -45,6 +45,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {}
             override fun onItemSelected(p0: AdapterView<*>? , p1: View? , p2: Int , p3: Long) {
+                progressDialog.show()
                 when (binding.spinner.selectedItemPosition) {
                     0 -> viewModel.getHistory(prefs.getCurrentUserId())
                     1 -> viewModel.getHistoryToday(prefs.getCurrentUserId(), getCurrentDate())

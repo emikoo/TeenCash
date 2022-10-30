@@ -27,13 +27,13 @@ fun vibrate(context: Context?) {
 class ProgressDialog {
     companion object {
         fun progressDialog(context: Context): Dialog {
-            val dialog = Dialog(context, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+            val dialog = Dialog(context)
             val inflate =
                 LayoutInflater.from(context).inflate(R.layout.layout_progress_dialog , null)
             dialog.setContentView(inflate)
             dialog.setCancelable(false)
             dialog.window !!.setBackgroundDrawable(
-                context.getDrawable(R.drawable.bg_progress_dialog)
+                ColorDrawable(Color.TRANSPARENT)
             )
             return dialog
         }
