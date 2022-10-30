@@ -2,7 +2,6 @@ package com.teenteen.teencash.presentation.ui.common_bottom_sheets
 
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -187,24 +186,64 @@ class BottomSheetAdd(
                             "piggy_banks" , categoryName , whenDocNotExistAction = this::addPiggy ,
                             whenDocExistAction = this::toastItemExists
                         )
-                    } else Toast.makeText(requireContext(), getString(R.string.check_all_data) , Toast.LENGTH_LONG).show()
+                    } else Toast.makeText(
+                        requireContext() ,
+                        getString(R.string.check_all_data) ,
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
                 AddBottomSheetKeys.SET_LIMIT -> checkField(this::updateLimit)
                 AddBottomSheetKeys.SPENT_CATEGORY -> checkField(this::spendMoney)
-                AddBottomSheetKeys.SAVED_PIGGY -> checkIfDocExists("statistics" , "info" ,
-                    whenDocExistAction = this::saveMoney, whenDocNotExistAction = this::createInfoDoc)
-                AddBottomSheetKeys.CURRENT_BALANCE -> checkIfDocExists("statistics" , "info" ,
-                    whenDocExistAction = this::addBalance, whenDocNotExistAction = this::createInfoDoc)
-                AddBottomSheetKeys.CREATE_MOTHERFUCKER -> checkIfDocExists("motherfuckers" , binding.etName.text.toString() ,
-                    whenDocExistAction = this::toastItemExists, whenDocNotExistAction = this::createMFDoc)
-                AddBottomSheetKeys.CREATE_BLOODSUCKER -> checkIfDocExists("bloodsuckers" , binding.etName.text.toString() ,
-                    whenDocExistAction = this::toastItemExists, whenDocNotExistAction = this::createBSDoc)
+                AddBottomSheetKeys.SAVED_PIGGY -> checkIfDocExists(
+                    "statistics" ,
+                    "info" ,
+                    whenDocExistAction = this::saveMoney ,
+                    whenDocNotExistAction = this::createInfoDoc
+                )
+                AddBottomSheetKeys.CURRENT_BALANCE -> checkIfDocExists(
+                    "statistics" ,
+                    "info" ,
+                    whenDocExistAction = this::addBalance ,
+                    whenDocNotExistAction = this::createInfoDoc
+                )
+                AddBottomSheetKeys.CREATE_MOTHERFUCKER -> if (binding.etName.text.isNotBlank()) checkIfDocExists(
+                    "motherfuckers" ,
+                    binding.etName.text.toString() ,
+                    whenDocExistAction = this::toastItemExists ,
+                    whenDocNotExistAction = this::createMFDoc
+                )
+                else Toast.makeText(
+                    requireContext() ,
+                    getString(R.string.check_all_data) ,
+                    Toast.LENGTH_LONG
+                ).show()
+                AddBottomSheetKeys.CREATE_BLOODSUCKER -> if (binding.etName.text.isNotBlank()) checkIfDocExists(
+                    "bloodsuckers" ,
+                    binding.etName.text.toString() ,
+                    whenDocExistAction = this::toastItemExists ,
+                    whenDocNotExistAction = this::createBSDoc
+                )
+                else Toast.makeText(
+                    requireContext() ,
+                    getString(R.string.check_all_data) ,
+                    Toast.LENGTH_LONG
+                ).show()
                 AddBottomSheetKeys.UPDATE_MOTHERFUCKER -> if (binding.etName.text.isNotBlank()
-                    && binding.etAmount.text.isNotBlank()) updateMotherfucker()
-                    else Toast.makeText(requireContext(), getString(R.string.check_all_data), Toast.LENGTH_SHORT).show()
+                    && binding.etAmount.text.isNotBlank()
+                ) updateMotherfucker()
+                else Toast.makeText(
+                    requireContext() ,
+                    getString(R.string.check_all_data) ,
+                    Toast.LENGTH_SHORT
+                ).show()
                 AddBottomSheetKeys.UPDATE_BLOODSUCKER -> if (binding.etName.text.isNotBlank()
-                    && binding.etAmount.text.isNotBlank()) updateBloodsucker()
-                else Toast.makeText(requireContext(), getString(R.string.check_all_data), Toast.LENGTH_SHORT).show()
+                    && binding.etAmount.text.isNotBlank()
+                ) updateBloodsucker()
+                else Toast.makeText(
+                    requireContext() ,
+                    getString(R.string.check_all_data) ,
+                    Toast.LENGTH_SHORT
+                ).show()
                 AddBottomSheetKeys.UPDATE_CATEGORY -> updateCategory()
                 AddBottomSheetKeys.UPDATE_PIGGY -> updatePiggy()
                 AddBottomSheetKeys.UPDATE_BALANCE -> checkField(this::updateBalance)
@@ -315,20 +354,18 @@ class BottomSheetAdd(
 
     private fun createBSDoc() {
         val name = binding.etName.text.toString()
-        if (name.isNotBlank()) {
-            val amount = binding.etAmount.text.toString().toInt()
-            val docName = "$name$amount"
-            val currentCurrency = binding.tvCurrency.text.toString()
-            val convertedAmount = amount.convertAmount(prefs.getSettingsCurrency(), currentCurrency)
-            val newBalance = balance + convertedAmount
-            val default: Debtor = Debtor("$name$amount", name, amount, currentCurrency)
-            val item = History(name, amount, false, getCurrentDate(), getCurrentDateTime(),
-                getCurrentMonth(),666, currentCurrency)
-            viewModel.putToHistory(prefs.getCurrentUserId(), item)
-            viewModel.createBloodsucker(prefs.getCurrentUserId(), docName, default)
-            viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
-            updater.updateBSList()
-        } else Toast.makeText(requireContext(), getString(R.string.enter_the_name), Toast.LENGTH_SHORT).show()
+        val amount = binding.etAmount.text.toString().toInt()
+        val docName = "$name$amount"
+        val currentCurrency = binding.tvCurrency.text.toString()
+        val convertedAmount = amount.convertAmount(prefs.getSettingsCurrency(), currentCurrency)
+        val newBalance = balance + convertedAmount
+        val default: Debtor = Debtor("$name$amount", name, amount, currentCurrency)
+        val item = History(name, amount, false, getCurrentDate(), getCurrentDateTime(),
+            getCurrentMonth(),666, currentCurrency)
+        viewModel.putToHistory(prefs.getCurrentUserId(), item)
+        viewModel.createBloodsucker(prefs.getCurrentUserId(), docName, default)
+        viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
+        updater.updateBSList()
     }
 
     private fun updateMotherfucker() {
