@@ -30,6 +30,8 @@ enum class Icons(val iconPath: Int , val id: Int) {
     CANDY(R.drawable.ic_candy , 23),
     BOTTLE(R.drawable.ic_bottle , 24),
     ANDROID(R.drawable.ic_android , 25),
+    PERSON(R.drawable.ic_person , 26),
+    QUESTION_MARK(R.drawable.ic_question_mark , 27),
     PIGGY_BANK(R.drawable.ic_piggy_bank , 777),
     DEBTOR_PERSON(R.drawable.ic_debtors , 666),
     BALANCE(R.drawable.ic_balance , 1313)
@@ -64,6 +66,8 @@ object IconType {
             Icons.CANDY.id -> Icons.CANDY.iconPath
             Icons.BOTTLE.id -> Icons.BOTTLE.iconPath
             Icons.ANDROID.id -> Icons.ANDROID.iconPath
+            Icons.PERSON.id -> Icons.PERSON.iconPath
+            Icons.QUESTION_MARK.id -> Icons.QUESTION_MARK.iconPath
             Icons.PIGGY_BANK.id -> Icons.PIGGY_BANK.iconPath
             Icons.DEBTOR_PERSON.id -> Icons.DEBTOR_PERSON.iconPath
             Icons.BALANCE.id -> Icons.BALANCE.iconPath
@@ -99,5 +103,7 @@ object IconType {
         add(CategoryName(Icons.BOTTLE.id, Icons.BOTTLE.iconPath.toString()))
         add(CategoryName(Icons.ANDROID.id, Icons.ANDROID.iconPath.toString()))
         add(CategoryName(Icons.FIREBASE.id, Icons.FIREBASE.iconPath.toString()))
+        add(CategoryName(Icons.PERSON.id, Icons.PERSON.iconPath.toString()))
+        add(CategoryName(Icons.QUESTION_MARK.id, Icons.QUESTION_MARK.iconPath.toString()))
     }
 }
