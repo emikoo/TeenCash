@@ -86,29 +86,6 @@
         android:text="KGS"
         android:layout_marginEnd="@dimen/dp_24"/>
 
-    <ImageView
-        android:id="@+id/iv_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/et_amount"
-        app:layout_constraintBottom_toBottomOf="@id/et_amount"
-        app:layout_constraintStart_toEndOf="@id/tv_currency"
-        app:layout_constraintEnd_toEndOf="@id/et_amount"
-        android:layout_marginEnd="@dimen/dp_4"
-        android:layout_marginStart="@dimen/dp_2"
-        android:src="@drawable/ic_arrow_down"
-        app:tint="@color/black030f28_to_whitef9"/>
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="@dimen/dp_0"
-        android:layout_height="@dimen/dp_0"
-        app:layout_constraintTop_toTopOf="@id/tv_currency"
-        app:layout_constraintBottom_toBottomOf="@id/tv_currency"
-        app:layout_constraintStart_toStartOf="@id/tv_currency"
-        app:layout_constraintEnd_toEndOf="@id/et_amount"
-        android:background="@android:color/transparent"/>
-
     <EditText
         android:id="@+id/et_limit"
         android:layout_width="match_parent"
@@ -130,17 +107,6 @@
         android:layout_marginEnd="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_8"
         android:background="@drawable/bg_stroke_black"/>
-
-    <TextView
-        android:id="@+id/tv_currency1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/et_limit"
-        android:layout_marginBottom="@dimen/dp_8"
-        app:layout_constraintEnd_toEndOf="@id/et_limit"
-        style="@style/title_16sp_poppinsMedium_black030f28"
-        android:text="KGS"
-        android:layout_marginEnd="@dimen/dp_24"/>
 
     <Button
         android:id="@+id/btn_add"

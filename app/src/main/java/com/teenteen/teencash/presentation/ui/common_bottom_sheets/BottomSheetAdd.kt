@@ -41,43 +41,24 @@ class BottomSheetAdd(
         checkInternetConnection(this::subscribeToLiveData, requireContext())
         when (key) {
             AddBottomSheetKeys.ADD_PIGGY_BANK , AddBottomSheetKeys.CREATE_MOTHERFUCKER ,
-            AddBottomSheetKeys.CREATE_BLOODSUCKER -> {
-                binding.title.isInvisible()
-                binding.limit.isInvisible()
-                binding.etName.isVisible()
-                binding.etLimit.isGone()
-                binding.tvCurrency1.isGone()
-                binding.spinner.isVisible()
-                binding.ivSpinner.isVisible()
-                setupSpinner()
-            }
-            AddBottomSheetKeys.UPDATE_BLOODSUCKER ,
+            AddBottomSheetKeys.CREATE_BLOODSUCKER, AddBottomSheetKeys.UPDATE_BLOODSUCKER ,
             AddBottomSheetKeys.UPDATE_MOTHERFUCKER -> {
                 binding.title.isInvisible()
                 binding.limit.isInvisible()
                 binding.etName.isVisible()
                 binding.etLimit.isGone()
-                binding.tvCurrency1.isGone()
-                binding.spinner.isGone()
-                binding.ivSpinner.isGone()
             }
             AddBottomSheetKeys.UPDATE_PIGGY , AddBottomSheetKeys.UPDATE_CATEGORY -> {
                 binding.title.isInvisible()
                 binding.limit.isInvisible()
                 binding.etName.isVisible()
                 binding.etLimit.isVisible()
-                binding.tvCurrency1.isVisible()
-                binding.spinner.isGone()
-                binding.ivSpinner.isGone()
             }
             else -> {
                 binding.title.isVisible()
                 binding.limit.isVisible()
                 binding.etName.isInvisible()
                 binding.etLimit.isGone()
-                binding.tvCurrency1.isGone()
-                binding.spinner.isGone()
-                binding.ivSpinner.isGone()
             }
         }
         setupTitlesByKey()
@@ -86,26 +67,13 @@ class BottomSheetAdd(
         setupListener()
     }
 
-    private fun setupSpinner() {
-        val adapter =
-            ArrayAdapter.createFromResource(requireActivity(), R.array.spinner_currency , R.layout.spinner_currency)
-        adapter.setDropDownViewResource(R.layout.spinner_dropdown_currency)
-        binding.spinner.adapter = adapter
-        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) {}
-            override fun onItemSelected(p0: AdapterView<*>? , p1: View? , p2: Int , p3: Long) {
-                binding.tvCurrency.text = binding.spinner.selectedItem.toString()
-            }
-        }
-    }
-
     private fun setupTitlesByKey() {
+        binding.tvCurrency.text = prefs.getSettingsCurrency()
         when (key) {
             AddBottomSheetKeys.ADD_PIGGY_BANK -> setupTextByKey(etAmountHint = resources.getString(R.string.goal) , btnAddText = false)
             AddBottomSheetKeys.SET_LIMIT -> {
                 setupTextByKey(title = getString(R.string.your_daily_limit),
                     etAmountHint = resources.getString(R.string.limit) , btnAddText = false)
-                binding.tvCurrency.text = prefs.getSettingsCurrency()
             }
             AddBottomSheetKeys.SPENT_CATEGORY -> {
                 setupTextByKey(title = itemCategory !!.name, etAmountHint = resources.getString(R.string.spent) , btnAddText = true)
@@ -121,7 +89,6 @@ class BottomSheetAdd(
             AddBottomSheetKeys.CURRENT_BALANCE -> {
                 setupTextByKey(title = getString(R.string.Balance),
                     etAmountHint = "0" , btnAddText = true)
-                binding.tvCurrency.text = prefs.getSettingsCurrency()
             }
             AddBottomSheetKeys.CREATE_MOTHERFUCKER -> setupTextByKey(etAmountHint = "0" , btnAddText = false)
             AddBottomSheetKeys.CREATE_BLOODSUCKER -> setupTextByKey(etAmountHint = "0" , btnAddText = false)
@@ -132,7 +99,6 @@ class BottomSheetAdd(
             AddBottomSheetKeys.UPDATE_BALANCE -> {
                 binding.title.text = getString(R.string.Balance)
                 binding.btnAdd.text = resources.getString(R.string.save)
-                binding.tvCurrency.text = prefs.getSettingsCurrency()
             }
         }
     }
@@ -165,7 +131,6 @@ class BottomSheetAdd(
             binding.etAmount.setText("${itemCategory?.firstAmount}")
             binding.etLimit.setText("${itemCategory?.secondAmount}")
             binding.tvCurrency.text = "${itemCategory?.currency}"
-            binding.tvCurrency1.text = "${itemCategory?.currency}"
         }
         binding.etName.setSelection(binding.etName.length())
         binding.etAmount.setSelection(binding.etAmount.length())

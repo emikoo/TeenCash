@@ -40,7 +40,7 @@ class AddCategoryBS(private val updater: UpdateData) :
         binding.ibClose.setOnClickListener {
             dialog?.dismiss()
         }
-        setupSpinner()
+        binding.tvCurrency.text = prefs.getSettingsCurrency()
     }
 
     private fun setupListeners() {
@@ -49,19 +49,6 @@ class AddCategoryBS(private val updater: UpdateData) :
         }
         binding.btnAdd.setOnClickListener {
             checkFields()
-        }
-    }
-
-    private fun setupSpinner() {
-        val adapter =
-            ArrayAdapter.createFromResource(requireActivity(), R.array.spinner_currency , R.layout.spinner_currency)
-        adapter.setDropDownViewResource(R.layout.spinner_dropdown_currency)
-        binding.spinner.adapter = adapter
-        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) {}
-            override fun onItemSelected(p0: AdapterView<*>? , p1: View? , p2: Int , p3: Long) {
-                binding.tvCurrency.text = binding.spinner.selectedItem.toString()
-            }
         }
     }
 

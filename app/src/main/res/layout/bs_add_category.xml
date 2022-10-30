@@ -97,28 +97,6 @@
         android:text="KGS"
         android:layout_marginEnd="@dimen/dp_24"/>
 
-    <ImageView
-        android:id="@+id/iv_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/tv_currency"
-        android:layout_marginTop="@dimen/dp_4"
-        app:layout_constraintStart_toEndOf="@id/tv_currency"
-        android:layout_marginEnd="@dimen/dp_4"
-        android:layout_marginStart="@dimen/dp_4"
-        android:src="@drawable/ic_arrow_down"
-        app:tint="@color/black030f28_to_whitef9"/>
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="@dimen/dp_0"
-        android:layout_height="@dimen/dp_0"
-        app:layout_constraintTop_toTopOf="@id/tv_currency"
-        app:layout_constraintBottom_toBottomOf="@id/tv_currency"
-        app:layout_constraintStart_toStartOf="@id/tv_currency"
-        app:layout_constraintEnd_toEndOf="@id/iv_spinner"
-        android:background="@android:color/transparent"/>
-
     <TextView
         android:id="@+id/max_limit"
         style="@style/title_10sp_poppinsMedium_red"
@@ -128,7 +106,7 @@
         android:layout_marginBottom="@dimen/dp_8"
         android:text="max: 0/5"
         app:layout_constraintBottom_toBottomOf="@id/et_limit"
-        app:layout_constraintStart_toEndOf="@id/spinner" />
+        app:layout_constraintStart_toEndOf="@id/tv_currency" />
 
     <Button
         android:id="@+id/btn_add"
