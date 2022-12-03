@@ -91,6 +91,7 @@
         <entry key="app/src/main/res/drawable/ic_wifi_off.xml" value="0.1825" />
         <entry key="app/src/main/res/drawable/progress_bar.xml" value="0.172" />
         <entry key="app/src/main/res/drawable/splash_scree.xml" value="0.1" />
+        <entry key="app/src/main/res/font/font.xml" value="0.33384615384615385" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/bs_achievement.xml" value="0.335" />
         <entry key="app/src/main/res/layout/bs_add.xml" value="0.30645058663399727" />

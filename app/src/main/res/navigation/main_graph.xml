@@ -41,13 +41,13 @@
             android:id="@+id/action_settingsFragment_self"
             app:destination="@id/settingsFragment"
             app:popUpTo="@id/settingsFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_settingsFragment_to_achievementsFragment"
-            app:popUpToSaveState="false"
+            app:destination="@id/achievementsFragment"
             app:popUpTo="@id/settingsFragment"
             app:popUpToInclusive="true"
-            app:destination="@id/achievementsFragment"/>
+            app:popUpToSaveState="false" />
     </fragment>
     <fragment
         android:id="@+id/achievementsFragment"
@@ -57,8 +57,8 @@
         <action
             android:id="@+id/action_achievementsFragment_to_settingsFragment"
             app:destination="@id/settingsFragment"
-            app:popUpToSaveState="false"
             app:popUpTo="@id/achievementsFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true"
+            app:popUpToSaveState="false" />
     </fragment>
 </navigation>
