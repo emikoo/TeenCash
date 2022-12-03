@@ -8,10 +8,12 @@ enum class DebtorAdapterKeys{
     MOTHERFUCKER, BLOODSUCKER
 }
 
-enum class AddBottomSheetKeys{
-    ADD_PIGGY_BANK, SPENT_CATEGORY, SAVED_PIGGY, SET_LIMIT, CURRENT_BALANCE, CREATE_MOTHERFUCKER,
-    CREATE_BLOODSUCKER, UPDATE_MOTHERFUCKER, UPDATE_BLOODSUCKER, UPDATE_CATEGORY, UPDATE_PIGGY,
-    UPDATE_BALANCE
+enum class AddBottomSheetKeys(var colName: String? = null, var docName: String? = null, var imageID: Int? = null){
+    CREATE_PIGGY("piggy_banks", imageID = 777), SPENT_CARD, ADD_MONEY_TO_PIGGY("statistics", "info", 777), SET_LIMIT,
+    ADD_BALANCE("statistics", "info", 1313),
+    CREATE_MOTHERFUCKER("motherfuckers", imageID = 666),
+    CREATE_BLOODSUCKER("bloodsuckers", imageID = 666), UPDATE_MOTHERFUCKER(imageID = 666),
+    UPDATE_BLOODSUCKER(imageID = 666), UPDATE_SPENDING_CARD, UPDATE_PIGGY, UPDATE_BALANCE
 }
 
 enum class ListBottomSheetKeys{

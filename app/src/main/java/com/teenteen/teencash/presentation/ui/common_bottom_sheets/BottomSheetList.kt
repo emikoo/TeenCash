@@ -114,7 +114,7 @@ class BottomSheetList(
     }
 
     override fun onEditCategory() {
-        BottomSheetAdd(updater!!, AddBottomSheetKeys.UPDATE_CATEGORY, itemCategory = itemCategory)
+        BottomSheetAdd(updater!!, AddBottomSheetKeys.UPDATE_SPENDING_CARD, itemCategory = itemCategory)
             .show(activity?.supportFragmentManager)
         dialog?.dismiss()
     }
@@ -197,7 +197,7 @@ class BottomSheetList(
                 viewModel.deleteCategory(prefs.getCurrentUserId() , it.docName)
                 viewModel.updateSpentAmount(prefs.getCurrentUserId(), newSpentAmount)
                 viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
-                updater!!.updateCategory()
+                updater!!.updateSpendingCard()
                 this.dismiss()
             } else Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show()
         }

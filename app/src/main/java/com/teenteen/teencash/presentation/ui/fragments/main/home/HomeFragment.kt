@@ -70,7 +70,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
         }
         binding.btnTotalEdit.setOnClickListener {
             BottomSheetAdd(
-                this , AddBottomSheetKeys.CURRENT_BALANCE
+                this , AddBottomSheetKeys.ADD_BALANCE
             ).show(activity !!.supportFragmentManager)
         }
     }
@@ -127,7 +127,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
     override fun onAddPiggyClickListener(item: Category) {
         BottomSheetAdd(
             this ,
-            AddBottomSheetKeys.ADD_PIGGY_BANK
+            AddBottomSheetKeys.CREATE_PIGGY
         ).show(activity?.supportFragmentManager)
     }
 
@@ -142,12 +142,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
     }
 
     override fun onCategoryClickListener(item: Category) {
-        BottomSheetAdd(this , AddBottomSheetKeys.SPENT_CATEGORY , item)
+        BottomSheetAdd(this , AddBottomSheetKeys.SPENT_CARD , item)
             .show(activity?.supportFragmentManager)
     }
 
     override fun onPiggyClickListener(item: Category) {
-        BottomSheetAdd(this , AddBottomSheetKeys.SAVED_PIGGY , item)
+        BottomSheetAdd(this , AddBottomSheetKeys.ADD_MONEY_TO_PIGGY , item)
             .show(activity?.supportFragmentManager)
     }
 
@@ -158,7 +158,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
         categoryAdapter.notifyDataSetChanged()
     }
 
-    override fun updateCategory() {
+    override fun updateSpendingCard() {
         progressDialog.show()
         viewModel.getCategories(prefs.getCurrentUserId())
         viewModel.getBalance(prefs.getCurrentUserId())

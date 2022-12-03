@@ -42,10 +42,6 @@ fun PreferenceManager.updateLanguage(lang: String, context: Context, prefsSettin
     prefsSettings.saveSettingsLanguage(lang)
 }
 
-fun Context.showNoConnectionToast() {
-    Toast.makeText(this, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show()
-}
-
 fun String.toSymbol(): String {
     var textWithoutCaps = ""
     when(this) {

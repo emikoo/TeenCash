@@ -3,10 +3,7 @@ package com.teenteen.teencash.presentation.ui.fragments.main.home.bottom_sheets
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.example.teencash.ui.bottom_sheet.icon.IconListBS
 import com.teenteen.teencash.R
@@ -90,7 +87,7 @@ class AddCategoryBS(private val updater: UpdateData) :
         usersCollection.document(prefs.getCurrentUserId())
             .collection("categories").document(docName).set(newCategory)
         dialog?.dismiss()
-        updater.updateCategory()
+        updater.updateSpendingCard()
     }
 
     private fun setupTextLimitations() {

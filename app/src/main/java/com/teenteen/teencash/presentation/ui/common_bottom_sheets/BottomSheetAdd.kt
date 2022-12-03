@@ -3,13 +3,8 @@ package com.teenteen.teencash.presentation.ui.common_bottom_sheets
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.lifecycle.Observer
-import com.google.firebase.firestore.FirebaseFirestore
 import com.teenteen.teencash.R
 import com.teenteen.teencash.data.model.Category
 import com.teenteen.teencash.data.model.Debtor
@@ -19,9 +14,7 @@ import com.teenteen.teencash.databinding.BsAddBinding
 import com.teenteen.teencash.presentation.base.BaseBottomSheetDialogFragment
 import com.teenteen.teencash.presentation.extensions.*
 import com.teenteen.teencash.presentation.interfaces.UpdateData
-import com.teenteen.teencash.presentation.utills.AddBottomSheetKeys
-import com.teenteen.teencash.presentation.utills.checkInternetConnection
-import com.teenteen.teencash.presentation.utills.convertAmount
+import com.teenteen.teencash.presentation.utills.*
 import com.teenteen.teencash.view_model.MainViewModel
 
 class BottomSheetAdd(
@@ -30,17 +23,20 @@ class BottomSheetAdd(
     BaseBottomSheetDialogFragment<BsAddBinding>() {
 
     lateinit var viewModel: MainViewModel
-    var categoryName = ""
     var balance = 0
-    var limit = 0
     private var savedMoney = 0
     var spentToday = 0
 
+    override fun attachBinding(list: MutableList<BsAddBinding>, layoutInflater: LayoutInflater,
+        container: ViewGroup?, attachToRoot: Boolean){
+        list.add(BsAddBinding.inflate(layoutInflater , container , attachToRoot))}
+
     override fun setupViews() {
         viewModel = MainViewModel()
+        requireContext().showToast(key.name)
         checkInternetConnection(this::subscribeToLiveData, requireContext())
         when (key) {
-            AddBottomSheetKeys.ADD_PIGGY_BANK , AddBottomSheetKeys.CREATE_MOTHERFUCKER ,
+            AddBottomSheetKeys.CREATE_PIGGY , AddBottomSheetKeys.CREATE_MOTHERFUCKER ,
             AddBottomSheetKeys.CREATE_BLOODSUCKER, AddBottomSheetKeys.UPDATE_BLOODSUCKER ,
             AddBottomSheetKeys.UPDATE_MOTHERFUCKER -> {
                 binding.title.isInvisible()
@@ -48,7 +44,7 @@ class BottomSheetAdd(
                 binding.etName.isVisible()
                 binding.etLimit.isGone()
             }
-            AddBottomSheetKeys.UPDATE_PIGGY , AddBottomSheetKeys.UPDATE_CATEGORY -> {
+            AddBottomSheetKeys.UPDATE_PIGGY , AddBottomSheetKeys.UPDATE_SPENDING_CARD -> {
                 binding.title.isInvisible()
                 binding.limit.isInvisible()
                 binding.etName.isVisible()
@@ -63,47 +59,40 @@ class BottomSheetAdd(
         }
         setupTitlesByKey()
         checkInternetConnection(this::setupListener, requireContext())
-        binding.btnCancel.setOnClickListener { dialog !!.dismiss() }
         setupListener()
     }
 
     private fun setupTitlesByKey() {
         binding.tvCurrency.text = prefs.getSettingsCurrency()
         when (key) {
-            AddBottomSheetKeys.ADD_PIGGY_BANK -> setupTextByKey(etAmountHint = resources.getString(R.string.goal) , btnAddText = false)
-            AddBottomSheetKeys.SET_LIMIT -> {
-                setupTextByKey(title = getString(R.string.your_daily_limit),
-                    etAmountHint = resources.getString(R.string.limit) , btnAddText = false)
-            }
-            AddBottomSheetKeys.SPENT_CATEGORY -> {
-                setupTextByKey(title = itemCategory !!.name, etAmountHint = resources.getString(R.string.spent) , btnAddText = true)
+            AddBottomSheetKeys.CREATE_PIGGY -> setText(etAmountHint = resources.getString(R.string.goal) , btnAddText = false)
+            AddBottomSheetKeys.SET_LIMIT -> setText(title = getString(R.string.your_daily_limit),
+                etAmountHint = resources.getString(R.string.limit) , btnAddText = false)
+            AddBottomSheetKeys.SPENT_CARD -> {
+                setText(title = itemCategory!!.name, etAmountHint = resources.getString(R.string.spent) , btnAddText = true)
                 val limit = resources.getString(R.string.limit)
                 binding.limit.text = "$limit: ${itemCategory.firstAmount}/${itemCategory.secondAmount}"
                 binding.tvCurrency.text = itemCategory.currency
             }
-            AddBottomSheetKeys.SAVED_PIGGY -> {
-                setupTextByKey(title = itemCategory !!.name,
+            AddBottomSheetKeys.ADD_MONEY_TO_PIGGY -> {
+                setText(title = itemCategory !!.name,
                     etAmountHint = "0" , btnAddText = false)
                 binding.tvCurrency.text = itemCategory.currency
             }
-            AddBottomSheetKeys.CURRENT_BALANCE -> {
-                setupTextByKey(title = getString(R.string.Balance),
+            AddBottomSheetKeys.ADD_BALANCE -> setText(title = getString(R.string.Balance),
                     etAmountHint = "0" , btnAddText = true)
-            }
-            AddBottomSheetKeys.CREATE_MOTHERFUCKER -> setupTextByKey(etAmountHint = "0" , btnAddText = false)
-            AddBottomSheetKeys.CREATE_BLOODSUCKER -> setupTextByKey(etAmountHint = "0" , btnAddText = false)
-            AddBottomSheetKeys.UPDATE_MOTHERFUCKER -> setupUpdateTexts(true)
-            AddBottomSheetKeys.UPDATE_BLOODSUCKER -> setupUpdateTexts(true)
-            AddBottomSheetKeys.UPDATE_CATEGORY -> setupUpdateTexts(false)
-            AddBottomSheetKeys.UPDATE_PIGGY -> setupUpdateTexts(false)
-            AddBottomSheetKeys.UPDATE_BALANCE -> {
-                binding.title.text = getString(R.string.Balance)
-                binding.btnAdd.text = resources.getString(R.string.save)
-            }
+            AddBottomSheetKeys.CREATE_MOTHERFUCKER -> setText(etAmountHint = "0" , btnAddText = false)
+            AddBottomSheetKeys.CREATE_BLOODSUCKER -> setText(etAmountHint = "0" , btnAddText = false)
+            AddBottomSheetKeys.UPDATE_MOTHERFUCKER -> updateText(true)
+            AddBottomSheetKeys.UPDATE_BLOODSUCKER -> updateText(true)
+            AddBottomSheetKeys.UPDATE_SPENDING_CARD -> updateText(false)
+            AddBottomSheetKeys.UPDATE_PIGGY -> updateText(false)
+            AddBottomSheetKeys.UPDATE_BALANCE -> setText(title = getString(R.string.Balance),
+                etAmountHint = "0", btnAddText = false)
         }
     }
 
-    private fun setupTextByKey(title: String? = null, etAmountHint: String , btnAddText: Boolean) {
+    private fun setText(title: String? = null, etAmountHint: String , btnAddText: Boolean) {
         binding.title.text = title
         binding.etAmount.hint = etAmountHint
         binding.etAmount.addTextChangedListener(object: TextWatcher {
@@ -121,7 +110,7 @@ class BottomSheetAdd(
         else binding.btnAdd.text = resources.getString(R.string.save)
     }
 
-    private fun setupUpdateTexts(isDebtor: Boolean) {
+    private fun updateText(isDebtor: Boolean) {
         if (isDebtor) {
             binding.etName.setText(itemDebtor?.name)
             binding.etAmount.setText("${itemDebtor?.amount}")
@@ -139,104 +128,167 @@ class BottomSheetAdd(
     }
 
     private fun setupListener() {
+        binding.btnCancel.setOnClickListener { dialog !!.dismiss() }
         binding.btnAdd.setOnClickListener {
             when (key) {
-                AddBottomSheetKeys.ADD_PIGGY_BANK -> {
-                    if (binding.etName.text.isNotBlank() && binding.etName.text.isNotEmpty()
-                        && binding.etAmount.text.isNotBlank() && binding.etAmount.text.isNotEmpty()
-                    ) {
-                        categoryName = binding.etName.text.toString()
-                        limit = binding.etAmount.text.toString().toInt()
-                        checkIfDocExists(
-                            "piggy_banks" , categoryName , whenDocNotExistAction = this::addPiggy ,
-                            whenDocExistAction = this::toastItemExists
-                        )
-                    } else Toast.makeText(
-                        requireContext() ,
-                        getString(R.string.check_all_data) ,
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-                AddBottomSheetKeys.SET_LIMIT -> checkField(this::updateLimit)
-                AddBottomSheetKeys.SPENT_CATEGORY -> checkField(this::spendMoney)
-                AddBottomSheetKeys.SAVED_PIGGY -> checkIfDocExists(
-                    "statistics" ,
-                    "info" ,
-                    whenDocExistAction = this::saveMoney ,
-                    whenDocNotExistAction = this::createInfoDoc
-                )
-                AddBottomSheetKeys.CURRENT_BALANCE -> checkIfDocExists(
-                    "statistics" ,
-                    "info" ,
-                    whenDocExistAction = this::addBalance ,
-                    whenDocNotExistAction = this::createInfoDoc
-                )
-                AddBottomSheetKeys.CREATE_MOTHERFUCKER -> if (binding.etName.text.isNotBlank()) checkIfDocExists(
-                    "motherfuckers" ,
-                    binding.etName.text.toString() ,
-                    whenDocExistAction = this::toastItemExists ,
-                    whenDocNotExistAction = this::createMFDoc
-                )
-                else Toast.makeText(
-                    requireContext() ,
-                    getString(R.string.check_all_data) ,
-                    Toast.LENGTH_LONG
-                ).show()
-                AddBottomSheetKeys.CREATE_BLOODSUCKER -> if (binding.etName.text.isNotBlank()) checkIfDocExists(
-                    "bloodsuckers" ,
-                    binding.etName.text.toString() ,
-                    whenDocExistAction = this::toastItemExists ,
-                    whenDocNotExistAction = this::createBSDoc
-                )
-                else Toast.makeText(
-                    requireContext() ,
-                    getString(R.string.check_all_data) ,
-                    Toast.LENGTH_LONG
-                ).show()
-                AddBottomSheetKeys.UPDATE_MOTHERFUCKER -> if (binding.etName.text.isNotBlank()
-                    && binding.etAmount.text.isNotBlank()
-                ) updateMotherfucker()
-                else Toast.makeText(
-                    requireContext() ,
-                    getString(R.string.check_all_data) ,
-                    Toast.LENGTH_SHORT
-                ).show()
-                AddBottomSheetKeys.UPDATE_BLOODSUCKER -> if (binding.etName.text.isNotBlank()
-                    && binding.etAmount.text.isNotBlank()
-                ) updateBloodsucker()
-                else Toast.makeText(
-                    requireContext() ,
-                    getString(R.string.check_all_data) ,
-                    Toast.LENGTH_SHORT
-                ).show()
-                AddBottomSheetKeys.UPDATE_CATEGORY -> updateCategory()
-                AddBottomSheetKeys.UPDATE_PIGGY -> updatePiggy()
-                AddBottomSheetKeys.UPDATE_BALANCE -> checkField(this::updateBalance)
+                AddBottomSheetKeys.CREATE_PIGGY -> checkField(this, requireContext(),
+                    binding.etName, binding.etAmount, this::checkIfDocExists)
+                AddBottomSheetKeys.CREATE_MOTHERFUCKER -> checkField(this, requireContext(),
+                    binding.etName, binding.etAmount, this::checkIfDocExists)
+                AddBottomSheetKeys.CREATE_BLOODSUCKER -> checkField(this, requireContext(),
+                    binding.etName, binding.etAmount, this::checkIfDocExists)
+                AddBottomSheetKeys.UPDATE_MOTHERFUCKER -> checkField(this, requireContext(),
+                    binding.etAmount, binding.etName, this::updateDebtor)
+                AddBottomSheetKeys.UPDATE_BLOODSUCKER -> checkField(this, requireContext(),
+                    binding.etAmount, binding.etName, this::updateDebtor)
+                AddBottomSheetKeys.UPDATE_SPENDING_CARD -> updateCategory()
+                AddBottomSheetKeys.UPDATE_PIGGY -> updateCategory()
+                AddBottomSheetKeys.UPDATE_BALANCE -> checkField(this, requireContext(),
+                    binding.etAmount, action = this::updateBalance)
+                AddBottomSheetKeys.SET_LIMIT -> checkField(this, requireContext(),
+                    binding.etAmount, action = this::updateLimit)
+                AddBottomSheetKeys.SPENT_CARD -> checkField(this, requireContext(),
+                    binding.etAmount, action = this::spendMoney)
+                AddBottomSheetKeys.ADD_MONEY_TO_PIGGY -> checkField(this, requireContext(),
+                    binding.etAmount, action = this::checkIfDocExists)
+                AddBottomSheetKeys.ADD_BALANCE -> checkField(this, requireContext(),
+                    binding.etAmount, action = this::checkIfDocExists)
             }
         }
     }
 
-    private fun addPiggy() {
-        val newGoal = Category(
-            name = categoryName ,
-            secondAmount = limit ,
-            iconId = 777 ,
-            firstAmount = 0,
-            docName = "$categoryName$limit",
-            currency = binding.tvCurrency.text.toString()
-        )
+    private fun checkIfDocExists(){
+        var docName = key.docName
+        if (docName == null) docName = binding.etName.text.toString()
+        val categoriesOfUser = key.colName?.let {
+            usersCollection.document(prefs.getCurrentUserId()).collection(it).document(docName) }
+        categoriesOfUser?.get()?.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val document = task.result
+                if (document != null) {
+                    if (document.exists()) {
+                        when (key) {
+                            AddBottomSheetKeys.ADD_MONEY_TO_PIGGY -> {saveMoney()}
+                            AddBottomSheetKeys.ADD_BALANCE -> {addBalance()}
+                            else -> requireContext().showToast(getString(R.string.item_exists))
+                        }
+                    }
+                    else {
+                        if (key.colName == "statistics" && key.docName == "info") {
+                            val defaultInfo: InfoStatistic = InfoStatistic(0 ,
+                                prefs.getSettingsCurrency(),0 , 0 , 0)
+                            db.collection("users")
+                                .document(prefs.getCurrentUserId()).collection(key.colName!!)
+                                .document(key.docName!!).set(defaultInfo)
+                            addBalance()
+                        }
+                        else if (key == AddBottomSheetKeys.CREATE_PIGGY) addPiggy()
+                        else {
+                            val amount = binding.etAmount.text.toString().toInt()
+                            var isSpent = true
+                            val currentCurrency = binding.tvCurrency.text.toString()
+                            val convertedAmount = amount.convertAmount(prefs.getSettingsCurrency(), currentCurrency)
+                            val default: Debtor = Debtor("$docName$amount", docName, amount, currentCurrency)
+                            if (key == AddBottomSheetKeys.CREATE_MOTHERFUCKER) {
+                                isSpent = true
+                                viewModel.createMotherfucker(prefs.getCurrentUserId(), "$docName$amount", default)
+                                viewModel.updateBalance(prefs.getCurrentUserId(), balance - convertedAmount)
+                                updater.updateMFList()
+                            } else if (key == AddBottomSheetKeys.CREATE_BLOODSUCKER) {
+                                isSpent = false
+                                viewModel.createBloodsucker(prefs.getCurrentUserId(), "$docName$amount", default)
+                                viewModel.updateBalance(prefs.getCurrentUserId(), balance + convertedAmount)
+                                updater.updateBSList()
+                            }
+                            val item = History(docName, amount, isSpent, getCurrentDate(), getCurrentDateTime(),
+                                getCurrentMonth(), key.imageID!!, currentCurrency)
+                            viewModel.putToHistory(prefs.getCurrentUserId(), item)
+                        }
+                    }
+                }
+            }
+        }
         dialog?.dismiss()
-        updater.updatePiggyBank()
-        usersCollection.document(prefs.getCurrentUserId())
-            .collection("piggy_banks").document("$categoryName$limit").set(newGoal)
+    }
+
+    private fun updateDebtor() {
+        itemDebtor?.let {
+            val amount = binding.etAmount.text.toString().toInt()
+            val convertedAmount = amount.convertAmount(prefs.getSettingsCurrency(), binding.tvCurrency.text.toString())
+            var gap = it.amount - convertedAmount
+            var isSpent = true
+            if (binding.etAmount.text.toString().toInt() != 0 && gap !=0) {
+                if (key == AddBottomSheetKeys.UPDATE_MOTHERFUCKER) {
+                    isSpent = amount > itemDebtor.amount
+                    viewModel.updateBalance(prefs.getCurrentUserId(), balance + gap)
+                    viewModel.updateMotherfucker(prefs.getCurrentUserId(), it.docName, binding.etName.text.toString(),
+                        binding.etAmount.text.toString().toInt())
+                    updater.updateMFList()
+                } else if (key == AddBottomSheetKeys.UPDATE_BLOODSUCKER) {
+                    isSpent = amount < itemDebtor.amount
+                    viewModel.updateBalance(prefs.getCurrentUserId(), balance - gap)
+                    viewModel.updateBloodsucker(prefs.getCurrentUserId(), it.docName, binding.etName.text.toString(),
+                        binding.etAmount.text.toString().toInt())
+                    updater.updateBSList()
+                }
+                if (gap < 0) gap += (gap * (- 2))
+                requireContext().showToast(isSpent.toString())
+                val item = History(it.name, gap, isSpent, getCurrentDate(),
+                    getCurrentDateTime(), getCurrentMonth(), key.imageID!!, binding.tvCurrency.text.toString())
+                viewModel.putToHistory(prefs.getCurrentUserId(), item)
+                dialog?.dismiss()
+            }
+        }
+    }
+
+    private fun updateCategory() {
+        itemCategory?.let {
+            val name = binding.etName.text.toString()
+            val limit = binding.etLimit.text.toString()
+            val amount = binding.etAmount.text.toString()
+            val convertedAmount = amount.toInt().convertAmount(prefs.getSettingsCurrency(), binding.tvCurrency.text.toString())
+            val gap = it.firstAmount-convertedAmount
+            if (name.isNotBlank() && limit.isNotBlank() && amount.isNotBlank() && amount.toInt() != 0) {
+                val isSpent = gap < 0
+                val historyAmount = if (gap < 0) amount.toInt()-it.firstAmount
+                else gap
+                viewModel.putToHistory(prefs.getCurrentUserId(), History(name, historyAmount, isSpent,
+                    getCurrentDate(), getCurrentDateTime(), getCurrentMonth(), it.iconId, binding.tvCurrency.text.toString()))
+                viewModel.updateBalance(prefs.getCurrentUserId(), balance+gap)
+                if (key == AddBottomSheetKeys.UPDATE_SPENDING_CARD) {
+                    viewModel.updateCategory(prefs.getCurrentUserId(), it.docName, name, amount.toInt(), limit.toInt())
+                    viewModel.updateSpentAmount(prefs.getCurrentUserId(), spentToday-gap)
+                    updater.updateSpendingCard()
+                }
+                else if (key == AddBottomSheetKeys.UPDATE_PIGGY) {
+                    viewModel.updatePiggy(prefs.getCurrentUserId(), it.docName, name, amount.toInt(), limit.toInt())
+                    viewModel.updateSavedAmount(prefs.getCurrentUserId(), savedMoney-gap)
+                    updater.updatePiggyBank()
+                }
+                dialog?.dismiss()
+            } else requireContext().showToast(getString(R.string.check_all_data))
+        }
+    }
+
+    private fun updateBalance() {
+        viewModel.updateBalance(prefs.getCurrentUserId(), binding.etAmount.text.toString().toInt())
+        updater.updateStatistics()
     }
 
     private fun updateLimit() {
-        viewModel.updateLimit(
-            prefs.getCurrentUserId() ,
-            binding.etAmount.text.toString().toInt()
-        )
+        viewModel.updateLimit(prefs.getCurrentUserId(), binding.etAmount.text.toString().toInt())
         updater.updateStatistics()
+    }
+
+    private fun addPiggy() {
+        val limit = binding.etAmount.text.toString().toInt()
+        val categoryName = binding.etName.text.toString()
+        val newGoal = Category(name = categoryName, secondAmount = limit, iconId = key.imageID!!, firstAmount = 0,
+            docName = "$categoryName$limit", currency = binding.tvCurrency.text.toString())
+        dialog?.dismiss()
+        updater.updatePiggyBank()
+        key.colName?.let { usersCollection.document(prefs.getCurrentUserId())
+            .collection(it).document("$categoryName$limit").set(newGoal) }
     }
 
     private fun spendMoney() {
@@ -252,7 +304,7 @@ class BottomSheetAdd(
             viewModel.updateSpentAmount(prefs.getCurrentUserId() , spentToday + spentAmount.convertAmount
                 (prefs.getSettingsCurrency(), binding.tvCurrency.text.toString()))
             viewModel.putToHistory(prefs.getCurrentUserId(), item)
-            updater.updateCategory()
+            updater.updateSpendingCard()
         }
     }
 
@@ -261,7 +313,7 @@ class BottomSheetAdd(
         if (input != 0) {
             val total = input + itemCategory !!.firstAmount
             val item = History(itemCategory.name, input, true, getCurrentDate(),
-                getCurrentDateTime(), getCurrentMonth(),777, itemCategory.currency.toString())
+                getCurrentDateTime(), getCurrentMonth(), key.imageID!!, itemCategory.currency.toString())
             viewModel.updateSavedAmount(prefs.getCurrentUserId() , savedMoney+input.convertAmount
                 (prefs.getSettingsCurrency(), binding.tvCurrency.text.toString()))
             viewModel.saveMoneyPiggy(prefs.getCurrentUserId() , itemCategory.docName , total)
@@ -276,208 +328,11 @@ class BottomSheetAdd(
         if (binding.etAmount.text.toString().toInt() != 0) {
             val newBalance = balance + binding.etAmount.text.toString().toInt()
             val item = History("Balance", binding.etAmount.text.toString().toInt(), false, getCurrentDate(),
-                getCurrentDateTime(), getCurrentMonth(),1313, binding.tvCurrency.text.toString())
+                getCurrentDateTime(), getCurrentMonth(), key.imageID!!, binding.tvCurrency.text.toString())
             viewModel.putToHistory(prefs.getCurrentUserId(), item)
             viewModel.updateBalance(prefs.getCurrentUserId() , newBalance)
             updater.updateStatistics()
         }
-    }
-
-    private fun updateBalance() {
-        viewModel.updateBalance(prefs.getCurrentUserId(), binding.etAmount.text.toString().toInt())
-        updater.updateStatistics()
-        dialog?.dismiss()
-    }
-
-    private fun createInfoDoc() {
-        val defaultInfo: InfoStatistic = InfoStatistic(0 , "KGD",0 , 0 , 0)
-        val db = FirebaseFirestore.getInstance()
-        db.collection("users")
-            .document(prefs.getCurrentUserId())
-            .collection("statistics").document("info").set(defaultInfo)
-        addBalance()
-    }
-
-    private fun createMFDoc() {
-        val name = binding.etName.text.toString()
-
-        if (name.isNotBlank()) {
-            val amount = binding.etAmount.text.toString().toInt()
-            val docName = "$name$amount"
-            val currentCurrency = binding.tvCurrency.text.toString()
-            val convertedAmount = amount.convertAmount(prefs.getSettingsCurrency(), currentCurrency)
-            val newBalance = balance - convertedAmount
-            val default: Debtor = Debtor("$name$amount", name, amount, currentCurrency)
-            val item = History(name, amount, true, getCurrentDate(), getCurrentDateTime(),
-                getCurrentMonth(),666, currentCurrency)
-            viewModel.putToHistory(prefs.getCurrentUserId(), item)
-            viewModel.createMotherfucker(prefs.getCurrentUserId(), docName, default)
-            viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
-            updater.updateMFList()
-        } else Toast.makeText(requireContext(), getString(R.string.enter_the_name), Toast.LENGTH_SHORT).show()
-    }
-
-    private fun createBSDoc() {
-        val name = binding.etName.text.toString()
-        val amount = binding.etAmount.text.toString().toInt()
-        val docName = "$name$amount"
-        val currentCurrency = binding.tvCurrency.text.toString()
-        val convertedAmount = amount.convertAmount(prefs.getSettingsCurrency(), currentCurrency)
-        val newBalance = balance + convertedAmount
-        val default: Debtor = Debtor("$name$amount", name, amount, currentCurrency)
-        val item = History(name, amount, false, getCurrentDate(), getCurrentDateTime(),
-            getCurrentMonth(),666, currentCurrency)
-        viewModel.putToHistory(prefs.getCurrentUserId(), item)
-        viewModel.createBloodsucker(prefs.getCurrentUserId(), docName, default)
-        viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
-        updater.updateBSList()
-    }
-
-    private fun updateMotherfucker() {
-        itemDebtor?.let {
-            val amount = binding.etAmount.text.toString().toInt()
-            val convertedAmount = amount.convertAmount(prefs.getSettingsCurrency(), binding.tvCurrency.text.toString())
-            val gap = it.amount - convertedAmount
-            if (binding.etAmount.text.toString().toInt() != 0 || gap !=0) {
-                val newBalance = balance + gap
-                val item = History(it.name, gap, false, getCurrentDate(),
-                    getCurrentDateTime(), getCurrentMonth(),666, binding.tvCurrency.text.toString())
-                viewModel.putToHistory(prefs.getCurrentUserId(), item)
-                viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
-            }
-            viewModel.updateMotherfucker(prefs.getCurrentUserId(), it.docName, binding.etName.text.toString(),
-                binding.etAmount.text.toString().toInt())
-            updater.updateMFList()
-            dialog?.dismiss()
-        }
-    }
-
-    private fun updateBloodsucker() {
-        itemDebtor?.let {
-            val amount = binding.etAmount.text.toString().toInt()
-            val convertedAmount = amount.convertAmount(prefs.getSettingsCurrency(), binding.tvCurrency.text.toString())
-            val gap = it.amount - convertedAmount
-            if (binding.etAmount.text.toString().toInt() != 0 || gap !=0) {
-                val newBalance = balance - gap
-                val item = History(it.name, gap, true, getCurrentDate(),
-                    getCurrentDateTime(), getCurrentMonth(),666, binding.tvCurrency.text.toString())
-                viewModel.putToHistory(prefs.getCurrentUserId(), item)
-                viewModel.updateBalance(prefs.getCurrentUserId(), newBalance)
-            }
-            viewModel.updateBloodsucker(prefs.getCurrentUserId(), it.docName, binding.etName.text.toString(),
-                binding.etAmount.text.toString().toInt())
-            updater.updateBSList()
-            dialog?.dismiss()
-        }
-    }
-
-    private fun updateCategory() {
-        itemCategory?.let {
-            val name = binding.etName.text.toString()
-            val limit = binding.etLimit.text.toString()
-            val amount = binding.etAmount.text.toString()
-            val convertedAmount = amount.toInt().convertAmount(prefs.getSettingsCurrency(), binding.tvCurrency.text.toString())
-            val gap = it.firstAmount-convertedAmount
-            if (name.isNotBlank() && limit.isNotBlank() && amount.isNotBlank()) {
-                viewModel.updateCategory(prefs.getCurrentUserId(), it.docName, name, amount.toInt(), limit.toInt())
-                if (amount.toInt() != 0) {
-                    val isSpent = gap < 0
-                    val historyAmount = if (gap < 0) amount.toInt()-it.firstAmount
-                    else gap
-                    viewModel.putToHistory(prefs.getCurrentUserId(), History(name, historyAmount, isSpent,
-                        getCurrentDate(), getCurrentDateTime(), getCurrentMonth(), it.iconId, binding.tvCurrency.text.toString()))
-                    viewModel.updateSpentAmount(prefs.getCurrentUserId(), spentToday-gap)
-                    viewModel.updateBalance(prefs.getCurrentUserId(), balance+gap)
-                }
-                updater.updateCategory()
-                dialog?.dismiss()
-            } else Toast.makeText(
-                requireContext() ,
-                getString(R.string.check_all_data) ,
-                Toast.LENGTH_LONG
-            ).show()
-        }
-    }
-
-    private fun updatePiggy() {
-        itemCategory?.let {
-            val name = binding.etName.text.toString()
-            val limit = binding.etLimit.text.toString()
-            val amount = binding.etAmount.text.toString()
-            val convertedAmount = amount.toInt().convertAmount(prefs.getSettingsCurrency(), binding.tvCurrency.text.toString())
-            val gap = it.firstAmount-convertedAmount
-            if (name.isNotBlank() && limit.isNotBlank() && amount.isNotBlank()) {
-                viewModel.updatePiggy(prefs.getCurrentUserId(), it.docName, name, amount.toInt(), limit.toInt())
-                if (amount.toInt() != 0) {
-                    val isSpent = gap < 0
-                    val historyAmount = if (gap < 0) amount.toInt()-it.firstAmount
-                    else gap
-                    viewModel.putToHistory(prefs.getCurrentUserId(), History(name, historyAmount, isSpent,
-                        getCurrentDate(), getCurrentDateTime(), getCurrentMonth(), it.iconId, binding.tvCurrency.text.toString()))
-                    viewModel.updateSavedAmount(prefs.getCurrentUserId(), savedMoney-gap)
-                    viewModel.updateBalance(prefs.getCurrentUserId(), balance+gap)
-                }
-                updater.updatePiggyBank()
-                dialog?.dismiss()
-            } else Toast.makeText(
-                requireContext() ,
-                getString(R.string.check_all_data) ,
-                Toast.LENGTH_LONG
-            ).show()
-        }
-    }
-
-    private fun checkField(action: () -> Unit) {
-        if (binding.etAmount.text.isNotBlank()) {
-            action()
-            dialog?.dismiss()
-        } else Toast.makeText(
-            requireContext() ,
-            getString(R.string.check_all_data) ,
-            Toast.LENGTH_LONG
-        ).show()
-    }
-
-    private fun toastItemExists() {
-        Toast.makeText(requireContext() , getString(R.string.item_exists) , Toast.LENGTH_LONG)
-            .show()
-    }
-
-    private fun checkIfDocExists(
-        colName: String , docName: String ,
-        whenDocExistAction: () -> Unit ,
-        whenDocNotExistAction: () -> Unit
-    ) {
-        if (binding.etAmount.text.isNotBlank()) {
-            val categoriesOfUser = usersCollection.document(prefs.getCurrentUserId())
-                .collection(colName).document(docName)
-            categoriesOfUser.get().addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val document = task.result
-                    if (document != null) {
-                        if (document.exists()) {
-                            whenDocExistAction()
-                        } else {
-                            whenDocNotExistAction()
-                        }
-                    }
-                }
-            }
-            dialog?.dismiss()
-        } else Toast.makeText(
-            requireContext() ,
-            getString(R.string.check_all_data) ,
-            Toast.LENGTH_LONG
-        ).show()
-    }
-
-    override fun attachBinding(
-        list: MutableList<BsAddBinding> ,
-        layoutInflater: LayoutInflater ,
-        container: ViewGroup? ,
-        attachToRoot: Boolean
-    ) {
-        list.add(BsAddBinding.inflate(layoutInflater , container , attachToRoot))
     }
 
     private fun subscribeToLiveData() {

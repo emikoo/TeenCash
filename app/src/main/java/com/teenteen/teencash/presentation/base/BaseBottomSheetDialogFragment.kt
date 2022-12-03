@@ -27,7 +27,7 @@ abstract class BaseBottomSheetDialogFragment<VB_CHILD : ViewBinding> :
     lateinit var progressDialog: Dialog
     lateinit var prefs: PrefsSettings
     lateinit var auth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
+    lateinit var db: FirebaseFirestore
     lateinit var usersCollection: CollectionReference
     var currentUser: FirebaseUser? = null
 
