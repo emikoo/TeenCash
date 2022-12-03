@@ -33,7 +33,6 @@ class BottomSheetAdd(
 
     override fun setupViews() {
         viewModel = MainViewModel()
-        requireContext().showToast(key.name)
         checkInternetConnection(this::subscribeToLiveData, requireContext())
         when (key) {
             AddBottomSheetKeys.CREATE_PIGGY , AddBottomSheetKeys.CREATE_MOTHERFUCKER ,
@@ -235,7 +234,6 @@ class BottomSheetAdd(
                     updater.updateBSList()
                 }
                 if (gap < 0) gap += (gap * (- 2))
-                requireContext().showToast(isSpent.toString())
                 val item = History(it.name, gap, isSpent, getCurrentDate(),
                     getCurrentDateTime(), getCurrentMonth(), key.imageID!!, binding.tvCurrency.text.toString())
                 viewModel.putToHistory(prefs.getCurrentUserId(), item)

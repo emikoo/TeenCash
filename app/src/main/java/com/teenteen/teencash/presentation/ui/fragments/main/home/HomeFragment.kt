@@ -182,7 +182,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
     }
 
     override fun subscribeToLiveData() {
-        var currency = ""
+        var currency = "KGS"
         var limit = 0
         viewModel.currency.observe(viewLifecycleOwner) {
             currency = it

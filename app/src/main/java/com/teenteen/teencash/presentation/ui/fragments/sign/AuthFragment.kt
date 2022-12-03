@@ -4,6 +4,7 @@ import android.os.Handler
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -21,6 +22,7 @@ import com.teenteen.teencash.view_model.AuthViewModel
 class AuthFragment : BaseFragment<FragmentAuthBinding>() {
 
     lateinit var viewModel: AuthViewModel
+    var uid = ""
 
     override fun attachBinding(
         list: MutableList<FragmentAuthBinding> ,
@@ -33,7 +35,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
 
     override fun setupViews() {
         viewModel = ViewModelProvider(this)[AuthViewModel::class.java]
-        checkInternetConnection(this::setupListeners, requireContext())
+        checkInternetConnection(this::setupListeners , requireContext())
         setupTextWatcher(binding.inputEditEmail , binding.inputEditPassword)
         setupTextWatcher(binding.inputEditPassword , binding.inputEditEmail)
     }
@@ -46,8 +48,12 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
 
     private fun clickSignIn() {
         binding.buttonSignIn.setOnClickListener {
-            if (checkField(binding.inputEditEmail , binding.inputEditPassword)){
-                checkInternetConnection(this::loginUser, requireContext(), this::showNoInternetConnectionToast)
+            if (checkField(binding.inputEditEmail , binding.inputEditPassword)) {
+                checkInternetConnection(
+                    this::loginUser ,
+                    requireContext() ,
+                    this::showNoInternetConnectionToast
+                )
             }
         }
     }
@@ -62,9 +68,10 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     firebaseAuth.addAuthStateListener { auth ->
-                        if (auth.currentUser!!.isEmailVerified) {
+                        if (auth.currentUser !!.isEmailVerified) {
+                            uid = auth.currentUser!!.uid
                             prefs.setFirstTimeLaunch(USER)
-                            prefs.saveCurrentUserId(currentUser?.uid)
+                            prefs.saveCurrentUserId(uid)
                             activityNavController().navigateSafely(R.id.action_global_mainFlowFragment)
                             progressDialog.dismiss()
                         } else {
@@ -80,8 +87,12 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
     private fun clickSignUp() {
         binding.buttonSignUp.setOnClickListener {
             progressDialog.show()
-            if (checkField(binding.inputEditEmail , binding.inputEditPassword)){
-                checkInternetConnection(this::createNewUser, requireContext(), this::showNoInternetConnectionToast)
+            if (checkField(binding.inputEditEmail , binding.inputEditPassword)) {
+                checkInternetConnection(
+                    this::createNewUser ,
+                    requireContext() ,
+                    this::showNoInternetConnectionToast
+                )
             }
         }
     }
@@ -94,44 +105,46 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
                 binding.inputEditPassword.text.toString()
             ).addOnCompleteListener { task ->
                 var user = firebaseAuth.currentUser
-                user!!.reload()
+                user !!.reload()
+                uid = user.uid
                 if (firebaseAuth.currentUser !!.isEmailVerified) {
-                    makeErrorTextVisible(R.string.now_log_in, R.color.grey80)
+                    makeErrorTextVisible(R.string.now_log_in , R.color.grey80)
                 } else {
                     addNewUserToFirestore()
-                    sendVerificationEmail()
-                }
-                if (task.isSuccessful) {
-                    addNewUserToFirestore()
-                    sendVerificationEmail()
                 }
             }
     }
 
     private fun sendVerificationEmail() {
-        currentUser?.sendEmailVerification()
-            ?.addOnCompleteListener {
-                progressDialog.dismiss()
-                showAlertDialog(
-                    requireContext() , this ,
-                    resources.getString(R.string.verify_your_email) ,
-                    resources.getString(R.string.verify_your_email_subtitle) ,
-                    resources.getString(R.string.ok)
-                )
-                makeErrorTextVisible(R.string.verify_your_email_subtitle , R.color.grey80)
-                deleteUnverifiedUser()
-            }
-            ?.addOnFailureListener { e ->
-                makeErrorTextVisible(R.string.verification_failed , R.color.red)
-            }
+        firebaseAuth.currentUser?.let {
+            val user = it
+            user.sendEmailVerification()
+                .addOnCompleteListener {
+                    showAlertDialog(
+                        requireContext() , this ,
+                        resources.getString(R.string.verify_your_email) ,
+                        resources.getString(R.string.verify_your_email_subtitle) ,
+                        resources.getString(R.string.ok)
+                    )
+                    makeErrorTextVisible(R.string.verify_your_email_subtitle , R.color.grey80)
+                    deleteUnverifiedUser()
+                }
+                .addOnFailureListener { e ->
+                    makeErrorTextVisible(R.string.verification_failed , R.color.red)
+                }
+        }
     }
 
 
     private fun clickForgotPassword() {
         binding.buttonForgotPassword.setOnClickListener {
             progressDialog.show()
-            if (checkField(binding.inputEditEmail , binding.inputEditPassword)){
-                checkInternetConnection(this::resetPassword, requireContext(), this::showNoInternetConnectionToast)
+            if (checkField(binding.inputEditEmail , binding.inputEditPassword)) {
+                checkInternetConnection(
+                    this::resetPassword ,
+                    requireContext() ,
+                    this::showNoInternetConnectionToast
+                )
             }
         }
     }
@@ -149,11 +162,11 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
 
     private fun deleteUnverifiedUser() {
         Handler().postDelayed({
-            if (!checkIfEmailVerified()) {
+            if (! checkIfEmailVerified()) {
                 currentUser?.delete()
-                usersCollection.document(currentUser!!.uid).delete()
+                usersCollection.document(currentUser !!.uid).delete()
             }
-        }, 300000)
+        } , 300000)
     }
 
     private fun checkIfEmailVerified(): Boolean {
@@ -199,16 +212,16 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
         progressDialog.dismiss()
     }
 
-    private fun addNewUserToFirestore(){
+    private fun addNewUserToFirestore() {
         val email = binding.inputEditEmail.text.toString()
-        firebaseAuth.currentUser?.uid?.let {
-            usersCollection.document(it).set(mapOf("email" to email))
-            createDefaultItems(it)}
+        usersCollection.document(uid).set(mapOf("email" to email))
+        createDefaultItems(uid)
+        sendVerificationEmail()
     }
 
     private fun createDefaultItems(uid: String) {
-        viewModel.createDefaultCategory(uid, getString(R.string.transport))
-        viewModel.createDefaultGoal(uid, getString(R.string.your_goal))
+        viewModel.createDefaultCategory(uid , getString(R.string.transport))
+        viewModel.createDefaultGoal(uid , getString(R.string.your_goal))
         viewModel.createInfoDoc(uid)
     }
 
@@ -231,7 +244,9 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
         })
     }
 
-    private fun showNoInternetConnectionToast() { requireContext().showNoConnectionToast() }
+    private fun showNoInternetConnectionToast() {
+        requireContext().showNoConnectionToast()
+    }
 
     override fun subscribeToLiveData() {}
 }

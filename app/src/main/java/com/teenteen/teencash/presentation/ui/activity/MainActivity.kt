@@ -58,9 +58,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getDeviceThemeMode() {
-        if (prefs.isFirstTimeLaunch() == PrefsSettings.FIRST_TIME) AppCompatDelegate.setDefaultNightMode(
-            AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-        )
+        if (prefs.isFirstTimeLaunch() == PrefsSettings.FIRST_TIME) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         else if (prefs.getDarkThemeMode()) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         else if (! prefs.getDarkThemeMode()) AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
