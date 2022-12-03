@@ -2,6 +2,7 @@ package com.teenteen.teencash.presentation.utills
 
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlin.math.roundToInt
 
 fun Int.convertAmount(settingsCurrency: String, currentCurrency: String): Int {
     Log.d("gfhgjgjh", settingsCurrency)
@@ -10,7 +11,7 @@ fun Int.convertAmount(settingsCurrency: String, currentCurrency: String): Int {
         var convertedAmount = this.toDouble()
         val gap = link.getExchangeRates()
         convertedAmount *= gap
-        convertedAmount.toInt()
+        convertedAmount.roundToInt()
     } else this
 }
 
@@ -21,18 +22,18 @@ fun Int.convertSettingsAmount(settingsCurrency: String, currentCurrency: String)
         var convertedAmount = this.toDouble()
         val gap = link.getExchangeRates()
         convertedAmount *= gap
-        convertedAmount.toInt()
+        convertedAmount.roundToInt()
     } else this
 }
 
 fun String.getExchangeRates(): Double {
     return when(this) {
-        "fromEURtoKGS" -> 78.597881
-        "fromEURtoUSD" -> 0.98030335
-        "fromUSDtoEUR" -> 1.0200924
-        "fromUSDtoKGS" -> 80.177102
-        "fromKGStoUSD" -> 0.012472389
-        "fromKGStoEUR" -> 0.012722989
+        "fromEURtoKGS" -> 82.96
+        "fromEURtoUSD" -> 1.00
+        "fromUSDtoEUR" -> 1.00
+        "fromUSDtoKGS" -> 83.25
+        "fromKGStoUSD" -> 0.012
+        "fromKGStoEUR" -> 0.012
         else -> 0.0
     }
 }
