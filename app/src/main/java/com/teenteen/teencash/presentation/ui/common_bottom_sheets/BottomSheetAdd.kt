@@ -193,6 +193,7 @@ class BottomSheetAdd(
                                 isSpent = true
                                 viewModel.createMotherfucker(prefs.getCurrentUserId(), "$docName$amount", default)
                                 viewModel.updateBalance(prefs.getCurrentUserId(), balance - convertedAmount)
+                                viewModel.updateSpentAmount(prefs.getCurrentUserId(), spentToday+amount)
                                 updater.updateMFList()
                             } else if (key == AddBottomSheetKeys.CREATE_BLOODSUCKER) {
                                 isSpent = false
@@ -220,12 +221,14 @@ class BottomSheetAdd(
             if (binding.etAmount.text.toString().toInt() != 0 && gap !=0) {
                 if (key == AddBottomSheetKeys.UPDATE_MOTHERFUCKER) {
                     isSpent = amount > itemDebtor.amount
+                    if (isSpent) viewModel.updateSpentAmount(prefs.getCurrentUserId(), spentToday+(amount - itemDebtor.amount))
                     viewModel.updateBalance(prefs.getCurrentUserId(), balance + gap)
                     viewModel.updateMotherfucker(prefs.getCurrentUserId(), it.docName, binding.etName.text.toString(),
                         binding.etAmount.text.toString().toInt())
                     updater.updateMFList()
                 } else if (key == AddBottomSheetKeys.UPDATE_BLOODSUCKER) {
                     isSpent = amount < itemDebtor.amount
+                    if (isSpent) viewModel.updateSpentAmount(prefs.getCurrentUserId(), spentToday+(itemDebtor.amount-amount))
                     viewModel.updateBalance(prefs.getCurrentUserId(), balance - gap)
                     viewModel.updateBloodsucker(prefs.getCurrentUserId(), it.docName, binding.etName.text.toString(),
                         binding.etAmount.text.toString().toInt())
@@ -271,6 +274,12 @@ class BottomSheetAdd(
     }
 
     private fun updateBalance() {
+        var gap = balance - binding.etAmount.text.toString().toInt()
+        if (gap < 0) gap += (gap * (- 2))
+        else viewModel.updateSpentAmount(prefs.getCurrentUserId(), spentToday+gap)
+        val item = History("Balance", gap, balance > binding.etAmount.text.toString().toInt(),
+            getCurrentDate(), getCurrentDateTime(), getCurrentMonth(), key.imageID!!, binding.tvCurrency.text.toString())
+        viewModel.putToHistory(prefs.getCurrentUserId(), item)
         viewModel.updateBalance(prefs.getCurrentUserId(), binding.etAmount.text.toString().toInt())
         updater.updateStatistics()
     }
