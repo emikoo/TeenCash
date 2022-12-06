@@ -34,6 +34,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
 
     private var categoryArray = mutableListOf<Category>()
     private var piggyArray = mutableListOf<Category>()
+    private var earningsArray = mutableListOf<Category>()
     private lateinit var categoryAdapter: CategoryAdapter
     lateinit var viewModel: MainViewModel
 
@@ -78,13 +79,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
     private fun setupTabLayout() {
         val tabLayout = binding.tabLayout
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.spendings)))
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.income)))
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.piggy_banks)))
         tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                if (tabLayout.selectedTabPosition == 0) {
-                    setupRecyclerView(categoryArray , CategoryAdapterKeys.CATEGORY)
-                } else if (tabLayout.selectedTabPosition == 1) {
-                    setupRecyclerView(piggyArray , CategoryAdapterKeys.PIGGY_BANK)
+                when(tabLayout.selectedTabPosition) {
+                    0 -> setupRecyclerView(categoryArray , CategoryAdapterKeys.CATEGORY)
+                    1 -> setupRecyclerView(earningsArray , CategoryAdapterKeys.EARNINGS)
+                    2 -> setupRecyclerView(piggyArray , CategoryAdapterKeys.PIGGY_BANK)
+                    else -> setupRecyclerView(piggyArray , CategoryAdapterKeys.PIGGY_BANK)
                 }
             }
 
@@ -108,6 +111,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
         viewModel.getLimit(prefs.getCurrentUserId())
         viewModel.getSpentAmount(prefs.getCurrentUserId())
         viewModel.getCategories(prefs.getCurrentUserId())
+        viewModel.getEarnings(prefs.getCurrentUserId())
         viewModel.getPiggyBanks(prefs.getCurrentUserId())
     }
 
@@ -121,7 +125,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
     }
 
     override fun onAddCategoryClickListener(item: Category) {
-        AddCategoryBS(this).show(activity?.supportFragmentManager)
+        AddCategoryBS(this, true).show(activity?.supportFragmentManager)
     }
 
     override fun onAddPiggyClickListener(item: Category) {
@@ -129,6 +133,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
             this ,
             AddBottomSheetKeys.CREATE_PIGGY
         ).show(activity?.supportFragmentManager)
+    }
+
+    override fun onAddIncomeClickListener(item: Category) {
+        AddCategoryBS(this, false).show(activity?.supportFragmentManager)
     }
 
     override fun onCategoryDotsClickListener(item: Category) {
@@ -151,6 +159,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
             .show(activity?.supportFragmentManager)
     }
 
+    override fun onEarningClickListener(item: Category) {
+        BottomSheetAdd(this, AddBottomSheetKeys.ADD_EARNING, item).show(activity?.supportFragmentManager)
+    }
+
+    override fun onEarningDotsClickListener(item: Category) {
+
+    }
+
     private fun updateArray(array: MutableList<Category> , newList: List<Category>) {
         array.clear()
         array.addAll(newList)
@@ -163,6 +179,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
         viewModel.getCategories(prefs.getCurrentUserId())
         viewModel.getBalance(prefs.getCurrentUserId())
         viewModel.getSpentAmount(prefs.getCurrentUserId())
+    }
+
+    override fun updateEarnings() {
+        progressDialog.show()
+        viewModel.getEarnings(prefs.getCurrentUserId())
     }
 
     override fun updatePiggyBank() {
@@ -198,6 +219,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
             }
             updateArray(categoryArray , it)
             prefs.saveCurrentDay(dateInString)
+            progressDialog.dismiss()
+        }
+        viewModel.earnings.observe(viewLifecycleOwner) {
+            updateArray(earningsArray, it)
             progressDialog.dismiss()
         }
         viewModel.piggy.observe(viewLifecycleOwner) {

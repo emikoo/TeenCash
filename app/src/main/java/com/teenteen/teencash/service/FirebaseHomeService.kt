@@ -27,6 +27,21 @@ object FirebaseHomeService {
         }
     }
 
+    suspend fun getEarnings(userId: String): List<Category> {
+        return try {
+            db.collection("users")
+                .document(userId)
+                .collection("earnings").get().await()
+                .documents.mapNotNull { it.toCategory() }
+        } catch (e: Exception) {
+            Log.e(TAG , "Error getting earnings" , e)
+            FirebaseCrashlytics.getInstance().log("Error getting earnings")
+            FirebaseCrashlytics.getInstance().setCustomKey("user id" , userId)
+            FirebaseCrashlytics.getInstance().recordException(e)
+            emptyList()
+        }
+    }
+
     suspend fun getPiggyBanks(userId: String): List<Category> {
         return try {
             db.collection("users")

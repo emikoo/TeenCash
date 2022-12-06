@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel() : ViewModel() {
     private val _category = MutableLiveData<List<Category>>()
+    private val _earnings = MutableLiveData<List<Category>>()
     private val _achievement = MutableLiveData<List<Category>>()
     private val _piggy = MutableLiveData<List<Category>>()
     private val _mf = MutableLiveData<List<Debtor>>()
@@ -29,6 +30,7 @@ class MainViewModel() : ViewModel() {
     private val _spentAmount = MutableLiveData<Int>()
     val spentAmount: LiveData<Int> = _spentAmount
     val category: LiveData<List<Category>> = _category
+    val earnings: LiveData<List<Category>> = _earnings
     val achievement: LiveData<List<Category>> = _achievement
     val piggy: LiveData<List<Category>> = _piggy
     val mf: LiveData<List<Debtor>> = _mf
@@ -55,6 +57,13 @@ class MainViewModel() : ViewModel() {
     fun getCategories(uid: String) {
         viewModelScope.launch {
             _category.value = FirebaseHomeService.getCategories(uid)
+        }
+    }
+
+
+    fun getEarnings(uid: String) {
+        viewModelScope.launch {
+            _earnings.value = FirebaseHomeService.getEarnings(uid)
         }
     }
 

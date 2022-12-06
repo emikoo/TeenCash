@@ -2,6 +2,7 @@ package com.teenteen.teencash.presentation.ui.fragments.main.home.bottom_sheets
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -11,12 +12,14 @@ import com.teenteen.teencash.data.model.Category
 import com.teenteen.teencash.data.model.CategoryName
 import com.teenteen.teencash.databinding.BsAddCategoryBinding
 import com.teenteen.teencash.presentation.base.BaseBottomSheetDialogFragment
+import com.teenteen.teencash.presentation.extensions.isGone
+import com.teenteen.teencash.presentation.extensions.isVisible
 import com.teenteen.teencash.presentation.extensions.show
 import com.teenteen.teencash.presentation.interfaces.PickerItem
 import com.teenteen.teencash.presentation.interfaces.UpdateData
 import com.teenteen.teencash.presentation.utills.checkInternetConnection
 
-class AddCategoryBS(private val updater: UpdateData) :
+class AddCategoryBS(private val updater: UpdateData , private val isSpending: Boolean) :
     BaseBottomSheetDialogFragment<BsAddCategoryBinding>() ,
     PickerItem {
 
@@ -32,6 +35,16 @@ class AddCategoryBS(private val updater: UpdateData) :
     var iconId = 0
 
     override fun setupViews() {
+        if (isSpending) {
+            binding.etLimit.isVisible()
+            binding.maxLimit.isVisible()
+            binding.etCategoryName.setHint(R.string.name)
+        }
+        else {
+            binding.etLimit.isGone()
+            binding.maxLimit.isGone()
+            binding.etCategoryName.setHint(R.string.set_source)
+        }
         setupTextLimitations()
         checkInternetConnection(this::setupListeners, requireContext())
         binding.ibClose.setOnClickListener {
@@ -50,16 +63,15 @@ class AddCategoryBS(private val updater: UpdateData) :
     }
 
     private fun checkFields() {
-        if (binding.etCategoryName.text.isNotBlank() && binding.etCategoryName.text.isNotEmpty()
-            && binding.etLimit.text.isNotBlank() && binding.etLimit.text.isNotEmpty() && iconId != null
-        ) {
-            checkIfDocExists()
-        } else Toast.makeText(requireContext() , getString(R.string.check_all_data) , Toast.LENGTH_LONG).show()
+        if (binding.etCategoryName.text.isNotBlank() && binding.etLimit.text.isNotBlank() && isSpending) {
+            checkIfDocExists("categories")
+        } else if (binding.etCategoryName.text.isNotBlank() && !isSpending) checkIfDocExists("earnings")
+        else Toast.makeText(requireContext() , getString(R.string.check_all_data) , Toast.LENGTH_LONG).show()
     }
 
-    private fun checkIfDocExists() {
+    private fun checkIfDocExists(colName: String) {
         val categoriesOfUser = usersCollection.document(prefs.getCurrentUserId())
-            .collection("categories").document(binding.etCategoryName.text.toString() )
+            .collection(colName).document(binding.etCategoryName.text.toString() )
         categoriesOfUser.get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val document = task.result
@@ -67,27 +79,31 @@ class AddCategoryBS(private val updater: UpdateData) :
                     if (document.exists()) {
                         Toast.makeText(requireContext(), getString(R.string.item_exists), Toast.LENGTH_LONG).show()
                     } else {
-                        addCategory()
+                        addCategory(colName)
                     }
                 }
             }
         }
     }
 
-    private fun addCategory() {
+    private fun addCategory(colName: String) {
+        val limit = if (isSpending) binding.etLimit.text.toString().toInt()
+                    else 0
         val docName = "${binding.etCategoryName.text}${binding.etLimit.text}$iconId"
         val newCategory = Category(
             name = binding.etCategoryName.text.toString() ,
-            secondAmount = binding.etLimit.text.toString().toInt() ,
+            secondAmount = limit ,
             iconId = iconId,
             firstAmount = 0,
             docName = docName,
-            currency = binding.tvCurrency.text.toString()
+            currency = prefs.getSettingsCurrency()
         )
+        Log.d("SCUUSUDHS", prefs.getSettingsCurrency())
         usersCollection.document(prefs.getCurrentUserId())
-            .collection("categories").document(docName).set(newCategory)
+            .collection(colName).document(docName).set(newCategory)
         dialog?.dismiss()
-        updater.updateSpendingCard()
+        if (isSpending) updater.updateSpendingCard()
+        else updater.updateEarnings()
     }
 
     private fun setupTextLimitations() {

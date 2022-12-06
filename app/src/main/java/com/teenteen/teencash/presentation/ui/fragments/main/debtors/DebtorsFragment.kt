@@ -155,6 +155,7 @@ class DebtorsFragment : BaseFragment<FragmentDebtorsBinding>(), UpdateData, Debt
 
     override fun achieved() {}
     override fun updateSpendingCard() {}
+    override fun updateEarnings() {}
     override fun updatePiggyBank() {}
     override fun updateStatistics() {}
 }

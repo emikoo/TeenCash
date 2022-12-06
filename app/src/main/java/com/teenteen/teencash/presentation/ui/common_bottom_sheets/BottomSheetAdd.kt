@@ -88,6 +88,8 @@ class BottomSheetAdd(
             AddBottomSheetKeys.UPDATE_PIGGY -> updateText(false)
             AddBottomSheetKeys.UPDATE_BALANCE -> setText(title = getString(R.string.Balance),
                 etAmountHint = "0", btnAddText = false)
+            AddBottomSheetKeys.ADD_EARNING -> setText(title = itemCategory!!.name,
+                etAmountHint = "0" , btnAddText = true)
         }
     }
 
@@ -152,6 +154,8 @@ class BottomSheetAdd(
                     binding.etAmount, action = this::checkIfDocExists)
                 AddBottomSheetKeys.ADD_BALANCE -> checkField(this, requireContext(),
                     binding.etAmount, action = this::checkIfDocExists)
+                AddBottomSheetKeys.ADD_EARNING -> checkField(this, requireContext(),
+                    binding.etAmount, action = this::addBalance)
             }
         }
     }
@@ -167,8 +171,8 @@ class BottomSheetAdd(
                 if (document != null) {
                     if (document.exists()) {
                         when (key) {
-                            AddBottomSheetKeys.ADD_MONEY_TO_PIGGY -> {saveMoney()}
-                            AddBottomSheetKeys.ADD_BALANCE -> {addBalance()}
+                            AddBottomSheetKeys.ADD_MONEY_TO_PIGGY -> saveMoney()
+                            AddBottomSheetKeys.ADD_BALANCE -> addBalance()
                             else -> requireContext().showToast(getString(R.string.item_exists))
                         }
                     }
@@ -334,8 +338,12 @@ class BottomSheetAdd(
     private fun addBalance() {
         if (binding.etAmount.text.toString().toInt() != 0) {
             val newBalance = balance + binding.etAmount.text.toString().toInt()
-            val item = History("Balance", binding.etAmount.text.toString().toInt(), false, getCurrentDate(),
-                getCurrentDateTime(), getCurrentMonth(), key.imageID!!, binding.tvCurrency.text.toString())
+            val colName = if (key == AddBottomSheetKeys.ADD_EARNING) itemCategory!!.name
+            else "Balance"
+            val imageID = if (key == AddBottomSheetKeys.ADD_EARNING) itemCategory!!.iconId
+            else key.imageID!!
+            val item = History(colName, binding.etAmount.text.toString().toInt(), false, getCurrentDate(),
+                getCurrentDateTime(), getCurrentMonth(), imageID, binding.tvCurrency.text.toString())
             viewModel.putToHistory(prefs.getCurrentUserId(), item)
             viewModel.updateBalance(prefs.getCurrentUserId() , newBalance)
             updater.updateStatistics()

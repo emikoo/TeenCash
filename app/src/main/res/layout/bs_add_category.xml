@@ -48,7 +48,7 @@
     <EditText
         android:id="@+id/et_category_name"
         style="@style/title_16sp_poppinsMedium_black030f28"
-        android:layout_width="@dimen/dp_150"
+        android:layout_width="@dimen/dp_180"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_24"
         android:backgroundTint="@color/black030f28_to_whitef9"

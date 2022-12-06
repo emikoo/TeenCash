@@ -98,6 +98,8 @@
         одновременно данные могут иметь погрешность, так как используется автоконвертация</string>
     <string name="continue_">Продолжать</string>
     <string name="now_log_in">Success ! Now you can lon into your account..</string>
+    <string name="income">Доходы</string>
+    <string name="set_source">Источник дохода</string>
 
     <string-array name="spinner_date">
         <item name="choose">все</item>

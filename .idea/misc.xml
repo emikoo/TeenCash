@@ -31,6 +31,7 @@
         <entry key="app/src/main/res/drawable/bg_button_lines.xml" value="0.2285" />
         <entry key="app/src/main/res/drawable/bg_category.xml" value="0.199" />
         <entry key="app/src/main/res/drawable/bg_category_blue.xml" value="0.209" />
+        <entry key="app/src/main/res/drawable/bg_category_green.xml" value="0.181" />
         <entry key="app/src/main/res/drawable/bg_cicle_white.xml" value="0.151" />
         <entry key="app/src/main/res/drawable/bg_circle_shape.xml" value="0.2005" />
         <entry key="app/src/main/res/drawable/bg_circle_white.xml" value="0.251" />
@@ -55,6 +56,8 @@
         <entry key="app/src/main/res/drawable/bottom_nav_spending.xml" value="0.159" />
         <entry key="app/src/main/res/drawable/cursor.xml" value="0.2285" />
         <entry key="app/src/main/res/drawable/ic_add.xml" value="0.199" />
+        <entry key="app/src/main/res/drawable/ic_add_blue.xml" value="0.181" />
+        <entry key="app/src/main/res/drawable/ic_add_green.xml" value="0.181" />
         <entry key="app/src/main/res/drawable/ic_arrow_down.xml" value="0.1665" />
         <entry key="app/src/main/res/drawable/ic_back.xml" value="0.1775" />
         <entry key="app/src/main/res/drawable/ic_bus.xml" value="0.2285" />

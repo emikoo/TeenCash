@@ -1,7 +1,7 @@
 package com.teenteen.teencash.presentation.utills
 
 enum class CategoryAdapterKeys{
-    CATEGORY, PIGGY_BANK
+    CATEGORY, EARNINGS, PIGGY_BANK
 }
 
 enum class DebtorAdapterKeys{
@@ -13,7 +13,8 @@ enum class AddBottomSheetKeys(var colName: String? = null, var docName: String? 
     ADD_BALANCE("statistics", "info", 1313),
     CREATE_MOTHERFUCKER("motherfuckers", imageID = 666),
     CREATE_BLOODSUCKER("bloodsuckers", imageID = 666), UPDATE_MOTHERFUCKER(imageID = 666),
-    UPDATE_BLOODSUCKER(imageID = 666), UPDATE_SPENDING_CARD, UPDATE_PIGGY, UPDATE_BALANCE(imageID = 1313)
+    UPDATE_BLOODSUCKER(imageID = 666), UPDATE_SPENDING_CARD, UPDATE_PIGGY, UPDATE_BALANCE(imageID = 1313),
+    ADD_EARNING
 }
 
 enum class ListBottomSheetKeys{

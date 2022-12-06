@@ -2,6 +2,7 @@ package com.teenteen.teencash.presentation.interfaces
 
 interface UpdateData {
     fun updateSpendingCard()
+    fun updateEarnings()
     fun updatePiggyBank()
     fun updateStatistics()
     fun updateMFList()
