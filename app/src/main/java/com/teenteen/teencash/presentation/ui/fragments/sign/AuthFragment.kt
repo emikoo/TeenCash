@@ -69,7 +69,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
                 if (task.isSuccessful) {
                     firebaseAuth.addAuthStateListener { auth ->
                         if (auth.currentUser !!.isEmailVerified) {
-                            uid = auth.currentUser!!.uid
+                            uid = auth.currentUser !!.uid
                             prefs.setFirstTimeLaunch(USER)
                             prefs.saveCurrentUserId(uid)
                             activityNavController().navigateSafely(R.id.action_global_mainFlowFragment)
@@ -104,7 +104,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
                 email ,
                 binding.inputEditPassword.text.toString()
             ).addOnCompleteListener { task ->
-                var user = firebaseAuth.currentUser
+                val user = firebaseAuth.currentUser
                 user !!.reload()
                 uid = user.uid
                 if (firebaseAuth.currentUser !!.isEmailVerified) {
@@ -222,6 +222,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
     private fun createDefaultItems(uid: String) {
         viewModel.createDefaultCategory(uid , getString(R.string.transport))
         viewModel.createDefaultGoal(uid , getString(R.string.your_goal))
+        viewModel.createDefaultEarning(uid , getString(R.string.job))
         viewModel.createInfoDoc(uid)
     }
 

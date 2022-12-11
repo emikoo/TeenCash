@@ -100,6 +100,7 @@
     <string name="now_log_in">Success ! Now you can lon into your account..</string>
     <string name="income">Доходы</string>
     <string name="set_source">Источник дохода</string>
+    <string name="job">Работа</string>
 
     <string-array name="spinner_date">
         <item name="choose">все</item>

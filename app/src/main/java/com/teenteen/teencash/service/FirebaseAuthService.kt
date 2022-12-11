@@ -31,19 +31,40 @@ object FirebaseAuthService {
         }
     }
 
+    fun createDefaultEarning(uid: String, name: String) {
+        val defaultEarning = Category(
+            name = name,
+            secondAmount = 50 ,
+            iconId = 22 ,
+            firstAmount = 0,
+            docName = "${name}50",
+            image = "",
+            currency = "KGS"
+        )
+        try {
+            db.collection("users").document(uid).collection("earnings")
+                .document("${name}50").set(defaultEarning)
+        } catch (e: Exception) {
+            Log.e(TAG , "Error creating default earning" , e)
+            FirebaseCrashlytics.getInstance().log("Error creating default earning")
+            FirebaseCrashlytics.getInstance().setCustomKey("user id" , uid)
+            FirebaseCrashlytics.getInstance().recordException(e)
+        }
+    }
+
     fun createDefaultCategory(uid: String, name: String) {
         val defaultCategory = Category(
             name = name ,
             secondAmount = 50 ,
             iconId = 0 ,
             firstAmount = 0,
-            docName = "${name}5000",
+            docName = "${name}50",
             image = "",
             currency = "KGS"
         )
         try {
             db.collection("users").document(uid).collection("categories")
-                .document("${name}5000").set(defaultCategory)
+                .document("${name}50").set(defaultCategory)
         } catch (e: Exception) {
             Log.e(TAG , "Error creating default category" , e)
             FirebaseCrashlytics.getInstance().log("Error creating default category")

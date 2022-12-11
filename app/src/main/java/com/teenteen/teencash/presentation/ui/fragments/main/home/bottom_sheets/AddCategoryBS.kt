@@ -71,7 +71,8 @@ class AddCategoryBS(private val updater: UpdateData , private val isSpending: Bo
 
     private fun checkIfDocExists(colName: String) {
         val categoriesOfUser = usersCollection.document(prefs.getCurrentUserId())
-            .collection(colName).document(binding.etCategoryName.text.toString() )
+            .collection(colName).document(binding.etCategoryName.text.toString()+binding
+                .etLimit.text.toString()+iconId.toString())
         categoriesOfUser.get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val document = task.result
@@ -98,7 +99,6 @@ class AddCategoryBS(private val updater: UpdateData , private val isSpending: Bo
             docName = docName,
             currency = prefs.getSettingsCurrency()
         )
-        Log.d("SCUUSUDHS", prefs.getSettingsCurrency())
         usersCollection.document(prefs.getCurrentUserId())
             .collection(colName).document(docName).set(newCategory)
         dialog?.dismiss()

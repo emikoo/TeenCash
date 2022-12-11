@@ -207,6 +207,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
         var limit = 0
         viewModel.currency.observe(viewLifecycleOwner) {
             currency = it
+            prefs.saveSettingsCurrency(it)
             binding.currencyTotal.text = it
         }
         viewModel.category.observe(viewLifecycleOwner) {
