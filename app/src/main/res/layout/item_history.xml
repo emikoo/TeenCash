@@ -1,64 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/dp_8"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/bg_billboard">
+    app:cardBackgroundColor="@color/blueC6E3ED_to_blue7584A3"
+    app:cardCornerRadius="@dimen/dp_20">
 
-    <ImageView
-        android:id="@+id/image_background"
-        android:layout_width="@dimen/dp_45"
-        android:layout_height="@dimen/dp_45"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/bg_circle_white"
-        android:layout_marginTop="@dimen/dp_12"
-        android:layout_marginBottom="@dimen/dp_12"
-        android:layout_marginStart="@dimen/dp_16"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="@dimen/dp_24"
-        android:layout_height="@dimen/dp_24"
-        app:layout_constraintTop_toTopOf="@id/image_background"
-        app:layout_constraintBottom_toBottomOf="@id/image_background"
-        app:layout_constraintStart_toStartOf="@id/image_background"
-        app:layout_constraintEnd_toEndOf="@id/image_background"
-        app:tint="@color/black030f28"
-        tools:src="@drawable/ic_coffee"/>
+        <ImageView
+            android:id="@+id/image_background"
+            android:layout_width="@dimen/dp_45"
+            android:layout_height="@dimen/dp_45"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_12"
+            android:layout_marginBottom="@dimen/dp_12"
+            android:background="@drawable/bg_circle_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/image_background"
-        app:layout_constraintTop_toTopOf="@id/image_background"
-        android:layout_marginStart="@dimen/dp_8"
-        android:layout_marginTop="@dimen/dp_4"
-        style="@style/title_14sp_poppinsMedium_black030f28"
-        tools:text="Coffee"/>
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            app:layout_constraintBottom_toBottomOf="@id/image_background"
+            app:layout_constraintEnd_toEndOf="@id/image_background"
+            app:layout_constraintStart_toStartOf="@id/image_background"
+            app:layout_constraintTop_toTopOf="@id/image_background"
+            app:tint="@color/black030f28"
+            tools:src="@drawable/ic_coffee"/>
 
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/image_background"
-        app:layout_constraintStart_toStartOf="@id/name"
-        style="@style/title_12sp_poppinsRegular"
-        tools:text="14.09.2022"/>
+        <TextView
+            android:id="@+id/name"
+            style="@style/title_14sp_poppinsMedium_black030f28"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_4"
+            app:layout_constraintStart_toEndOf="@id/image_background"
+            app:layout_constraintTop_toTopOf="@id/image_background"
+            tools:text="Coffee"/>
 
-    <TextView
-        android:id="@+id/amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        style="@style/title_14sp_poppinsMedium_black030f28"
-        android:layout_marginEnd="@dimen/dp_32"
-        tools:textColor="@color/red"
-        tools:text="- 50 kgs"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/date"
+            style="@style/title_12sp_poppinsRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/image_background"
+            app:layout_constraintStart_toStartOf="@id/name"
+            tools:text="14.09.2022"/>
+
+        <TextView
+            android:id="@+id/amount"
+            style="@style/title_14sp_poppinsMedium_black030f28"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_32"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="- 50 kgs"
+            tools:textColor="@color/red" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

@@ -18,35 +18,72 @@
         style="@style/title_14sp_poppinsBold_black030f28"
         android:text="@string/history"/>
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_spinner"
-        android:layout_marginEnd="@dimen/dp_32"
-        android:paddingStart="@dimen/dp_4"
-        android:paddingEnd="@dimen/dp_16"
-        style="@style/title_12sp_montserratMedium_white"
-        app:layout_constraintTop_toTopOf="@id/title"
-        app:layout_constraintBottom_toBottomOf="@id/title"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/spinner"
-        app:layout_constraintBottom_toBottomOf="@id/spinner"
-        app:layout_constraintEnd_toEndOf="@id/spinner"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_statistics"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:cardBackgroundColor="@color/blue7584A3_to_blue414A61"
+        app:cardCornerRadius="30dp"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginStart="@dimen/dp_8"
         android:layout_marginEnd="@dimen/dp_8"
-        android:background="@drawable/ic_arrow_down"/>
+        app:layout_constraintTop_toBottomOf="@id/title">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/spending_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/spendings"
+                style="@style/title_14sp_poppinsMedium_blue031952"
+                android:layout_margin="@dimen/dp_16"/>
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pie_chart"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/dp_4"
+                android:layout_marginTop="@dimen/dp_4"
+                android:layout_marginEnd="@dimen/dp_16"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/spinner"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_spinner"
+                android:layout_marginStart="@dimen/dp_8"
+                android:layout_marginTop="8dp"
+                android:paddingEnd="@dimen/dp_16"
+                style="@style/title_12sp_montserratMedium_white"
+                app:layout_constraintTop_toBottomOf="@id/spending_title"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/spinner"
+                app:layout_constraintBottom_toBottomOf="@id/spinner"
+                app:layout_constraintEnd_toEndOf="@id/spinner"
+                android:layout_marginEnd="@dimen/dp_8"
+                android:background="@drawable/ic_arrow_down"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_0"
-        app:layout_constraintTop_toBottomOf="@id/spinner"
+        app:layout_constraintTop_toBottomOf="@id/card_statistics"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="@dimen/dp_8"
         android:layout_marginStart="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_10"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

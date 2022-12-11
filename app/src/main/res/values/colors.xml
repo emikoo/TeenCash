@@ -27,11 +27,25 @@
     <color name="brown">#BA7612</color>
     <color name="dark_brown">#6A3F00</color>
 
+    <color name="pie_red">#F47A1F</color>
+    <color name="pie_yellow">#FDBB2F</color>
+    <color name="pie_dark_green">#377B2B</color>
+    <color name="pie_green">#7AC142</color>
+    <color name="pie_blue">#007CC3</color>
+    <color name="pie_dark_blue">#00529B</color>
+    <color name="pie_midnight_green">#003F5C</color>
+    <color name="pie_purple">#58508D</color>
+    <color name="pie_mulberry">#BC5090</color>
+    <color name="pie_pink">#FF6361</color>
+
     <color name="white_to_black29">#ffffff</color>
     <color name="white_to_black030f28">#ffffff</color>
     <color name="whiteC7_to_blue031952">#c7c7c7</color>
     <color name="whiteC7_to_grey_6c">#c7c7c7</color>
     <color name="blueC6E3ED_to_blue414A61">#c6e3ed</color>
+    <color name="blueC6E3ED_to_blue7584A3">#c6e3ed</color>
+    <color name="blue7584A3_to_blue414A61">#7584A3</color>
+    <color name="blue414A61_to_white">#414A61</color>
     <color name="blue031952_to_blueC6e3ed">#031952</color>
     <color name="black030f28_to_whitef9">#030f28</color>
     <color name="blackTransparent_to_whiteTransparent">#80000000</color>
