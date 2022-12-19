@@ -75,7 +75,7 @@ object IconType {
         }
         return icon
     }
-
+//TODO: ЕСЛИ БЫ МЫ ЗНАЛИ ЧТО ЭТО ТАКОЕ, НО МЫ НЕ ЗНАЕМ ЧТО ЭТО ТАКОЕ...
     val iconArray = mutableListOf<CategoryName>().apply {
         add(CategoryName(Icons.BUS.id, Icons.BUS.iconPath.toString()))
         add(CategoryName(Icons.CAR.id, Icons.CAR.iconPath.toString()))

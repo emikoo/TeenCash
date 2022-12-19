@@ -4,7 +4,7 @@ import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.firestore.DocumentSnapshot
 import java.util.*
-
+//TODO: ТУДУ ЕСТЬ КУДА РАСТИ (ХОТЯБЫ ИЗБАВИТЬСЯ ОТ !!)
 data class History(
     var name: String,
     var amount: Int,
@@ -28,6 +28,7 @@ data class History(
                 val currency = getString("currency") !!
                 return History(name , amount, spent, date, time, month, image, currency)
             } catch (e: Exception) {
+                //ЭТО ВЕЗДЕ ПОВТОРЯЕТСЯ, МОЖНО ЖЕ СДЕЛАТЬ КРУТО!!
                 Log.e(TAG , "Error converting history" , e)
                 FirebaseCrashlytics.getInstance().log("Error converting history")
                 FirebaseCrashlytics.getInstance().setCustomKey("historyId" , id)

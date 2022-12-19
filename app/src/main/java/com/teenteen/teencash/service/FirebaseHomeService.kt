@@ -7,7 +7,7 @@ import com.teenteen.teencash.data.model.Category
 import com.teenteen.teencash.data.model.Category.Companion.toCategory
 import com.teenteen.teencash.data.model.History
 import kotlinx.coroutines.tasks.await
-
+//TODO: ТУДУ ЕСТЬ КУДА РАСТИ
 object FirebaseHomeService {
     private const val TAG = "FirebaseHomeService"
     val db = FirebaseFirestore.getInstance()

@@ -59,7 +59,6 @@ abstract class BaseBottomSheetDialogFragment<VB_CHILD : ViewBinding> :
         return binding.root
     }
 
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = BottomSheetDialog(requireContext() , theme)
         dialog.setOnShowListener {

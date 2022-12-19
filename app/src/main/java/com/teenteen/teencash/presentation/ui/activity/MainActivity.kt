@@ -11,7 +11,7 @@ import com.teenteen.teencash.data.local.PrefsSettings
 import com.teenteen.teencash.databinding.ActivityMainBinding
 import com.teenteen.teencash.presentation.extensions.updateLanguage
 import com.teenteen.teencash.presentation.utills.checkInternetConnection
-
+//TODO: ВЫГЛЯДИТ НЕ ПЛОХО, НО СМУЩАЕТ ПРОВЕРКА НА ИНТЕРНЕТ
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController

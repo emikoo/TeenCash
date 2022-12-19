@@ -6,7 +6,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.teenteen.teencash.data.model.Debtor
 import com.teenteen.teencash.data.model.Debtor.Companion.toDebtor
 import kotlinx.coroutines.tasks.await
-
+//TODO: ТУДУ ЕСТЬ КУДА РАСТИ
 object FirebaseDebtorService {
     private const val TAG = "FirebaseDebtorService"
     private val db = FirebaseFirestore.getInstance()

@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.teenteen.teencash.service.FirebaseAuthService
 import com.teenteen.teencash.service.FirebaseHomeService
 import kotlinx.coroutines.launch
-
+//TODO: А ЗАЧЕМ ТОГДА ВАМ РИКСДЖАВА?
 class AuthViewModel : ViewModel() {
 
     fun createDefaultGoal(uid: String , name: String) {

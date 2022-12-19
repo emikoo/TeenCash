@@ -60,7 +60,7 @@ class AchievementAdapter(private val dataSet: List<Category>,
     private fun setupEmptyViewHolder(holder: EmptyViewHolder) {
         holder.image.setImageResource(R.drawable.ic_trofy)
     }
-
+    //TODO: ОН ПОТЕРЯЛ СВОИХ БРАТЬЕВ... ПОМОГИ ЕМУ ПЛИЗ
     companion object {
         const val VIEW_TYPE_DATA = 1
         const val VIEW_TYPE_EMPTY = 2

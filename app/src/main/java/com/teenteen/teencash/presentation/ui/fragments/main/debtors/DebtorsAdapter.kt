@@ -26,7 +26,7 @@ class DebtorsAdapter(private val dataSet: List<Debtor>, val listener: DebtorClic
     class EmptyViewHolder(binding: ItemEmptyBinding) : BaseViewHolder(binding) {
         val image: ImageView = binding.image
     }
-
+//ЗАЧЕМ БЕЙС_АДАПТЕР ЕСЛИ ВЫ ЭТО ТУТ ДЕЛАЕТЕ?
     override fun onCreateViewHolder(parent: ViewGroup , viewType: Int): BaseViewHolder {
         return if (viewType == VIEW_TYPE_DATA) DebtorViewHolder(
             ItemDebtorBinding.inflate(LayoutInflater.from(parent.context) , parent , false)
@@ -34,12 +34,12 @@ class DebtorsAdapter(private val dataSet: List<Debtor>, val listener: DebtorClic
             ItemEmptyBinding.inflate(LayoutInflater.from(parent.context) , parent , false)
         )
     }
-
+    //ЗАЧЕМ БЕЙС_АДАПТЕР ЕСЛИ ВЫ ЭТО ТУТ ДЕЛАЕТЕ?
     override fun getItemCount(): Int {
         return if (dataSet.isEmpty()) 1
         else dataSet.size
     }
-
+    //ЗАЧЕМ БЕЙС_АДАПТЕР ЕСЛИ ВЫ ЭТО ТУТ ДЕЛАЕТЕ?
     override fun getItemViewType(position: Int): Int {
         return if (dataSet.isEmpty()) VIEW_TYPE_EMPTY
         else VIEW_TYPE_DATA
@@ -58,7 +58,7 @@ class DebtorsAdapter(private val dataSet: List<Debtor>, val listener: DebtorClic
         holder.delete.setOnClickListener { listener.deleteDebtor(item, key) }
         holder.edit.setOnClickListener { listener.editDebtor(item, key) }
     }
-
+//МОЖЕТ ВЫНЕСТИ В ОТДЕЛЬНЫЙ КЛАСС ЭМПТИ вьюходер
     private fun setupEmptyViewHolder(holder: EmptyViewHolder) {
         if (key == DebtorAdapterKeys.MOTHERFUCKER) holder.image.setBackgroundResource(R.drawable.ic_morty)
         else holder.image.setBackgroundResource(R.drawable.ic_rick)

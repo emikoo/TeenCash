@@ -57,7 +57,7 @@ class AchievementsFragment : BaseFragment<FragmentAchievementsBinding>() ,
             action = this::delete
         )
     }
-
+    //КАКБУДТО ТУТ МОЖНО ИЗБАВИТЬСЯ ОТ ЭТОГО ВСЕГО
     private fun delete() {
         if (internetIsConnected(requireContext())) {
             viewModel.deleteAchievement(prefs.getCurrentUserId() , docName)

@@ -69,6 +69,7 @@ class CategoryAdapter(
         val item = dataSet[position]
         viewHolder.name.text = item.name
         viewHolder.icon.setImageResource(getProjectIconType(item.iconId))
+        //TODO: КАКБУДТА МОЖНО ЛУЧШЕ НАПИСАТЬ
         when (key) {
             CategoryAdapterKeys.CATEGORY -> {
                 viewHolder.limit.text = "${item.firstAmount}/${item.secondAmount} ${item.currency.toString().toSymbol()}"
@@ -105,6 +106,7 @@ class CategoryAdapter(
 
     private fun setupButtonViewHolder(viewHolder: ButtonViewHolder , position: Int) {
         when (key) {
+            //TODO: КАКБУДТА МОЖНО ЛУЧШЕ НАПИСАТЬ
             CategoryAdapterKeys.CATEGORY -> {
                 setupButtonViewsByKey(viewHolder, R.drawable.bg_category_blue, R.drawable.ic_add_blue)
                 viewHolder.itemView.setOnClickListener {
@@ -152,7 +154,7 @@ class CategoryAdapter(
     }
 
     override fun getItemCount() = dataSet.size
-
+    //ВЫДЕЛИТЕ ЕМУ ОТДЕЛЬНЫЙ ФАЙЛ, ОН ЗАСЛУЖИЛ)
     interface CategoryClickListener {
         fun onAddCategoryClickListener(item: Category)
         fun onAddPiggyClickListener(item: Category)

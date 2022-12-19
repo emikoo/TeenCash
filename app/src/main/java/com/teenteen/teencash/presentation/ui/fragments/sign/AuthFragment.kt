@@ -18,7 +18,7 @@ import com.teenteen.teencash.presentation.extensions.*
 import com.teenteen.teencash.presentation.utills.checkInternetConnection
 import com.teenteen.teencash.presentation.utills.showAlertDialog
 import com.teenteen.teencash.view_model.AuthViewModel
-
+//TODO: В ЦЕЛОМ ВЕСЬ ФАЙЛ НУЖНО ПЕРЕРАБОТАТЬ
 class AuthFragment : BaseFragment<FragmentAuthBinding>() {
 
     lateinit var viewModel: AuthViewModel
@@ -172,7 +172,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
     private fun checkIfEmailVerified(): Boolean {
         return currentUser?.isEmailVerified ?: false
     }
-
+//TODO: ЗДЕСЬ ТОЧНО ЕСТЬ КУДА РАСТИ
     private fun checkField(et1: EditText , et2: EditText): Boolean {
         if (et1.text.toString().isNullOrBlank() && et2.text.toString().isNullOrBlank()) {
             et1.background = resources.getDrawable(R.drawable.bg_field_red)

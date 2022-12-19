@@ -11,7 +11,8 @@ import com.teenteen.teencash.service.FirebaseDebtorService
 import com.teenteen.teencash.service.FirebaseHistoryService
 import com.teenteen.teencash.service.FirebaseHomeService
 import kotlinx.coroutines.launch
-
+//TODO: А ЗАЧЕМ ТОГДА ВАМ РИКСДЖАВА?
+//TODO: КАКБУДТА МОЖНО РАЗДЕЛИТЬ ЭТОТ КЛАСС НА НЕСКОЛЬКО ВЬЮМОДЕЛЕЙ
 class MainViewModel() : ViewModel() {
     private val _category = MutableLiveData<List<Category>>()
     private val _earnings = MutableLiveData<List<Category>>()

@@ -41,8 +41,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() , UpdateLanguag
         if (switchState){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             binding.ivMode.setBackgroundResource(R.drawable.ic_dark_mode)
-        }
-        else{
+        } else{
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             binding.ivMode.setBackgroundResource(R.drawable.ic_light_mode)
         }

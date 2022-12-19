@@ -15,7 +15,7 @@ import com.teenteen.teencash.data.local.PrefsSettings
 import com.teenteen.teencash.presentation.utills.ProgressDialog
 
 abstract class BaseFragment<VB_CHILD : ViewBinding> : Fragment() {
-
+//TODO: ЧТО ТАКЕ _binding и binding?
     private var _binding: VB_CHILD? = null
     lateinit var binding: VB_CHILD
     lateinit var progressDialog: Dialog

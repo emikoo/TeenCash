@@ -17,11 +17,11 @@ fun Fragment.activityNavController() = requireActivity().findNavController(R.id.
 fun NavController.navigateSafely(@IdRes actionId: Int) {
     currentDestination?.getAction(actionId)?.let { navigate(actionId) }
 }
-
+//TODO: Если не используете может удалить? [1]
 fun NavController.navigateSafely(directions: NavDirections) {
     currentDestination?.getAction(directions.actionId)?.let { navigate(directions) }
 }
-
+//TODO: Если не используете может удалить? [2]
 fun Int.toDp(context: Context): Int = TypedValue.applyDimension(
     TypedValue.COMPLEX_UNIT_DIP , this.toFloat() , context.resources.displayMetrics
 ).toInt()

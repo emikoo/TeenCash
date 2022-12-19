@@ -19,7 +19,7 @@ fun vibrate(context: Context?) {
         }
     }
 }
-
+//TODO: КАКБУДТА МОЖНО НАПИСАТЬ ЛУЧШЕ
 fun checkField(dialogFragment: BottomSheetDialogFragment , context: Context , editText1: EditText ,
                editText2: EditText? = null, action: () -> Unit) {
     if (editText1.text.isNotBlank() && editText2 == null) {

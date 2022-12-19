@@ -3,11 +3,9 @@ package com.teenteen.teencash.presentation.extensions
 import android.content.Context
 import android.content.res.Configuration
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.preference.PreferenceManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.teenteen.teencash.R
 import com.teenteen.teencash.data.local.PrefsSettings
 import java.util.*
 
@@ -32,7 +30,7 @@ fun BottomSheetDialogFragment.show(fragmentManager: FragmentManager?) {
         )
     }
 }
-
+//TODO: Если не используете может удалить? [4]
 fun PreferenceManager.updateLanguage(lang: String, context: Context, prefsSettings: PrefsSettings) {
     val locale = Locale(lang)
     Locale.setDefault(locale)

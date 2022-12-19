@@ -17,7 +17,7 @@ class SliderAdapter(private val context: Context, private val layouts: Array<Int
         container.addView(view)
         return view
     }
-
+    //TODO: ЧТО ТАКОЕ `object`?
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
         return view == `object`
     }

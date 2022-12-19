@@ -50,6 +50,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
             ArrayAdapter.createFromResource(requireActivity(), R.array.spinner_date , R.layout.spinner_history)
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_history)
         binding.spinner.adapter = adapter
+        //ПУСТЫЕ ПЕРЕОПРЕДЕЛЕННЫЕ МЕТОДЫ ОТШЕЛЬНИКИ, ОНИ ВАШИ ЛЮБИМЧИКИ?
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {}
             override fun onItemSelected(p0: AdapterView<*>? , p1: View? , p2: Int , p3: Long) {
@@ -64,7 +65,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
             }
         }
     }
-
+//ПОХОЖЕ ПИРОГ МОЖНО ПОЛОЖИТЬ НА ОКОШКА В ДРУГУЮ КОМНАТУ(КЛАСС)
     private fun setupPieChart() {
         val pieChart = binding.pieChart
         pieChart.setUsePercentValues(true)
@@ -79,6 +80,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
         pieChart.setEntryLabelColor(Color.WHITE)
         pieChart.setEntryLabelTextSize(15f)
 
+        //ПОЧЕМУ НЕ Л А НЕ LEG? НОГА ЖЕ КРУЧЕ ЗВУЧИТ)))
         val l: Legend = pieChart.legend
         l.isEnabled = true
         l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
@@ -87,7 +89,8 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
         l.textColor = resources.getColor(R.color.white)
 
         val dataSet = PieDataSet(entries, "")
-
+        //ВАААУУУ, А ПОЧ У ВАС НЕ 16 МИЛЛИОНОВ ЦВЕТОВ, МОЖЕТ ИХ КУДА_ТО ВЫНЕСТИ ТОЖЕ?
+        //ГЕТКОЛАААР...
         val colors: ArrayList<Int> = ArrayList<Int>().apply {
             add(resources.getColor(R.color.pie_red))
             add(resources.getColor(R.color.pie_yellow))
@@ -111,7 +114,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
         binding.pieChart.highlightValues(null)
         binding.pieChart.invalidate()
     }
-
+    //ИНТЕРНЕТ КОННЕКШЕН ЕСТЬ ИЛИ НЕТ? А ЕСЛИ НАЙДУ?
     override fun subscribeToLiveData() {
         if (internetIsConnected(requireContext())) {
             viewModel.history.observe(viewLifecycleOwner, Observer { it ->

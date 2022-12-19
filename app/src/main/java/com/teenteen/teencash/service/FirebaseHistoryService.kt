@@ -8,7 +8,7 @@ import com.teenteen.teencash.data.model.History.Companion.toHistory
 import com.teenteen.teencash.presentation.extensions.getCurrentDate
 import kotlinx.coroutines.tasks.await
 import java.util.*
-
+//TODO: ТУДУ ЕСТЬ КУДА РАСТИ
 object FirebaseHistoryService {
     private const val TAG = "FirebaseHistoryService"
     private val db = FirebaseFirestore.getInstance()

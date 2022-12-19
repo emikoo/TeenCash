@@ -19,6 +19,7 @@ import com.teenteen.teencash.view_model.MainViewModel
 
 class DebtorsFragment : BaseFragment<FragmentDebtorsBinding>(), UpdateData, DebtorsAdapter.DebtorClickListener {
 
+    //ЧТО ТАКОЕ MF и BS ?
     private lateinit var adapter: DebtorsAdapter
     lateinit var viewModel: MainViewModel
     private var mfArray = mutableListOf<Debtor>()
@@ -152,7 +153,7 @@ class DebtorsFragment : BaseFragment<FragmentDebtorsBinding>(), UpdateData, Debt
         array.addAll(newList)
         adapter.notifyDataSetChanged()
     }
-
+//А ЭТО ОТШЕЛЬНИКИ МЕТОДЫ, ЗАЧЕМ ОНИ ЗДЕСЬ? ВЫ ИХ РЕШИЛИ ОТЕДЛИТЬ ОТ ВСЕХ И ЗАГНОБИТЬ?
     override fun achieved() {}
     override fun updateSpendingCard() {}
     override fun updateEarnings() {}

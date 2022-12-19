@@ -16,7 +16,9 @@ import com.teenteen.teencash.presentation.extensions.*
 import com.teenteen.teencash.presentation.interfaces.UpdateData
 import com.teenteen.teencash.presentation.utills.*
 import com.teenteen.teencash.view_model.MainViewModel
-
+//TODO: ЧЕТ СЛИШКОМ МАЛО СТРОК
+//TODO: ЧЕТ СЛИШКОМ МАЛО ПАРАМЕТРОВ В КЛАССЕ
+//TODO: НАДО БЫЛО СЮДА ЕЩЁ
 class BottomSheetAdd(
     private val updater: UpdateData , private val key: AddBottomSheetKeys , private val itemCategory: Category? = null ,
     val itemDebtor: Debtor? = null) :
@@ -159,7 +161,7 @@ class BottomSheetAdd(
             }
         }
     }
-
+//TODO: ЗДЕСЬ ЕЩЁ МОЖНО БЫЛО БАХНУТЬ ЕСЛИ У ПРИЛОЖЕНИЯ РАЗРЕЩЕНИЕ НА ДОСТУП К ФАЙЛАМ, ЧТОБЫ ПОЛНОСТЬЮ ЗАБИТЬ КЛАСС
     private fun checkIfDocExists(){
         var docName = key.docName
         if (docName == null) docName = binding.etName.text.toString()

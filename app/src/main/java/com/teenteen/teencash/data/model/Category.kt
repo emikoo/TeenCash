@@ -4,7 +4,7 @@ import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.firestore.DocumentSnapshot
 import java.util.*
-
+//TODO: ТУДУ ЕСТЬ КУДА РАСТИ (ХОТЯБЫ ИЗБАВИТЬСЯ ОТ !!)
 data class Category(
     var iconId: Int ,
     var secondAmount: Int ,
@@ -26,6 +26,7 @@ data class Category(
                 val currency = getString("currency") !!
                 return Category(icon , secondAmount , name , docName, firstAmount, image, currency)
             } catch (e: Exception) {
+                //ЭТО ВЕЗДЕ ПОВТОРЯЕТСЯ, МОЖНО ЖЕ СДЕЛАТЬ КРУТО!!
                 Log.e(TAG , "Error converting category" , e)
                 FirebaseCrashlytics.getInstance().log("Error converting category")
                 FirebaseCrashlytics.getInstance().setCustomKey("categoryId"     , id)

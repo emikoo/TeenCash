@@ -53,6 +53,8 @@ class HistoryAdapter(private val dataSet: List<History>) : BaseAdapter() {
 
     private fun setupHistoryViewHolder(holder: HistoryViewHolder , position: Int) {
         val item = dataSet[position]
+        // ВОТ ТУТ КАКБУДТА МОЖНО ЛУЧШЕ СДЕЛАТЬ, РАЗНИЦЫ ПОЧТИ НЕТ МЕЖДУ СТРОЧКАМИ
+        //ГЕТ_КОЛОР УЖЕ ДЕПРЕКЕЙТЕД, СКОЛЬКО БУДЕМ ЕГО ИСПОЛЬЗОВАТЬ?
         if (item.spent) {
             holder.amount.text = "- ${item.amount} ${item.currency.toSymbol()}"
             holder.amount.setTextColor(holder.itemView.resources.getColor(R.color.red))
@@ -68,7 +70,7 @@ class HistoryAdapter(private val dataSet: List<History>) : BaseAdapter() {
     private fun setupEmptyViewHolder(holder: EmptyViewHolder) {
         holder.image.setImageResource(R.drawable.ic_history)
     }
-
+//TODO: ВОТ ЭТИХ КРАСАВЦЕВ Я УЖЕ ГДЕ-ТО ВИДЕЛ
     companion object {
         const val VIEW_TYPE_DATA = 1
         const val VIEW_TYPE_EMPTY = 2

@@ -21,7 +21,7 @@ fun checkInternetConnection(connectedAction: () -> Unit, context: Context) {
         Toast.makeText(context, context.getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show()
     }
 }
-
+//TODO: ТУТ УЖЕ ПОЛОВИНА ДЕПРЕКЕЙТЕД, СТОИТ ПОИСКАТЬ РЕШЕНИЕ ПОЛУЧШЕ
 fun internetIsConnected(context: Context): Boolean {
     var connected = false
     val connectivityManager =

@@ -7,7 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.teenteen.teencash.R
-
+//КАК_БУДТО МОЖНО ЧТО_ТО УЛУЧШИТЬ
 fun showAlertDialog(
     context: Context ,
     fragment: Fragment ,

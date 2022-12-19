@@ -34,6 +34,7 @@ class OnBoardingFragment : BaseFragment<FragmentOnboardingBinding>() {
     }
 
     private fun init() {
+        //МОЖЕТ КУДА_ТО МОЖНО ВЫНЕСТИ МАССИВЧИК?
         layouts = arrayOf(
             R.layout.onboarding_slide1 ,
             R.layout.onboarding_slide2 ,
@@ -65,7 +66,7 @@ class OnBoardingFragment : BaseFragment<FragmentOnboardingBinding>() {
         ) {
         }
     }
-
+    //ТУТ КАКАЯ_ТО ДИСКОТЕКА? !!?? !??!!!??!!
     private fun addBottomDots(currentPage: Int) {
         dots = arrayOfNulls(layouts.size)
         binding.dotsLayout.removeAllViews()

@@ -8,7 +8,7 @@ import com.teenteen.teencash.data.model.History
 import com.teenteen.teencash.service.FirebaseHistoryService
 import kotlinx.coroutines.launch
 import java.util.*
-
+//TODO: А ЗАЧЕМ ТОГДА ВАМ РИКСДЖАВА?
 class HistoryViewModel(): ViewModel() {
     private val _history = MutableLiveData<List<History>>()
     val history: LiveData<List<History>> = _history

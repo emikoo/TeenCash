@@ -6,7 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import com.teenteen.teencash.R
-
+//TODO: ДА!! !! !! !!
 class ProgressDialog {
     companion object {
         fun progressDialog(context: Context): Dialog {

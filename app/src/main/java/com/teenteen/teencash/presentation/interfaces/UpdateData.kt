@@ -10,6 +10,7 @@ interface UpdateData {
     fun achieved()
 }
 
+//TODO: ТУТ И АПДЕЙТ ЛЕНГВИЧ-СЕНДВИЧ СПРЯТАЛСЯ)
 interface UpdateLanguage {
     fun updateLanguage()
 }

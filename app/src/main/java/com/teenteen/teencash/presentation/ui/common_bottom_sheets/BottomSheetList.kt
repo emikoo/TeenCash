@@ -16,7 +16,7 @@ import com.teenteen.teencash.presentation.interfaces.UpdateData
 import com.teenteen.teencash.presentation.interfaces.UpdateLanguage
 import com.teenteen.teencash.presentation.utills.*
 import com.teenteen.teencash.view_model.MainViewModel
-
+//TODO: ПОХОЖЕ ЭТОТ БОТОМ ЩИТ МОЖНО РАЗДЕЛИТЬ НА НЕСКОЛЬКО
 class BottomSheetList(
     private val key: ListBottomSheetKeys ,
     private val updater: UpdateData? = null ,

@@ -14,7 +14,7 @@ fun Int.convertAmount(settingsCurrency: String, currentCurrency: String): Int {
         convertedAmount.roundToInt()
     } else this
 }
-
+//TODO: алвыашвыщаылвоалывалыдвоалдывоалдывоалдоывалд
 fun Int.convertSettingsAmount(settingsCurrency: String, currentCurrency: String): Int {
     Log.d("gfhgjgjh", settingsCurrency)
     return if (settingsCurrency != currentCurrency) {
@@ -25,7 +25,7 @@ fun Int.convertSettingsAmount(settingsCurrency: String, currentCurrency: String)
         convertedAmount.roundToInt()
     } else this
 }
-
+//Я ССЫЛКУ В ЧАТИК СКИДЫВАЛ НА АКТУЛЬНЫЕ КУРСЫ, МОЖЕТЕ ТУ АПИШКУ ЗАЮЗАТЬ)
 fun String.getExchangeRates(): Double {
     return when(this) {
         "fromEURtoKGS" -> 82.96

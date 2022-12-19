@@ -138,7 +138,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
     override fun onAddIncomeClickListener(item: Category) {
         AddCategoryBS(this, false).show(activity?.supportFragmentManager)
     }
-
+    //КАКБУДТА ЗДЕСЬ ЕСТЬ ЧТО_ТО ОБЩЕЕ
     override fun onCategoryDotsClickListener(item: Category) {
         BottomSheetList(ListBottomSheetKeys.CATEGORY_SETTINGS , this , itemCategory = item)
             .show(activity?.supportFragmentManager)
@@ -158,7 +158,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
         BottomSheetAdd(this , AddBottomSheetKeys.ADD_MONEY_TO_PIGGY , item)
             .show(activity?.supportFragmentManager)
     }
-
+    //
     override fun onEarningClickListener(item: Category) {
         BottomSheetAdd(this, AddBottomSheetKeys.ADD_EARNING, item).show(activity?.supportFragmentManager)
     }
@@ -173,7 +173,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
         array.add(Category(0 , 0 , "" , "" , 0))
         categoryAdapter.notifyDataSetChanged()
     }
-
+    //СЛИШКОМ МАЛО ОБРАЩЕНИЙ К ВЬЮМОДЕЛ [1]
     override fun updateSpendingCard() {
         progressDialog.show()
         viewModel.getCategories(prefs.getCurrentUserId())
@@ -185,14 +185,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
         progressDialog.show()
         viewModel.getEarnings(prefs.getCurrentUserId())
     }
-
+    //СЛИШКОМ МАЛО ОБРАЩЕНИЙ К ВЬЮМОДЕЛ [2]
     override fun updatePiggyBank() {
         progressDialog.show()
         viewModel.getPiggyBanks(prefs.getCurrentUserId())
         viewModel.getBalance(prefs.getCurrentUserId())
         viewModel.getSavedAmount(prefs.getCurrentUserId())
     }
-
+    //СЛИШКОМ МАЛО ОБРАЩЕНИЙ К ВЬЮМОДЕЛ [3]
     override fun updateStatistics() {
         progressDialog.show()
         viewModel.getCurrency(prefs.getCurrentUserId())
@@ -201,7 +201,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
         viewModel.getLimit(prefs.getCurrentUserId())
         viewModel.getSpentAmount(prefs.getCurrentUserId())
     }
-
+    //KGS можно вынести
+    //ТУТ ВСЁ МОЖНО ВЫНЕСТИ
     override fun subscribeToLiveData() {
         var currency = "KGS"
         var limit = 0
