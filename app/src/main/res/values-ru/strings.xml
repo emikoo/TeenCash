@@ -110,8 +110,8 @@
     </string-array>
 
     <string-array name="spinner_currency">
-        <item name="kgs">KGS</item>
         <item name="eur">EUR</item>
         <item name="usd">USD</item>
+        <item name="kgs">KGS</item>
     </string-array>
 </resources>

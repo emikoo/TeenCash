@@ -3,7 +3,6 @@ package com.teenteen.teencash.data.model
 import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.firestore.DocumentSnapshot
-import java.util.*
 
 data class Category(
     var iconId: Int ,
@@ -12,7 +11,7 @@ data class Category(
     var docName: String,
     var firstAmount: Int,
     var image: String = "",
-    var currency: String? = "KGS"
+    var currency: String? = "EUR"
 ) {
     companion object {
         fun DocumentSnapshot.toCategory(): Category? {

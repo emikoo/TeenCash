@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import java.util.*
 
-class PrefsSettings(private val context: Context) {
+class PrefsSettings(context: Context) {
     private var prefs: SharedPreferences =
         context.getSharedPreferences(PREFS_NAME , Context.MODE_PRIVATE)
     private var prefsEditor: SharedPreferences.Editor = prefs.edit()
@@ -50,7 +50,7 @@ class PrefsSettings(private val context: Context) {
     }
 
     fun getSettingsCurrency(): String {
-        return prefs.getString(SETTINGS_CURRENCY , "") ?: "KGS"
+        return prefs.getString(SETTINGS_CURRENCY , "") ?: "EUR"
     }
 
     fun saveCurrentDay(dateInString: String) {
@@ -63,7 +63,6 @@ class PrefsSettings(private val context: Context) {
 
     companion object {
         private const val PREFS_NAME = "TeenCash"
-        private const val PRIVATE_MODE = 0
         const val FIRST_TIME = 1
         const val NOT_AUTH = 2
         const val USER = 3

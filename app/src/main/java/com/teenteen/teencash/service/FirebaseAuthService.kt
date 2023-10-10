@@ -1,5 +1,6 @@
 package com.teenteen.teencash.service
 
+import android.annotation.SuppressLint
 import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.firestore.FirebaseFirestore
@@ -8,6 +9,7 @@ import com.teenteen.teencash.data.model.InfoStatistic
 
 object FirebaseAuthService {
     private const val TAG = "FirebaseAuthService"
+    @SuppressLint("StaticFieldLeak")
     private val db = FirebaseFirestore.getInstance()
 
     fun createDefaultGoal(uid: String, name: String) {
@@ -18,7 +20,7 @@ object FirebaseAuthService {
             firstAmount = 0,
             docName = "${name}5000",
             image = "",
-            currency = "KGS"
+            currency = "EUR"
         )
         try {
             db.collection("users").document(uid).collection("piggy_banks")
@@ -39,7 +41,7 @@ object FirebaseAuthService {
             firstAmount = 0,
             docName = "${name}50",
             image = "",
-            currency = "KGS"
+            currency = "EUR"
         )
         try {
             db.collection("users").document(uid).collection("earnings")
@@ -60,7 +62,7 @@ object FirebaseAuthService {
             firstAmount = 0,
             docName = "${name}50",
             image = "",
-            currency = "KGS"
+            currency = "EUR"
         )
         try {
             db.collection("users").document(uid).collection("categories")
@@ -77,7 +79,7 @@ object FirebaseAuthService {
     fun createInfoDoc(uid: String) {
         try {
             db.collection("users").document(uid).collection("statistics")
-                .document("info").set(InfoStatistic(0 , "KGS",
+                .document("info").set(InfoStatistic(0 , "EUR",
                     0 , 0 , 0))
         } catch (e: Exception) {
             Log.e(TAG , "Error creating default info" , e)

@@ -1,5 +1,6 @@
 package com.teenteen.teencash.presentation.ui.fragments.main.home
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
@@ -167,7 +168,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
 
     }
 
-    private fun updateArray(array: MutableList<Category> , newList: List<Category>) {
+    @SuppressLint("NotifyDataSetChanged")
+    private fun updateArray(array: MutableList<Category>, newList: List<Category>) {
         array.clear()
         array.addAll(newList)
         array.add(Category(0 , 0 , "" , "" , 0))
@@ -202,8 +204,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
         viewModel.getSpentAmount(prefs.getCurrentUserId())
     }
 
+    @SuppressLint("SetTextI18n")
     override fun subscribeToLiveData() {
-        var currency = "KGS"
+        var currency = "EUR"
         var limit = 0
         viewModel.currency.observe(viewLifecycleOwner) {
             currency = it

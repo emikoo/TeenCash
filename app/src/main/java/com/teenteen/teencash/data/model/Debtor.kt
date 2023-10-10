@@ -8,7 +8,7 @@ data class Debtor(
     val docName: String,
     val name: String,
     val amount: Int,
-    var currency: String? = "KGS"
+    var currency: String? = "EUR"
 ) {
     companion object {
         fun DocumentSnapshot.toDebtor(): Debtor? {
