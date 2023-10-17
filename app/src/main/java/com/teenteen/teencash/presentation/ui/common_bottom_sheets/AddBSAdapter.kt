@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.RadioButton
 import android.widget.TextView
 import com.example.antkotlinproject.base.BaseAdapter
 import com.example.antkotlinproject.base.BaseViewHolder
@@ -20,40 +19,41 @@ class AddBSAdapter(
     private val key: ListBottomSheetKeys
 ) : BaseAdapter() {
 
-    class AddBSViewHolder(binding: ItemBsListBinding): BaseViewHolder(binding) {
+    class AddBSViewHolder(binding: ItemBsListBinding) : BaseViewHolder(binding) {
         val image: ImageView = binding.imageView
         val btn: Button = binding.button
         val title: TextView = binding.title
         val subtitle: TextView = binding.subtitle
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup , viewType: Int): BaseViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val binding =
-            ItemBsListBinding.inflate(LayoutInflater.from(parent.context) , parent , false)
+            ItemBsListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return AddBSViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder , position: Int) {
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         setupAddBSViewHolder(holder as AddBSViewHolder, position)
     }
 
-    private fun setupAddBSViewHolder(holder: AddBSViewHolder , position: Int) {
+    private fun setupAddBSViewHolder(holder: AddBSViewHolder, position: Int) {
         val item = dataSet[position]
         holder.title.text = item.title
-        when(key) {
+        when (key) {
             ListBottomSheetKeys.CATEGORY_SETTINGS -> {
                 holder.image.isVisible()
-                item.image?.let { holder.image.setBackgroundResource(it)  }
-                holder.btn.setOnClickListener{
+                item.image?.let { holder.image.setBackgroundResource(it) }
+                holder.btn.setOnClickListener {
                     if (position == 0) listener.onEditCategory()
                     else listener.onDeleteCategory()
                 }
                 holder.subtitle.isGone()
             }
+
             ListBottomSheetKeys.PIGGY_BANK_SETTINGS -> {
                 holder.image.isVisible()
-                item.image?.let { holder.image.setBackgroundResource(it)  }
-                holder.btn.setOnClickListener{
+                item.image?.let { holder.image.setBackgroundResource(it) }
+                holder.btn.setOnClickListener {
                     when (position) {
                         0 -> listener.onAchieved()
                         1 -> listener.onEditPiggyBank()
@@ -62,6 +62,7 @@ class AddBSAdapter(
                 }
                 holder.subtitle.isGone()
             }
+
             ListBottomSheetKeys.CHANGE_LANGUAGE -> {
                 holder.subtitle.isVisible()
                 holder.image.isGone()
@@ -70,6 +71,7 @@ class AddBSAdapter(
                     listener.onLanguageSelected(item)
                 }
             }
+
             ListBottomSheetKeys.CHANGE_CURRENCY -> {
                 holder.subtitle.isVisible()
                 holder.image.isGone()
@@ -83,7 +85,7 @@ class AddBSAdapter(
 
     override fun getItemCount(): Int = dataSet.size
 
-    interface onListClickedListener{
+    interface onListClickedListener {
         fun onDeleteCategory()
         fun onDeletePiggyBank()
         fun onEditCategory()

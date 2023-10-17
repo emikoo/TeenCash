@@ -32,6 +32,7 @@
 
         <ImageView
             android:id="@+id/iv_mode"
+            android:contentDescription="@string/sun_icon"
             android:layout_width="@dimen/dp_32"
             android:layout_height="@dimen/dp_32"
             android:background="@drawable/ic_light_mode"
@@ -60,7 +61,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="@dimen/dp_10"/>
+            android:layout_marginEnd="@dimen/dp_10"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -75,6 +77,7 @@
 
         <ImageView
             android:id="@+id/iv_lang"
+            android:contentDescription="@string/globus"
             android:background="@drawable/ic_lang"
             android:layout_width="@dimen/dp_32"
             android:layout_height="@dimen/dp_32"
@@ -96,6 +99,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/an_arrow"
             app:layout_constraintTop_toTopOf="@id/iv_lang"
             app:layout_constraintBottom_toBottomOf="@id/iv_lang"
             app:layout_constraintEnd_toEndOf="parent"
@@ -121,6 +125,7 @@
         <ImageView
             android:id="@+id/iv_currency"
             android:background="@drawable/ic_currency"
+            android:contentDescription="@string/coin"
             android:layout_width="@dimen/dp_32"
             android:layout_height="@dimen/dp_32"
             app:layout_constraintTop_toBottomOf="@id/line1"
@@ -141,6 +146,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/an_arrow"
             app:layout_constraintTop_toTopOf="@id/iv_currency"
             app:layout_constraintBottom_toBottomOf="@id/iv_currency"
             app:layout_constraintEnd_toEndOf="parent"
@@ -165,6 +171,7 @@
 
         <ImageView
             android:id="@+id/iv_achievements"
+            android:contentDescription="@string/trophy"
             android:background="@drawable/ic_achievements"
             android:layout_width="@dimen/dp_32"
             android:layout_height="@dimen/dp_32"
@@ -188,6 +195,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/an_arrow"
             app:layout_constraintTop_toTopOf="@id/iv_achievements"
             app:layout_constraintBottom_toBottomOf="@id/iv_achievements"
             app:layout_constraintEnd_toEndOf="parent"
@@ -211,17 +219,17 @@
         android:background="@drawable/bg_field"
         android:layout_marginStart="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_24"
+        android:layout_marginTop="@dimen/dp_16"
         app:layout_constraintTop_toBottomOf="@id/settings_container">
 
         <ImageView
             android:id="@+id/iv_ask"
             android:background="@drawable/ic_ask"
+            android:contentDescription="@string/chat"
             android:layout_width="@dimen/dp_32"
             android:layout_height="@dimen/dp_32"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginTop="@dimen/dp_12"
             android:layout_marginBottom="@dimen/dp_12"
             android:layout_marginStart="@dimen/dp_16"/>
@@ -229,8 +237,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_ask"
+            app:layout_constraintBottom_toBottomOf="@id/iv_ask"
             app:layout_constraintStart_toEndOf="@id/iv_ask"
             android:layout_marginStart="@dimen/dp_10"
             android:text="@string/ask_a_question"
@@ -239,6 +247,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/an_arrow"
             app:layout_constraintTop_toTopOf="@id/iv_ask"
             app:layout_constraintBottom_toBottomOf="@id/iv_ask"
             app:layout_constraintEnd_toEndOf="parent"
@@ -250,6 +259,53 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"/>
+
+        <View
+            android:id="@+id/line3"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            app:layout_constraintTop_toBottomOf="@id/iv_ask"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/blue7584A3"/>
+
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:background="@drawable/ic_delete"
+            android:contentDescription="@string/trash_bin"
+            android:layout_width="@dimen/dp_32"
+            android:layout_height="@dimen/dp_32"
+            app:layout_constraintTop_toTopOf="@id/btn_delete"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/btn_delete"
+            android:layout_marginStart="@dimen/dp_16"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/iv_delete"
+            app:layout_constraintBottom_toBottomOf="@id/iv_delete"
+            app:layout_constraintStart_toEndOf="@id/iv_delete"
+            android:layout_marginStart="@dimen/dp_10"
+            android:text="@string/delete_account"
+            style="@style/title_16sp_poppinsMedium_black030f28"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/an_arrow"
+            app:layout_constraintTop_toTopOf="@id/iv_delete"
+            app:layout_constraintBottom_toBottomOf="@id/iv_delete"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:background="@drawable/ic_right"/>
+
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:layout_constraintTop_toBottomOf="@id/line3"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

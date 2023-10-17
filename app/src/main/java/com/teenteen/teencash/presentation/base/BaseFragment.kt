@@ -21,7 +21,7 @@ abstract class BaseFragment<VB_CHILD : ViewBinding> : Fragment() {
     lateinit var progressDialog: Dialog
     lateinit var prefs: PrefsSettings
     lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
+    lateinit var db: FirebaseFirestore
     var currentUser: FirebaseUser? = null
     lateinit var usersCollection: CollectionReference
 

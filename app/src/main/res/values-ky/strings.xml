@@ -101,6 +101,16 @@
     <string name="income">Киреше</string>
     <string name="set_source">Доходдун источниги</string>
     <string name="job">Жумуш</string>
+    <string name="delete_account">Аккаунтту жок кылуу</string>
+    <string name="lose_data">After deletion you\'re gonna lose all the data</string>
+    <string name="btn_continue">Continue</string>
+    <string name="sun_icon">Sun icon</string>
+    <string name="globus">Globus</string>
+    <string name="an_arrow">An arrow</string>
+    <string name="coin">Coin</string>
+    <string name="trophy">Trophy</string>
+    <string name="chat">Chat</string>
+    <string name="trash_bin">Trash bin</string>
 
     <string-array name="spinner_date">
         <item name="choose">баары</item>
