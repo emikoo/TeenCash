@@ -1,0 +1,21 @@
+run = "kotlinc -d app/src/main/res/layout/flow_fragment_main.xml"
+
+hidden=["*.jar"]
+
+[nix]
+channel = "stable-22_11"
+
+[packager]
+language = "java"
+
+[packager.features]
+packageSearch = true
+
+[languages.kotlin]
+pattern = "**/*.{kt,kts,java}"
+
+[languages.kotlin.languageServer]
+start = ["kotlin-language-server"]
+
+[deployment]
+run = ["sh", "-c", "kotlinc -d app/src/main/res/layout/flow_fragment_main.xml"]
