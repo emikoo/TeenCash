@@ -217,6 +217,12 @@ class MainViewModel() : ViewModel() {
         }
     }
 
+    fun deleteEarning(uid: String, docName: String){
+        viewModelScope.launch {
+            FirebaseHomeService.deleteEarning(uid, docName)
+        }
+    }
+
     fun deleteAchievement(uid: String, docName: String){
         viewModelScope.launch {
             FirebaseHomeService.deleteAchievement(uid, docName)

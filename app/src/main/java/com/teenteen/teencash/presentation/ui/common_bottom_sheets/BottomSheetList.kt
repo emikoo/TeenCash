@@ -1,5 +1,6 @@
 package com.teenteen.teencash.presentation.ui.common_bottom_sheets
 
+import android.annotation.SuppressLint
 import androidx.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -79,6 +80,13 @@ class BottomSheetList(
                     ListBS(image = R.drawable.ic_delete, title = getString(R.string.delete)))
                 setupSettingsView(list, ListBottomSheetKeys.PIGGY_BANK_SETTINGS)
             }
+            ListBottomSheetKeys.EARNINGS_SETTINGS -> {
+                binding.title.isGone()
+                list = mutableListOf(
+//                    ListBS(image = R.drawable.ic_edit_rectangle, title = getString(R.string.edit)),
+                    ListBS(image = R.drawable.ic_delete, title = getString(R.string.delete)))
+                setupSettingsView(list, ListBottomSheetKeys.EARNINGS_SETTINGS)
+            }
         }
     }
 
@@ -99,6 +107,17 @@ class BottomSheetList(
             subtitleText = getString(R.string.are_u_sure_delete) ,
             buttonText = getString(R.string.yes) ,
             action = this::deleteCategory
+        )
+    }
+
+    override fun onDeleteEarnings() {
+        showAlertDialog(
+            requireContext() ,
+            this ,
+            titleText = getString(R.string.delete_category) ,
+            subtitleText = getString(R.string.are_u_sure_delete) ,
+            buttonText = getString(R.string.yes) ,
+            action = this::deleteEarnings
         )
     }
 
@@ -125,6 +144,12 @@ class BottomSheetList(
         dialog?.dismiss()
     }
 
+    override fun onEditEarnings() {
+        BottomSheetAdd(updater!!, AddBottomSheetKeys.UPDATE_EARNINGS, itemCategory = itemCategory)
+            .show(activity?.supportFragmentManager)
+        dialog?.dismiss()
+    }
+
     override fun onAchieved() {
         itemCategory?.let {
             if (internetIsConnected(requireContext())) {
@@ -145,6 +170,7 @@ class BottomSheetList(
         }
     }
 
+    @SuppressLint("RestrictedApi")
     override fun onLanguageSelected(item: ListBS) {
         when (item.subtitle) {
             getString(R.string.kyrgyz_or) -> {
@@ -219,6 +245,16 @@ class BottomSheetList(
                 updater!!.updatePiggyBank()
                 this.dismiss()
             } else Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun deleteEarnings(){
+        itemCategory?.let {
+            if (internetIsConnected(requireContext())) {
+                viewModel.deleteEarning(prefs.getCurrentUserId(), it.docName)
+                updater!!.updateEarnings()
+                this.dismiss()
+            }
         }
     }
 

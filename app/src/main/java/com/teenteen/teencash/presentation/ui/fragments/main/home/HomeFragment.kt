@@ -150,6 +150,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
             .show(activity?.supportFragmentManager)
     }
 
+    override fun onEarningDotsClickListener(item: Category) {
+        BottomSheetList(ListBottomSheetKeys.EARNINGS_SETTINGS, this, itemCategory = item)
+            .show(activity?.supportFragmentManager)
+    }
+
     override fun onCategoryClickListener(item: Category) {
         BottomSheetAdd(this , AddBottomSheetKeys.SPENT_CARD , item)
             .show(activity?.supportFragmentManager)
@@ -162,10 +167,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() , CategoryAdapter.Categ
 
     override fun onEarningClickListener(item: Category) {
         BottomSheetAdd(this, AddBottomSheetKeys.ADD_EARNING, item).show(activity?.supportFragmentManager)
-    }
-
-    override fun onEarningDotsClickListener(item: Category) {
-
     }
 
     @SuppressLint("NotifyDataSetChanged")

@@ -90,6 +90,7 @@ class BottomSheetAdd(
                 etAmountHint = "0", btnAddText = false)
             AddBottomSheetKeys.ADD_EARNING -> setText(title = itemCategory!!.name,
                 etAmountHint = "0" , btnAddText = true)
+            AddBottomSheetKeys.UPDATE_EARNINGS -> updateText(false)
         }
     }
 
@@ -156,6 +157,7 @@ class BottomSheetAdd(
                     binding.etAmount, action = this::checkIfDocExists)
                 AddBottomSheetKeys.ADD_EARNING -> checkField(this, requireContext(),
                     binding.etAmount, action = this::addBalance)
+                AddBottomSheetKeys.UPDATE_EARNINGS -> updateCategory()
             }
         }
     }
@@ -253,7 +255,7 @@ class BottomSheetAdd(
             val amount = binding.etAmount.text.toString()
             val convertedAmount = amount.toInt().convertAmount(prefs.getSettingsCurrency(), binding.tvCurrency.text.toString())
             val gap = it.firstAmount-convertedAmount
-            if (name.isNotBlank() && limit.isNotBlank() && amount.isNotBlank() && amount.toInt() != 0) {
+            if (name.isNotBlank() && limit.isNotBlank() && amount.isNotBlank()) {
                 val isSpent = gap < 0
                 val historyAmount = if (gap < 0) amount.toInt()-it.firstAmount
                 else gap
@@ -269,6 +271,9 @@ class BottomSheetAdd(
                     viewModel.updatePiggy(prefs.getCurrentUserId(), it.docName, name, amount.toInt(), limit.toInt())
                     viewModel.updateSavedAmount(prefs.getCurrentUserId(), savedMoney-gap)
                     updater.updatePiggyBank()
+                }
+                else if (key == AddBottomSheetKeys.UPDATE_EARNINGS) {
+//                    viewModel.updateEarning()
                 }
                 dialog?.dismiss()
             } else requireContext().showToast(getString(R.string.check_all_data))

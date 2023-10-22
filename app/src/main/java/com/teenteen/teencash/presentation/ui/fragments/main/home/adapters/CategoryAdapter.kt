@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.marginTop
 import com.example.antkotlinproject.base.BaseAdapter
 import com.example.antkotlinproject.base.BaseViewHolder
 import com.teenteen.teencash.R
@@ -133,6 +132,7 @@ class CategoryAdapter(
             viewHolder.limit.setTextColor(viewHolder.itemView.resources.getColor(R.color.red))
         } else if (key == CategoryAdapterKeys.EARNINGS) {
             viewHolder.limit.isGone()
+//            viewHolder.limit.setTextColor(viewHolder.itemView.resources.getColor(R.color.dark_green))
             viewHolder.icon.setColorFilter(viewHolder.itemView.resources.getColor(R.color.dark_green))
         } else {
             viewHolder.limit.setTextColor(viewHolder.itemView.resources.getColor(limitColor))

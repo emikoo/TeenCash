@@ -63,6 +63,17 @@ class AddBSAdapter(
                 holder.subtitle.isGone()
             }
 
+            ListBottomSheetKeys.EARNINGS_SETTINGS -> {
+                holder.image.isVisible()
+                item.image?.let { holder.image.setBackgroundResource(it) }
+                holder.btn.setOnClickListener {
+                    listener.onDeleteEarnings()
+//                    if (position == 0) listener.onEditEarnings()
+//                    else listener.onDeleteEarnings()
+                }
+                holder.subtitle.isGone()
+            }
+
             ListBottomSheetKeys.CHANGE_LANGUAGE -> {
                 holder.subtitle.isVisible()
                 holder.image.isGone()
@@ -88,8 +99,10 @@ class AddBSAdapter(
     interface onListClickedListener {
         fun onDeleteCategory()
         fun onDeletePiggyBank()
+        fun onDeleteEarnings()
         fun onEditCategory()
         fun onEditPiggyBank()
+        fun onEditEarnings()
         fun onAchieved()
         fun onLanguageSelected(item: ListBS)
         fun onCurrencySelected(item: ListBS)

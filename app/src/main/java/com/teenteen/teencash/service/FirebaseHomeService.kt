@@ -5,7 +5,6 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.firestore.FirebaseFirestore
 import com.teenteen.teencash.data.model.Category
 import com.teenteen.teencash.data.model.Category.Companion.toCategory
-import com.teenteen.teencash.data.model.History
 import kotlinx.coroutines.tasks.await
 
 object FirebaseHomeService {
@@ -287,6 +286,20 @@ object FirebaseHomeService {
         } catch (e: Exception) {
             Log.e(TAG , "Error deleting piggy bank" , e)
             FirebaseCrashlytics.getInstance().log("Error deleting piggy bank")
+            FirebaseCrashlytics.getInstance().setCustomKey("user id" , userId)
+            FirebaseCrashlytics.getInstance().recordException(e)
+        }
+    }
+
+    fun deleteEarning(userId: String , docName: String) {
+        val earning_ref = db.collection("users")
+            .document(userId)
+            .collection("earnings").document(docName)
+        try {
+            earning_ref.delete()
+        } catch (e: Exception) {
+            Log.e(TAG , "Error deleting earning" , e)
+            FirebaseCrashlytics.getInstance().log("Error deleting earning")
             FirebaseCrashlytics.getInstance().setCustomKey("user id" , userId)
             FirebaseCrashlytics.getInstance().recordException(e)
         }
